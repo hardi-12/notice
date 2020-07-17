@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".LoginStudent">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/l"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:lottie_rawRes="@raw/teammm"
+        android:layout_marginTop="10dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColorHint="#000"
+        android:layout_above="@id/passStudent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etStudentSignInEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            app:hintTextColor="#000"
+            android:textColor="#000"
+            android:layout_marginRight="30dp"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:textColorHint="#000"
+        android:layout_centerInParent="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etStudentSignInPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="#000"
+            android:textColorHint="#000"
+            android:hint="Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnStudentSignIn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/passStudent"
+        android:layout_centerInParent="true"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#000"
+        android:background="@drawable/custombut1"/>
+
+    <Button
+        android:id="@+id/btnStudentSignUp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/btnStudentSignIn"
+        android:background="@drawable/custbut2"
+        android:fontFamily="sans-serif-black"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/btnStudentForgotPassword"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/btnStudentSignUp"
+        android:textColor="#000"
+        android:background="@drawable/custombut1"
+        android:fontFamily="sans-serif-black"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.noticeboard">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".IntroActivity"></activity>
+        <activity android:name=".NoticeEdit" />
+        <activity android:name=".AdminValidation" />
+        <activity android:name=".SingleFileUpload" />
+        <activity android:name=".web_view" />
+        <activity android:name=".ui.profile.ProfileEdit" />
+        <activity android:name=".NoticeDetails" />
+        <activity android:name=".NoticeSeminar" />
+        <activity android:name=".NoticeExamCell" />
+        <activity android:name=".NoticeSports" />
+        <activity android:name=".NoticeTypes" />
+        <activity android:name=".NoticeDepartment" />
+        <activity android:name=".StudentSignUpActivity" />
+        <activity android:name=".LoginStudent" />
+        <activity
+            android:name=".DashboardStudent"
+            android:configChanges="orientation|screenSize"
+            android:label="Student"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dashboard"
+            android:configChanges="orientation|screenSize"
+            android:label="Admin"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- this line helps ACTIVITY to retain its state on screen orientation change -->
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".AdminSignUpActivity" />
+        <activity android:name=".LoginAdmin" />
+        <activity
+            android:name=".Splash"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

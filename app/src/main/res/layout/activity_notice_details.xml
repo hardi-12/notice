@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".NoticeDetails"
+    android:background="@drawable/bac">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Title"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDetailUploadBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uploaded by : "
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:layout_below="@id/tvDetailTitle"/>
+
+        <TextView
+            android:id="@+id/tvDetailDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="Upload date :"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textAlignment="textEnd"
+            android:textStyle="italic"
+            android:layout_below="@id/tvDetailUploadBy"/>
+
+        <TextView
+            android:id="@+id/tvDetailDept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Department"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_below="@id/tvDetailDate"/>
+
+        <TextView
+            android:id="@+id/tvDetailSem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Semester"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_below="@id/tvDetailDept"/>
+
+        <TextView
+            android:id="@+id/tvDetailSubject"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Subject"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_below="@id/tvDetailSem"/>
+
+        <TextView
+            android:id="@+id/tvDetailNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notice"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:linksClickable="true"
+            android:autoLink="all"
+            android:layout_below="@id/tvDetailSubject"/>
+
+        <TextView
+            android:id="@+id/tvDetailLastDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:text="Last Date"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvDetailNotice"/>
+
+        <TextView
+            android:id="@+id/tvDetailTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Time"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:layout_below="@id/tvDetailLastDate"/>
+
+        <TextView
+            android:id="@+id/tvDetailFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="File"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:linksClickable="true"
+            android:autoLink="all"
+            android:layout_below="@id/tvDetailTime"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_below="@id/tvDetailFile"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/school"
+            />
+
+    </RelativeLayout>
+</ScrollView>
