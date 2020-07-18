@@ -43,7 +43,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class NoticeExamCell extends AppCompatActivity {
+public class
+NoticeExamCell extends AppCompatActivity {
 
     ImageButton ibExamDate;
     TextView tvExamDate, tvExamDept, tvExamSem, tvExamFile;
@@ -80,7 +81,7 @@ public class NoticeExamCell extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
         toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("ExamCell Notice");
+        setTitle("ExamCell Notice");
 
         ibExamDate.setOnClickListener(new View.OnClickListener() {
             @Override

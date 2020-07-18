@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".NoticeTypes">
 
     <RelativeLayout
@@ -15,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:text="Upload a file"
+            android:background="@drawable/custbut2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"/>
@@ -23,8 +25,10 @@
             android:id="@+id/btnSports"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:background="@drawable/custombut1"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:textColor="#000"
             android:layout_marginRight="10dp"
             android:text="Sports Notice"
             android:layout_below="@id/btnUploadSingleFile"/>
@@ -34,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:text="Exam Cell Notice"
+            android:background="@drawable/custbut2"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
@@ -45,6 +50,8 @@
             android:layout_height="150dp"
             android:text="Department Notice"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/custombut1"
+            android:textColor="#000"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_below="@id/btnExamCell"/>
@@ -53,6 +60,7 @@
             android:id="@+id/btnSeminar"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:background="@drawable/custbut2"
             android:text="Seminar Notice"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"

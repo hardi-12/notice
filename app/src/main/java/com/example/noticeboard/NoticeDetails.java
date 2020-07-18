@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 public class NoticeDetails extends AppCompatActivity {
 
     TextView tvDetailTitle, tvDetailUploadBy, tvDetailDate, tvDetailDept, tvDetailSem, tvDetailSubject, tvDetailNotice,
-            tvDetailTime, tvDetailLastDate, tvDetailFile;
+            tvDetailTime, tvDetailLastDate, tvDetailFile,Att;
     String title, department, semester, subject, notice, date, current_date, upload, time, key;
     DatabaseReference reference;
+    LinearLayout timeLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class NoticeDetails extends AppCompatActivity {
         tvDetailTime = findViewById(R.id.tvDetailTime);
         tvDetailLastDate = findViewById(R.id.tvDetailLastDate);
         tvDetailFile = findViewById(R.id.tvDetailFile);
+        timeLine = findViewById(R.id.timeLine);
+        Att = findViewById(R.id.Att);
         reference = FirebaseDatabase.getInstance().getReference().child("notice");
 
         Intent i = getIntent();
@@ -58,13 +63,20 @@ public class NoticeDetails extends AppCompatActivity {
 
         tvDetailTitle.setText(title);
         tvDetailUploadBy.setText(upload);
-        tvDetailDate.setText("Uploaded on :"+current_date);
+        tvDetailDate.setText(current_date);
         tvDetailDept.setText(department);
         tvDetailSem.setText(semester);
         tvDetailSubject.setText(subject);
+        tvDetailSubject.setPaintFlags(tvDetailSubject.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tvDetailNotice.setText(notice);
-        tvDetailTime.setText("Time : "+time);
-        tvDetailLastDate.setText("Last Date : "+date);
+        if(time != null) {
+            timeLine.setVisibility(View.VISIBLE);
+            tvDetailTime.setText(time);
+        }
+        else {
+            timeLine.setVisibility(View.GONE);
+        }
+        tvDetailLastDate.setText(date);
 
         reference.child(key).addValueEventListener(new ValueEventListener() {
             @SuppressLint("ClickableViewAccessibility")
@@ -84,7 +96,9 @@ public class NoticeDetails extends AppCompatActivity {
                         }
                     });
                 }
-                else tvDetailFile.setVisibility(View.INVISIBLE);
+                else
+                    Att.setVisibility(View.GONE);
+                tvDetailFile.setVisibility(View.GONE);
             }
 
             @Override

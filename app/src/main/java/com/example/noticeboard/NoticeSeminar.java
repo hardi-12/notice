@@ -85,7 +85,7 @@ public class NoticeSeminar extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
         toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("Seminar Notice");
+        setTitle("Seminar Notice");
 
         ibSeminarDate.setOnClickListener(new View.OnClickListener() {
             @Override

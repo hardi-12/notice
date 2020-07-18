@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class LoginAdmin extends AppCompatActivity {
     Button btnSignIn, btnSignUp, btnForgotPassword;
     FirebaseUser user;
     FirebaseAuth firebaseAuth;
+    ProgressDialog loading;
     DatabaseReference reference;
 
     @Override
@@ -40,7 +42,7 @@ public class LoginAdmin extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
-
+        loading=new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("user");//
@@ -60,6 +62,10 @@ public class LoginAdmin extends AppCompatActivity {
                     Toast.makeText(LoginAdmin.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    loading.setTitle("SINNING IN");
+                    loading.setMessage("Please wait, while we are checking the credentials.");
+                    loading.setCanceledOnTouchOutside(false);
+                    loading.show();
                     reference.orderByChild("email").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -74,16 +80,19 @@ public class LoginAdmin extends AppCompatActivity {
                                                 etSignInEmail.setText("");
                                                 etSignInPassword.setText("");
                                                 etSignInEmail.requestFocus();
+                                                loading.dismiss();
                                                 finish();
                                             }
                                             else {
                                                 Toast.makeText(LoginAdmin.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                loading.dismiss();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(LoginAdmin.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            loading.dismiss();
                                         }
                                     });
                                 }
@@ -92,6 +101,7 @@ public class LoginAdmin extends AppCompatActivity {
                                     etSignInEmail.setText("");
                                     etSignInPassword.setText("");
                                     etSignInEmail.requestFocus();
+                                    loading.dismiss();
                                     finish();
                                 }
                             }

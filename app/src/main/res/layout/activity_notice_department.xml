@@ -4,18 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
+    android:theme="@style/AppTheme.PopupOverlay"
     tools:context=".NoticeDepartment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+
+       >
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/a"
+            android:layout_below="@id/nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColorHint="#000"
             app:counterEnabled="true"
             app:counterMaxLength="30">
 
@@ -24,6 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Title"
+                android:textColor="#000"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/tvDeptTitle"
                 android:maxLength="30"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -34,6 +43,8 @@
             android:layout_height="30dp"
             android:layout_below="@id/a"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_date_range_black_24dp"
@@ -44,7 +55,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Date"
+            android:textColor="#000"
             android:textSize="20sp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_toStartOf="@id/ibDeptDate"
             android:layout_below="@id/a"/>
@@ -53,6 +67,9 @@
             android:id="@+id/tvDeptSem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:text="Select Semester :"
             android:layout_marginTop="15dp"
             android:layout_below="@id/tvDeptDate"/>
@@ -62,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:theme="@style/AppTheme.PopupOverlay"
             android:entries="@array/semester"
             android:layout_below="@id/tvDeptSem"/>
 
@@ -69,6 +87,9 @@
             android:id="@+id/tvDeptDept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:text="Select Department"
             android:layout_marginTop="20dp"
             android:layout_below="@id/spDeptSem"/>
@@ -78,12 +99,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:theme="@style/AppTheme.PopupOverlay"
             android:entries="@array/department"
             android:layout_below="@id/tvDeptDept"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_below="@id/spDeptDept"
             android:id="@+id/b">
@@ -91,6 +118,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColorHint="#000"
                 android:id="@+id/tvDeptSubject"
                 android:hint="Subject" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,13 +129,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColorHint="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:id="@+id/one"
             android:layout_below="@id/b">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/tvDeptNotice"
+                android:textColorHint="#000"
                 android:hint="Notice" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,6 +149,9 @@
             android:id="@+id/switchDept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:text="Want to upload file ?    "
             android:layout_below="@id/one"/>
 
@@ -121,6 +160,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:textSize="20sp"
             android:text="Filename"
             android:visibility="invisible"
@@ -128,11 +170,17 @@
 
         <Button
             android:id="@+id/btnDeptFile"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Select a file"
+            android:background="@drawable/custbut2"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#fff"
+            android:textAllCaps="true"
             android:visibility="invisible"
+            android:fontFamily="sans-serif-black"
             android:layout_centerInParent="true"
             android:layout_below="@id/tvDeptFile"/>
     </RelativeLayout>

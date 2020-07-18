@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileEdit"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp">
+    android:theme="@style/AppTheme.PopupOverlay"
+    android:background="#fff"
+  >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/tvEditType"
@@ -21,6 +23,7 @@
             android:gravity="center_horizontal"
             android:textStyle="bold|italic"
             android:textSize="30sp"
+            android:textColorHint="#000"
             android:textColor="#F44336"
             android:text="Student/Admin Details" />
 
@@ -33,6 +36,8 @@
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textStyle="bold"
+            android:textColorHint="#000"
+            android:textColor="#000"
             android:textSize="20sp"
             android:layout_below="@id/tvEditType"/>
 
@@ -41,6 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ID number"
+            android:textColor="#000"
+            android:textColorHint="#000"
             android:layout_marginTop="20dp"
             android:layout_below="@id/tvEditEmail"/>
 
@@ -49,6 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColorHint="#000"
+            android:textColor="#000"
             android:inputType="textPersonName"
             android:hint="Name"
             android:layout_marginTop="20dp"
@@ -57,7 +66,9 @@
         <EditText
             android:id="@+id/etEditPhone"
             android:layout_width="match_parent"
+            android:textColorHint="#000"
             android:layout_height="wrap_content"
+            android:textColor="#000"
             android:ems="10"
             android:inputType="phone"
             android:hint="Phone number"
@@ -69,34 +80,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:visibility="visible"
             android:entries="@array/department"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_below="@id/etEditPhone"/>
 
         <Spinner
             android:id="@+id/spEditSem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:visibility="visible"
+            android:layout_marginTop="20dp"
             android:entries="@array/semester"
+            android:spinnerMode="dropdown"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
             android:layout_below="@id/spEditDept"/>
 
         <Spinner
             android:id="@+id/spEditDesg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/spEditDept"
             android:layout_marginTop="20dp"
-            android:visibility="visible"
             android:entries="@array/designation"
-            android:layout_below="@id/spEditDept"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:spinnerMode="dropdown"
+             />
 <!--NOTE: dept and desg spinner is made overlapping purposely-->
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Update"
+            android:background="@drawable/custombut1"
+            android:textColor="#000"
+            android:fontFamily="sans-serif-black"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_below="@id/spEditSem"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_below="@id/btnUpdate"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            app:lottie_rawRes="@raw/pro"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            />
 
     </RelativeLayout>
 
