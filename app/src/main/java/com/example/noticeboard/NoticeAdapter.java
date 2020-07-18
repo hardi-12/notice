@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,19 +58,17 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         key = noticeList.get(position).getKey();
 
         if (upload.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-            holder.ibNoticeEdit.setVisibility(View.VISIBLE);
-            holder.ibNoticeDelete.setVisibility(View.VISIBLE);
+           holder.edit.setVisibility(View.VISIBLE);
         }
         else {
-            holder.ibNoticeEdit.setVisibility(View.GONE);
-            holder.ibNoticeDelete.setVisibility(View.GONE);
+            holder.edit.setVisibility(View.VISIBLE);
         }
 
         holder.tvPrintTitle.setText(title);
         holder.tvPrintType.setText(type);
         holder.tvPrintUpload.setText(upload);
-        holder.tvPrintDate.setText("Uploaded on : "+currdate);
-        holder.tvPrintLDate.setText("Last date : "+date);
+        holder.tvPrintDate.setText(currdate);
+        holder.tvPrintLDate.setText(date);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +165,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
 
         TextView tvPrintTitle, tvPrintType, tvPrintUpload, tvPrintDate, tvPrintLDate;
         ImageButton ibNoticeEdit, ibNoticeDelete;
+        LinearLayout edit;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
@@ -176,6 +176,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
             tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);
             ibNoticeEdit = itemView.findViewById(R.id.ibNoticeEdit);
             ibNoticeDelete = itemView.findViewById(R.id.ibNoticeDelete);
+            edit = itemView.findViewById(R.id.edit);
         }
     }
 }

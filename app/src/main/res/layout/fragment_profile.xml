@@ -117,50 +117,51 @@
             android:id="@+id/tvProfileDept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tvProfileDesg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:text="Department"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:textSize="20sp"
-            android:layout_below="@id/tvProfilePhNum" />
-
-        <TextView
-            android:id="@+id/tvProfileSem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Semester"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:textColor="#000"
-            android:layout_marginRight="20dp"
-            android:textSize="20sp"
-            android:visibility="visible"
-            android:layout_below="@id/tvProfileDept"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvProfileDesg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Designation"
+            android:layout_below="@id/tvProfilePhNum"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:textColor="#000"
             android:layout_marginRight="20dp"
+            android:text="Designation"
+            android:textColor="#000"
             android:textSize="20sp"
-            android:visibility="visible"
-            android:layout_below="@id/tvProfilePhNum"/>
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvProfileSem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvProfileDept"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Semester"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tvProfileVerify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Verification Status"
+            android:layout_below="@id/tvProfileSem"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:textSize="20sp"
+            android:text="Verification Status"
             android:textColor="#0000ee"
-            android:layout_below="@id/tvProfileDept"/>
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </ScrollView>

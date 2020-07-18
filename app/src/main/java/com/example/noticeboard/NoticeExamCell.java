@@ -51,7 +51,6 @@ public class NoticeExamCell extends AppCompatActivity {
     Spinner spExamSem, spExamDept;
     Calendar calendar;
     DatabaseReference reference;
-    Toolbar toolbar;
     Button btnExamFile;
     Switch switchExam;
     Uri uri;
@@ -62,6 +61,7 @@ public class NoticeExamCell extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_exam_cell);
+        setTitle("ExamCell Notice");
 
         ibExamDate = findViewById(R.id.ibExamDate);
         tvExamDate = findViewById(R.id.tvExamDate);
@@ -79,8 +79,6 @@ public class NoticeExamCell extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
-        toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("ExamCell Notice");
 
         ibExamDate.setOnClickListener(new View.OnClickListener() {
             @Override
