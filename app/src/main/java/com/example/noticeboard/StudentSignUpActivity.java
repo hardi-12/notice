@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.ref.PhantomReference;
+
 public class StudentSignUpActivity extends AppCompatActivity {
 
     EditText etStudentName, etStudentIDNumber, etStudentPhoneNumber, etStudentEmail, etStudentPassword;
@@ -29,6 +32,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
     Spinner spDepartment, spSemester;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
+    ProgressDialog loading;
     DatabaseReference reference;
 
     @Override
@@ -44,7 +48,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
         btnStudentSignUp = findViewById(R.id.btnStudentSignUp);
         spDepartment = findViewById(R.id.spDepartment);
         spSemester = findViewById(R.id.spSemester);
-
+        loading=new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("user");//
@@ -86,6 +90,10 @@ public class StudentSignUpActivity extends AppCompatActivity {
                     etStudentEmail.setError("Kindly use ...@somaiya.edu ID");
                 }
                 else {
+                    loading.setTitle("Create Account");
+                    loading.setMessage("Please wait, while we are checking the credentials.");
+                    loading.setCanceledOnTouchOutside(false);
+                    loading.show();
                     reference.orderByChild("id_number").equalTo(ID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -102,11 +110,13 @@ public class StudentSignUpActivity extends AppCompatActivity {
                                             reference.child(key).setValue(u);
                                             Intent i = new Intent(StudentSignUpActivity.this, DashboardStudent.class);
                                             startActivity(i);
+                                            loading.dismiss();
                                             finish();
                                         }
                                         else {
                                             Toast.makeText(StudentSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
                                             etStudentEmail.requestFocus();
+                                            loading.dismiss();
                                         }
                                     }
                                 });

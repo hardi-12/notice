@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class LoginStudent extends AppCompatActivity {
     Button btnStudentSignIn, btnStudentSignUp, btnStudentForgotPassword;
     FirebaseUser user;
     FirebaseAuth firebaseAuth;
+    ProgressDialog loading;
     DatabaseReference reference;
 
     @Override
@@ -40,7 +42,7 @@ public class LoginStudent extends AppCompatActivity {
         btnStudentSignIn = findViewById(R.id.btnStudentSignIn);
         btnStudentSignUp = findViewById(R.id.btnStudentSignUp);
         btnStudentForgotPassword = findViewById(R.id.btnStudentForgotPassword);
-
+        loading=new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("user");//
@@ -60,6 +62,10 @@ public class LoginStudent extends AppCompatActivity {
                     Toast.makeText(LoginStudent.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    loading.setTitle("SINNING IN");
+                    loading.setMessage("Please wait, while we are checking the credentials.");
+                    loading.setCanceledOnTouchOutside(false);
+                    loading.show();
                     reference.orderByChild("email").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -74,16 +80,19 @@ public class LoginStudent extends AppCompatActivity {
                                                 etStudentSignInEmail.setText("");
                                                 etStudentSignInPassword.setText("");
                                                 etStudentSignInEmail.requestFocus();
+                                                loading.dismiss();
                                                 finish();
                                             }
                                             else {
                                                 Toast.makeText(LoginStudent.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                loading.dismiss();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(LoginStudent.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            loading.dismiss();
                                         }
                                     });
                                 }
@@ -92,11 +101,13 @@ public class LoginStudent extends AppCompatActivity {
                                     etStudentSignInEmail.setText("");
                                     etStudentSignInPassword.setText("");
                                     etStudentSignInEmail.requestFocus();
+                                    loading.dismiss();
                                     finish();
                                 }
                             }
                             else {
                                 Toast.makeText(LoginStudent.this, "No such user exists", Toast.LENGTH_SHORT).show();
+                                loading.dismiss();
                             }
                         }
 

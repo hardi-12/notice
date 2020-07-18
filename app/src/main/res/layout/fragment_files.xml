@@ -10,6 +10,7 @@
         android:id="@+id/tvFileStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:text="NO FILES FOUND \nPLEASE UPLOAD FILES TO VIEW HERE" />
 
     <androidx.recyclerview.widget.RecyclerView

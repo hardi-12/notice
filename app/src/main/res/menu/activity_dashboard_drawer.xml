@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:visible="true">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_home"
+            android:visible="true"
+            app:showAsAction="always" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
-            android:title="Profile" />
+            android:title="Profile"
+            android:visible="true"
+            app:showAsAction="withText" />
         <item
             android:id="@+id/nav_files"
             android:icon="@drawable/ic_folder_black_24dp"
-            android:title="Files" />
+
+            android:title="Files"
+            android:visible="true" />
         <item
             android:id="@+id/nav_list_users"
             android:icon="@drawable/ic_list_black_24dp"
-            android:title="Users" />
+            android:title="Users"
+            android:visible="true" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="About" />
+            android:title="About"
+            android:visible="true" />
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_arrow_back_black_24dp"
-            android:title="Signout" />
+            android:title="Signout"
+            android:visible="true" />
     </group>
 
 
@@ -38,11 +50,12 @@
                 android:id="@+id/nav_svv"
                 android:icon="@drawable/ic_domain"
                 android:title="Somaiya Account"
-                />
+                android:visible="true" />
             <item
                 android:id="@+id/nav_website"
                 android:icon="@drawable/ic_domain"
-                android:title="Somaiya Website"/>
+                android:title="Somaiya Website"
+                android:visible="true" />
         </menu>
     </item>
 

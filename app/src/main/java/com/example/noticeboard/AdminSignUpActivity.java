@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
     Spinner spDepartment, spDesignation;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
+    ProgressDialog loading;
     DatabaseReference reference;
 
     @Override
@@ -44,11 +46,10 @@ public class AdminSignUpActivity extends AppCompatActivity {
         btnAdminSignUp = findViewById(R.id.btnAdminSignUp);
         spDepartment = findViewById(R.id.spDepartment);
         spDesignation = findViewById(R.id.spDesignation);
-
+        loading=new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("user");//
-
         btnAdminSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +86,10 @@ public class AdminSignUpActivity extends AppCompatActivity {
                     etAdminEmail.setError("Kindly use ...@somaiya.edu ID");
                 }
                 else {
+                    loading.setTitle("Create Account");
+                    loading.setMessage("Please wait, while we are checking the credentials.");
+                    loading.setCanceledOnTouchOutside(false);
+                    loading.show();
                     reference.orderByChild("id_number").equalTo(ID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,11 +106,13 @@ public class AdminSignUpActivity extends AppCompatActivity {
                                             reference.child(key).setValue(u);
                                             Intent i = new Intent(AdminSignUpActivity.this, Dashboard.class);
                                             startActivity(i);
+                                            loading.dismiss();
                                             finish();
                                         }
                                         else {
                                             Toast.makeText(AdminSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
                                             etAdminEmail.requestFocus();
+                                            loading.dismiss();
                                         }
                                     }
                                 });

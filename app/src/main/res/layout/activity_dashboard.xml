@@ -25,34 +25,36 @@
 
 <!--</androidx.drawerlayout.widget.DrawerLayout>-->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayoutAdmin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinatorLayoutAdmin">
+    tools:visibility="visible">
 
     <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/drawer_layout"
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
-            <include
-                layout="@layout/app_bar_dashboard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <include
+            layout="@layout/app_bar_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <com.google.android.material.navigation.NavigationView
-                android:id="@+id/nav_view_admin"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:fitsSystemWindows="true"
-                app:headerLayout="@layout/nav_header_admin_dashboard"
-                app:menu="@menu/activity_dashboard_drawer" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:backgroundTint="#fff"
+            app:itemTextColor="@color/colorPrimary"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_admin_dashboard"
+            app:menu="@menu/activity_dashboard_drawer" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
