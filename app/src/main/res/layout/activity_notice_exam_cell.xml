@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
+            android:textColorHint="#000"
             app:counterMaxLength="30"
             android:layout_marginTop="20dp">
 
@@ -27,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Title"
+                android:textColorHint="#000"
                 android:id="@+id/tvExamTitle"
                 android:maxLength="30"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:text="Select Date"
             android:textSize="20sp"
+            android:textColor="#000"
             android:layout_marginTop="20dp"
             android:layout_toStartOf="@id/ibExamDate"
             android:layout_below="@id/c"/>
@@ -56,45 +59,55 @@
             android:id="@+id/tvExamSem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Semester :"
+            android:textSize="17sp"
+            android:text="Click here to select Semester :"
+            android:textColor="#000"
             android:layout_marginTop="15dp"
             android:layout_below="@id/tvExamDate"/>
 
-        <Spinner
-            android:id="@+id/spExamSem"
+        <TextView
+            android:id="@+id/tvExamSemData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:entries="@array/semester"
+            android:textSize="20sp"
+            android:text="Selected Semester"
+            android:textColor="#000"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/tvExamSem"/>
 
         <TextView
             android:id="@+id/tvExamDept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Department"
+            android:textSize="17sp"
+            android:text="Click here to select Department"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/spExamSem"/>
+            android:textColor="#000"
+            android:layout_below="@id/tvExamSemData"/>
 
-        <Spinner
-            android:id="@+id/spExamDept"
+        <TextView
+            android:id="@+id/tvExamDeptData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Selected Department"
+            android:textColor="#000"
             android:layout_marginTop="20dp"
-            android:entries="@array/department"
             android:layout_below="@id/tvExamDept"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/spExamDept"
+            android:layout_below="@id/tvExamDeptData"
+            android:textColorHint="#000"
             android:id="@+id/d">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvExamSubject"
+                android:textColorHint="#000"
                 android:hint="Subject" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,12 +116,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColorHint="#000"
             android:layout_below="@id/d">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvExamNotice"
+                android:textColorHint="#000"
                 android:hint="Notice" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,6 +131,7 @@
             android:id="@+id/switchExam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000"
             android:text="Want to upload file ?    "
             android:layout_below="@id/two"/>
 
@@ -125,6 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
+            android:textColor="#000"
             android:text="Filename"
             android:visibility="invisible"
             android:layout_below="@id/switchExam"/>

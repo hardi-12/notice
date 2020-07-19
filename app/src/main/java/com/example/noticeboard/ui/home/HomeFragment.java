@@ -58,9 +58,12 @@ public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         refresh = view.findViewById(R.id.refresh);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         list_view=view.findViewById(R.id.list_view);
         list_view.setHasFixedSize(true);
-        list_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list_view.setLayoutManager(linearLayoutManager);
 
         ivPopup_home.setOnClickListener(new View.OnClickListener() {
             @Override
