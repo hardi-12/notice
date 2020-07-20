@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,10 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 public class NoticeDetails extends AppCompatActivity {
 
     TextView tvDetailTitle, tvDetailUploadBy, tvDetailDate, tvDetailDept, tvDetailSem, tvDetailSubject, tvDetailNotice,
-            tvDetailTime, tvDetailLastDate, tvDetailFile,Att;
+            tvDetailTime, tvDetailLastDate, tvDetailFile,Att, tvDashTym;
     String title, department, semester, subject, notice, date, current_date, upload, time, key;
     DatabaseReference reference;
-    LinearLayout timeLine;
+    String file_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class NoticeDetails extends AppCompatActivity {
         tvDetailTime = findViewById(R.id.tvDetailTime);
         tvDetailLastDate = findViewById(R.id.tvDetailLastDate);
         tvDetailFile = findViewById(R.id.tvDetailFile);
-        timeLine = findViewById(R.id.timeLine);
+        tvDashTym = findViewById(R.id.tvDashTym);
         Att = findViewById(R.id.Att);
         reference = FirebaseDatabase.getInstance().getReference().child("notice");
 
@@ -68,12 +69,14 @@ public class NoticeDetails extends AppCompatActivity {
         tvDetailSubject.setText(subject);
         tvDetailSubject.setPaintFlags(tvDetailSubject.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tvDetailNotice.setText(notice);
-        if(time != null) {
-            timeLine.setVisibility(View.VISIBLE);
+        if(!time.equals("")) {
+            tvDashTym.setVisibility(View.VISIBLE);
+            tvDetailTime.setVisibility(View.VISIBLE);
             tvDetailTime.setText(time);
         }
         else {
-            timeLine.setVisibility(View.GONE);
+            tvDashTym.setVisibility(View.GONE);
+            tvDetailTime.setVisibility(View.GONE);
         }
         tvDetailLastDate.setText(date);
 
@@ -82,7 +85,7 @@ public class NoticeDetails extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("files")) {
-                    final String file_url = dataSnapshot.child("files").getValue().toString();
+                    file_url = dataSnapshot.child("files").getValue().toString();
                     tvDetailFile.setText(file_url);
                     tvDetailFile.setOnTouchListener(new View.OnTouchListener() {
                         @Override
@@ -95,14 +98,15 @@ public class NoticeDetails extends AppCompatActivity {
                         }
                     });
                 }
-                else
+                else {
                     Att.setVisibility(View.GONE);
                     tvDetailFile.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(NoticeDetails.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
             }
         });
     }

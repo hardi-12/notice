@@ -62,7 +62,7 @@ public class LoginStudent extends AppCompatActivity {
                     Toast.makeText(LoginStudent.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    loading.setTitle("SINNING IN");
+                    loading.setTitle("SIGNING IN");
                     loading.setMessage("Please wait, while we are checking the credentials.");
                     loading.setCanceledOnTouchOutside(false);
                     loading.show();

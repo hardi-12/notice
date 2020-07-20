@@ -54,7 +54,7 @@ public class NoticeSeminar extends AppCompatActivity {
     TextView tvSeminarDate, tvSeminarDept, tvSeminarSem, tvSeminarTime, tvSeminarFile, tvSeminarSemData, tvSeminarDeptData;
     EditText tvSeminarTitle, tvSeminarSubject, tvSeminarNotice;
     Calendar calendar;
-    String ampm;
+    String ampm, url;
     DatabaseReference reference;
     Toolbar toolbar;
     Button btnSeminarFile;
@@ -282,16 +282,31 @@ public class NoticeSeminar extends AppCompatActivity {
 
                                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
                                         upload, time, "Seminar Notice", filename);
-                                String url = uri.toString();
+                                url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toast.makeText(NoticeSeminar.this, "Done", Toast.LENGTH_SHORT).show();
 
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
 
-                                Intent i = new Intent(NoticeSeminar.this, Dashboard.class);
-                                startActivity(i);
-                                finish();
+                                new AlertDialog.Builder(NoticeSeminar.this).setMessage("Do you want to share this Notice ?")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                                Intent i = new Intent(Intent.ACTION_SEND);
+                                                i.setType("text/*");
+                                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date+"\nPFA below\n"+url);
+                                                startActivity(Intent.createChooser(i,"Share using..."));
+                                            }
+                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }).show();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -324,8 +339,25 @@ public class NoticeSeminar extends AppCompatActivity {
                         upload, time, "Seminar Notice", filename);
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeSeminar.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, Dashboard.class);
-                startActivity(i);
+
+                new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/*");
+                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date);
+                                startActivity(Intent.createChooser(i,"Share using..."));
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        }).show();
             }
         }
         return super.onOptionsItemSelected(item);

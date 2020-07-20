@@ -62,6 +62,7 @@ public class NoticeExamCell extends AppCompatActivity {
     AlertDialog.Builder builder;
     CheckBox cb_semI, cb_semII, cb_semIII, cb_semIV, cb_semV, cb_semVI, cb_semVII, cb_semVIII, cb_CS, cb_IT, cb_EXTC, cb_ETRX, cb_AI_DS;
     StringBuilder data = new StringBuilder();
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,16 +254,31 @@ public class NoticeExamCell extends AppCompatActivity {
 
                                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
                                         upload, "", "Department Notice", filename);
-                                String url = uri.toString();
+                                url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toast.makeText(NoticeExamCell.this, "Done", Toast.LENGTH_SHORT).show();
 
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
 
-                                Intent i = new Intent(NoticeExamCell.this, Dashboard.class);
-                                startActivity(i);
-                                finish();
+                                new AlertDialog.Builder(NoticeExamCell.this).setMessage("Do you want to share this Notice ?")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                                Intent i = new Intent(Intent.ACTION_SEND);
+                                                i.setType("text/*");
+                                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date+"\nPFA below\n"+url);
+                                                startActivity(Intent.createChooser(i,"Share using..."));
+                                            }
+                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }).show();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -295,8 +311,25 @@ public class NoticeExamCell extends AppCompatActivity {
                         upload, "", "Department Notice", filename);
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeExamCell.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, Dashboard.class);
-                startActivity(i);
+
+                new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/*");
+                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date);
+                                startActivity(Intent.createChooser(i,"Share using..."));
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        }).show();
             }
         }
         return super.onOptionsItemSelected(item);

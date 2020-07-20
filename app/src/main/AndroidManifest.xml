@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".IntroActivity"/>
+        <activity android:name=".IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NoticeEdit" />
         <activity android:name=".AdminValidation" />
         <activity android:name=".SingleFileUpload" />

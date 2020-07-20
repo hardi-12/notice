@@ -62,7 +62,7 @@ public class LoginAdmin extends AppCompatActivity {
                     Toast.makeText(LoginAdmin.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    loading.setTitle("SINNING IN");
+                    loading.setTitle("SIGNING IN");
                     loading.setMessage("Please wait, while we are checking the credentials.");
                     loading.setCanceledOnTouchOutside(false);
                     loading.show();
@@ -111,7 +111,9 @@ public class LoginAdmin extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(LoginAdmin.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
+                        }
                     });
                 }
             }

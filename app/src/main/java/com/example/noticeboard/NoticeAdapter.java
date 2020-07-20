@@ -59,7 +59,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
            holder.edit.setVisibility(View.VISIBLE);
         }
         else {
-            holder.edit.setVisibility(View.VISIBLE);
+            holder.edit.setVisibility(View.GONE);
         }
 
         holder.tvPrintTitle.setText(title);

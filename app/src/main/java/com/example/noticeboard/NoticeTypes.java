@@ -28,40 +28,35 @@ public class NoticeTypes extends AppCompatActivity {
         btnUploadSingleFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(NoticeTypes.this, SingleFileUpload.class);
-                startActivity(i);
+                startActivity(new Intent(NoticeTypes.this, SingleFileUpload.class));
             }
         });
 
         btnSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(NoticeTypes.this, NoticeSports.class);
-                startActivity(i);
+                startActivity(new Intent(NoticeTypes.this, NoticeSports.class));
             }
         });
 
         btnExamCell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(NoticeTypes.this, NoticeExamCell.class);
-                startActivity(i);
+                startActivity(new Intent(NoticeTypes.this, NoticeExamCell.class));
             }
         });
 
         btnDepartment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(NoticeTypes.this, NoticeDepartment.class);
-                startActivity(i);
+                startActivity(new Intent(NoticeTypes.this, NoticeDepartment.class));
             }
         });
 
         btnSeminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(NoticeTypes.this, NoticeSeminar.class);
-                startActivity(i);
+                startActivity(new Intent(NoticeTypes.this, NoticeSeminar.class));
             }
         });
     }
