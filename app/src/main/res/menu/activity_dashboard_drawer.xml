@@ -42,8 +42,6 @@
             android:visible="true" />
     </group>
 
-
-
     <item android:title="Quick Links">
         <menu>
             <item

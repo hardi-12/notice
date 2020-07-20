@@ -23,7 +23,7 @@ public class NoticeTypes extends AppCompatActivity {
         btnUploadSingleFile = findViewById(R.id.btnUploadSingleFile);
 
         toolbar = findViewById(R.id.toolbar);
-        //getSupportActionBar().setTitle("Notice Types");
+        getSupportActionBar().setTitle("Notice Types");
 
         btnUploadSingleFile.setOnClickListener(new View.OnClickListener() {
             @Override

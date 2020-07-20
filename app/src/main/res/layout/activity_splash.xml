@@ -15,8 +15,5 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         android:scaleType="centerCrop"
-
         app:lottie_rawRes="@raw/team" />
-
-
 </RelativeLayout>

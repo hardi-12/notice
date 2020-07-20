@@ -19,8 +19,8 @@
             android:layout_height="196dp"
             app:lottie_rawRes="@raw/www"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-/>
+            app:lottie_loop="true" />
+
         <EditText
             android:id="@+id/etAdminName"
             android:layout_width="match_parent"

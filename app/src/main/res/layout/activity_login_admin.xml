@@ -13,8 +13,7 @@
         app:lottie_rawRes="@raw/teammm"
         android:layout_marginTop="10dp"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        />
+        app:lottie_loop="true" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -22,8 +21,7 @@
         android:layout_centerInParent="true"
          android:textColorHint="#000"
         android:hint="E-mail"
-        android:layout_above="@id/passAdmin"
-        >
+        android:layout_above="@id/passAdmin">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etSignInEmail"
@@ -33,8 +31,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:textColor="#000"
-        android:layout_below="@+id/l"
-        />
+        android:layout_below="@+id/l" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,8 +68,7 @@
         android:layout_centerInParent="true"
         android:fontFamily="sans-serif-black"
         android:textColor="#000"
-        android:background="@drawable/custombut1"
-        />
+        android:background="@drawable/custombut1" />
 
     <Button
         android:id="@+id/btnSignUp"

@@ -23,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.ref.PhantomReference;
-
 public class StudentSignUpActivity extends AppCompatActivity {
 
     EditText etStudentName, etStudentIDNumber, etStudentPhoneNumber, etStudentEmail, etStudentPassword;

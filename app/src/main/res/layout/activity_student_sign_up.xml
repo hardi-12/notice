@@ -16,8 +16,7 @@
             android:layout_height="200dp"
             app:lottie_rawRes="@raw/www"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            />
+            app:lottie_loop="true" />
 
         <EditText
             android:layout_below="@id/lots"
@@ -70,8 +69,7 @@
             android:layout_marginRight="20dp"
             android:entries="@array/department"
             android:layout_below="@id/etStudentPhoneNumber"
-            android:theme="@style/AppTheme.PopupOverlay"
-            />
+            android:theme="@style/AppTheme.PopupOverlay" />
 
         <Spinner
             android:id="@+id/spSemester"
@@ -82,8 +80,7 @@
             android:layout_marginRight="20dp"
             android:entries="@array/semester"
             android:layout_below="@id/spDepartment"
-            android:theme="@style/AppTheme.PopupOverlay"
-            />
+            android:theme="@style/AppTheme.PopupOverlay" />
 
         <EditText
             android:id="@+id/etStudentEmail"

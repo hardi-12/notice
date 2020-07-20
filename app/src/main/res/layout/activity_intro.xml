@@ -13,8 +13,8 @@
         android:layout_height="220dp"
         app:lottie_rawRes="@raw/professor"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        />
+        app:lottie_loop="true" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/l2"
         android:layout_marginTop="410dp"
@@ -23,8 +23,8 @@
        android:layout_toRightOf="@+id/l1"
         app:lottie_rawRes="@raw/person"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-    />
+        app:lottie_loop="true" />
+
     <Button
         android:id="@+id/but1"
         android:layout_width="150dp"
@@ -34,8 +34,8 @@
         android:text="STAFF"
         android:textColor="#000"
         android:fontFamily="sans-serif-black"
-        android:background="@drawable/custombut1"
-        />
+        android:background="@drawable/custombut1" />
+
     <Button
         android:id="@+id/but2"
         android:layout_width="150dp"
@@ -45,8 +45,7 @@
         android:text="STUDENT"
         android:fontFamily="sans-serif-black"
         android:textColor="#000"
-        android:background="@drawable/custombut1"
-        />
+        android:background="@drawable/custombut1" />
 
 
 
