@@ -1,5 +1,7 @@
 package com.example.noticeboard.ui.home;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.noticeboard.Dashboard;
 import com.example.noticeboard.NoticeAdapter;
 import com.example.noticeboard.R;
 import com.example.noticeboard.notice;
 import com.example.noticeboard.ui.search.SearchFragment;
+import com.example.noticeboard.web_view;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +41,7 @@ public class HomeFragment extends Fragment {
     RecyclerView list_view;
     ArrayList<notice> itemlist, sortedList;
     NoticeAdapter adapterClass;
-    Button view_all;
+    Button view_all, Result, Research;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -69,6 +73,18 @@ public class HomeFragment extends Fragment {
                 transaction.replace(R.id.nav_host_fragment, newFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+
+        Result = view.findViewById(R.id.Result);
+        Research = view.findViewById(R.id.Research);
+
+        Result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(getContext(), web_view.class);
+                k.putExtra("link","https://myaccount.somaiya.edu/#/login");
+                startActivity(k);
             }
         });
 

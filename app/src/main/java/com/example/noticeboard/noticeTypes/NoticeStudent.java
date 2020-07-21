@@ -71,6 +71,7 @@ public class NoticeStudent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_sports);
+        setTitle("Student Section");
 
         ibSportsDate = findViewById(R.id.ibSportsDate);
         ibSportsTime = findViewById(R.id.ibSportsTime);
@@ -90,9 +91,6 @@ public class NoticeStudent extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
-
-        toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("Student Section");
 
         ibSportsDate.setOnClickListener(new View.OnClickListener() {
             @Override

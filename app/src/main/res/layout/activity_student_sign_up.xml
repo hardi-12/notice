@@ -50,15 +50,15 @@
             android:id="@+id/etStudentPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone"
-            android:hint="Phone Nunber"
+            android:layout_below="@id/etStudentIDNumber"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="phone"
             android:textColor="#000"
-            android:textColorHint="#000"
-            android:layout_below="@id/etStudentIDNumber"/>
+            android:textColorHint="#000" />
 
         <Spinner
             android:id="@+id/spDepartment"
