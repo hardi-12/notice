@@ -20,6 +20,7 @@ public class AdminValidation extends AppCompatActivity {
         etValidationKey = findViewById(R.id.etValidationKey);
         btnValidate = findViewById(R.id.btnValidate);
 
+
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
