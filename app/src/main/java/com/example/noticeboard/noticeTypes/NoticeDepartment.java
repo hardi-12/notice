@@ -48,6 +48,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+
 public class NoticeDepartment extends AppCompatActivity {
 
     ImageButton ibDeptDate;
@@ -160,9 +162,14 @@ public class NoticeDepartment extends AppCompatActivity {
                         if (cb_semVII.isChecked()) { data.append(" 7,"); }
                         if (cb_semVIII.isChecked()) { data.append(" 8"); }
                         if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() && !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
-                            Toast.makeText(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
                         }
-                        else tvDeptSemData.setText(data);
+                        else {
+                            if (data.toString().substring(data.toString().length()-1).equals(",")) {
+                                tvDeptSemData.setText(data.toString().substring(0, data.toString().length()-1));
+                            }
+                            else tvDeptSemData.setText(data);
+                        }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -193,9 +200,14 @@ public class NoticeDepartment extends AppCompatActivity {
                         if (cb_ETRX.isChecked()) { data.append(" ETRX,"); }
                         if (cb_AI_DS.isChecked()) { data.append(" AI-DS"); }
                         if (!cb_CS.isChecked() && !cb_IT.isChecked() && !cb_EXTC.isChecked() && !cb_ETRX.isChecked() && !cb_AI_DS.isChecked()) {
-                            Toast.makeText(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
                         }
-                        else tvDeptDeptData.setText(data);
+                        else {
+                            if (data.toString().substring(data.toString().length()-1).equals(",")) {
+                                tvDeptDeptData.setText(data.toString().substring(0, data.toString().length()-1));
+                            }
+                            else tvDeptDeptData.setText(data);
+                        }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -258,7 +270,7 @@ public class NoticeDepartment extends AppCompatActivity {
                                         upload, "", "Department Section",filename);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
-                                Toast.makeText(NoticeDepartment.this, "Done", Toast.LENGTH_SHORT).show();
+                                Toasty.success(NoticeDepartment.this, "Done", Toast.LENGTH_SHORT).show();
 
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
@@ -286,7 +298,7 @@ public class NoticeDepartment extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
                         });
@@ -295,7 +307,7 @@ public class NoticeDepartment extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
                     }
@@ -312,7 +324,7 @@ public class NoticeDepartment extends AppCompatActivity {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
                         upload, "", "Department Section", filename);
                 reference.child(filename).setValue(n);
-                Toast.makeText(NoticeDepartment.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
+                Toasty.success(NoticeDepartment.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 
                 new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -350,7 +362,7 @@ public class NoticeDepartment extends AppCompatActivity {
         if (requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             selectFiles();
         }
-        else Toast.makeText(NoticeDepartment.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
+        else Toasty.info(NoticeDepartment.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -365,6 +377,6 @@ public class NoticeDepartment extends AppCompatActivity {
             }
             else tvDeptFile.setText(dataaaa);
         }
-        else Toast.makeText(NoticeDepartment.this, "Please select a file...", Toast.LENGTH_SHORT).show();
+        else Toasty.info(NoticeDepartment.this, "Please select a file...", Toast.LENGTH_SHORT).show();
     }
 }

@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginAdmin extends AppCompatActivity {
 
     EditText etSignInEmail, etSignInPassword;
@@ -42,14 +44,13 @@ public class LoginAdmin extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
-        loading=new ProgressDialog(this);
+        loading = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference().child("user");//
+        reference = FirebaseDatabase.getInstance().getReference().child("user");
 
         if (user != null ) {
-            Intent i = new Intent(LoginAdmin.this, Dashboard.class);
-            startActivity(i);
+            startActivity(new Intent(LoginAdmin.this, Dashboard.class));
             finish();
         }
 
@@ -59,7 +60,7 @@ public class LoginAdmin extends AppCompatActivity {
                 final String username = etSignInEmail.getText().toString();
                 final String password = etSignInPassword.getText().toString();
                 if (username.isEmpty() || password.isEmpty()){
-                    Toast.makeText(LoginAdmin.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
+                    Toasty.info(LoginAdmin.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     loading.setTitle("SIGNING IN");
@@ -77,42 +78,44 @@ public class LoginAdmin extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
                                                 startActivity(new Intent(LoginAdmin.this, Dashboard.class));
+                                                loading.dismiss();
                                                 etSignInEmail.setText("");
                                                 etSignInPassword.setText("");
                                                 etSignInEmail.requestFocus();
-                                                loading.dismiss();
                                                 finish();
                                             }
                                             else {
-                                                Toast.makeText(LoginAdmin.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                Toasty.error(LoginAdmin.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
                                                 loading.dismiss();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(LoginAdmin.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toasty.error(LoginAdmin.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                                             loading.dismiss();
                                         }
                                     });
                                 }
                                 else {
-                                    Toast.makeText(LoginAdmin.this, "Only admin's can access, "+typ+"'s cannot", Toast.LENGTH_SHORT).show();
+                                    Toasty.warning(LoginAdmin.this, "Only admin's can access, "+typ+"'s cannot", Toast.LENGTH_SHORT).show();
+                                    loading.dismiss();
                                     etSignInEmail.setText("");
                                     etSignInPassword.setText("");
                                     etSignInEmail.requestFocus();
-                                    loading.dismiss();
                                     finish();
                                 }
                             }
                             else {
-                                Toast.makeText(LoginAdmin.this, "No such user exists", Toast.LENGTH_SHORT).show();
+                                Toasty.warning(LoginAdmin.this, "No such user exists", Toast.LENGTH_SHORT).show();
+                                loading.dismiss();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(LoginAdmin.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
+                            Toasty.error(LoginAdmin.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
+                            loading.dismiss();
                         }
                     });
                 }
@@ -122,16 +125,14 @@ public class LoginAdmin extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginAdmin.this, AdminSignUpActivity.class);
-                startActivity(i);
+                startActivity(new Intent(LoginAdmin.this, AdminSignUpActivity.class));
             }
         });
 
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginAdmin.this,ForgotPassword.class);
-                startActivity(i);
+                startActivity(new Intent(LoginAdmin.this,ForgotPassword.class));
             }
         });
     }

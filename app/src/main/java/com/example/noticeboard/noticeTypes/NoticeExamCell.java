@@ -48,6 +48,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+
 public class NoticeExamCell extends AppCompatActivity {
 
     ImageButton ibExamDate;
@@ -160,7 +162,7 @@ public class NoticeExamCell extends AppCompatActivity {
                         if (cb_semVII.isChecked()) { data.append(" 7,"); }
                         if (cb_semVIII.isChecked()) { data.append(" 8"); }
                         if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() && !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
-                            Toast.makeText(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
                         }
                         else tvExamSemData.setText(data);
                     }
@@ -193,7 +195,7 @@ public class NoticeExamCell extends AppCompatActivity {
                         if (cb_ETRX.isChecked()) { data.append(" ETRX,"); }
                         if (cb_AI_DS.isChecked()) { data.append(" AI-DS"); }
                         if (!cb_CS.isChecked() && !cb_IT.isChecked() && !cb_EXTC.isChecked() && !cb_ETRX.isChecked() && !cb_AI_DS.isChecked()) {
-                            Toast.makeText(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
                         }
                         else tvExamDeptData.setText(data);
                     }
@@ -258,7 +260,7 @@ public class NoticeExamCell extends AppCompatActivity {
                                         upload, "", "Exam Section", filename);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
-                                Toast.makeText(NoticeExamCell.this, "Done", Toast.LENGTH_SHORT).show();
+                                Toasty.success(NoticeExamCell.this, "Done", Toast.LENGTH_SHORT).show();
 
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
@@ -286,7 +288,7 @@ public class NoticeExamCell extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(NoticeExamCell.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(NoticeExamCell.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
                         });
@@ -295,7 +297,7 @@ public class NoticeExamCell extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(NoticeExamCell.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(NoticeExamCell.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
                     }
@@ -312,7 +314,7 @@ public class NoticeExamCell extends AppCompatActivity {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
                         upload, "", "Exam Section", filename);
                 reference.child(filename).setValue(n);
-                Toast.makeText(NoticeExamCell.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
+                Toasty.success(NoticeExamCell.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 
                 new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -350,7 +352,7 @@ public class NoticeExamCell extends AppCompatActivity {
         if (requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             selectFiles();
         }
-        else Toast.makeText(NoticeExamCell.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
+        else Toasty.info(NoticeExamCell.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -365,6 +367,6 @@ public class NoticeExamCell extends AppCompatActivity {
             }
             else tvExamFile.setText(dataaaa);
         }
-        else Toast.makeText(NoticeExamCell.this, "Please select a file...", Toast.LENGTH_SHORT).show();
+        else Toasty.info(NoticeExamCell.this, "Please select a file...", Toast.LENGTH_SHORT).show();
     }
 }

@@ -64,7 +64,9 @@
             android:layout_height="30dp"
             android:layout_below="@id/editTitle"
             android:layout_marginTop="20dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:background="@null" />
 
         <TextView
             android:id="@+id/tvEditNoticeDate"
@@ -82,7 +84,9 @@
             android:layout_height="30dp"
             android:layout_below="@id/tvEditNoticeDate"
             android:layout_marginTop="20dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_access_time_black_24dp"
+            android:background="@null"/>
 
         <TextView
             android:id="@+id/tvEditNoticeTime"
@@ -244,7 +248,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeNotice"
-                android:hint="Notice" />
+                android:hint="Description" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginStudent extends AppCompatActivity {
 
     EditText etStudentSignInEmail, etStudentSignInPassword;
@@ -45,11 +47,10 @@ public class LoginStudent extends AppCompatActivity {
         loading=new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference().child("user");//
+        reference = FirebaseDatabase.getInstance().getReference().child("user");
 
         if (user != null ) {
-            Intent i = new Intent(LoginStudent.this, DashboardStudent.class);
-            startActivity(i);
+            startActivity(new Intent(LoginStudent.this, DashboardStudent.class));
             finish();
         }
 
@@ -59,7 +60,7 @@ public class LoginStudent extends AppCompatActivity {
                 final String username = etStudentSignInEmail.getText().toString();
                 final String password = etStudentSignInPassword.getText().toString();
                 if (username.isEmpty() || password.isEmpty()){
-                    Toast.makeText(LoginStudent.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
+                    Toasty.info(LoginStudent.this, "ENTER CREDENTIALS", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     loading.setTitle("SIGNING IN");
@@ -77,42 +78,45 @@ public class LoginStudent extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
                                                 startActivity(new Intent(LoginStudent.this, DashboardStudent.class));
+                                                loading.dismiss();
                                                 etStudentSignInEmail.setText("");
                                                 etStudentSignInPassword.setText("");
                                                 etStudentSignInEmail.requestFocus();
-                                                loading.dismiss();
                                                 finish();
                                             }
                                             else {
-                                                Toast.makeText(LoginStudent.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                Toasty.error(LoginStudent.this, "Failure \n" + task.getException(), Toast.LENGTH_SHORT).show();
                                                 loading.dismiss();
                                             }
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(LoginStudent.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toasty.error(LoginStudent.this, "Failure : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                                             loading.dismiss();
                                         }
                                     });
                                 }
                                 else {
-                                    Toast.makeText(LoginStudent.this, "Only student's can access, "+typ+"'s cannot", Toast.LENGTH_SHORT).show();
+                                    Toasty.warning(LoginStudent.this, "Only student's can access, "+typ+"'s cannot", Toast.LENGTH_SHORT).show();
+                                    loading.dismiss();
                                     etStudentSignInEmail.setText("");
                                     etStudentSignInPassword.setText("");
                                     etStudentSignInEmail.requestFocus();
-                                    loading.dismiss();
                                     finish();
                                 }
                             }
                             else {
-                                Toast.makeText(LoginStudent.this, "No such user exists", Toast.LENGTH_SHORT).show();
+                                Toasty.warning(LoginStudent.this, "No such user exists", Toast.LENGTH_SHORT).show();
                                 loading.dismiss();
                             }
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toasty.error(LoginStudent.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
+                            loading.dismiss();
+                        }
                     });
                 }
             }
@@ -121,16 +125,14 @@ public class LoginStudent extends AppCompatActivity {
         btnStudentSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginStudent.this, StudentSignUpActivity.class);
-                startActivity(i);
+                startActivity(new Intent(LoginStudent.this, StudentSignUpActivity.class));
             }
         });
 
         btnStudentForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginStudent.this,ForgotPassword.class);
-                startActivity(i);
+                startActivity(new Intent(LoginStudent.this,ForgotPassword.class));
             }
         });
     }

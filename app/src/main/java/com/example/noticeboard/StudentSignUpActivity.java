@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import es.dmoral.toasty.Toasty;
+
 public class StudentSignUpActivity extends AppCompatActivity {
 
     EditText etStudentName, etStudentIDNumber, etStudentPhoneNumber, etStudentEmail, etStudentPassword;
@@ -46,10 +48,10 @@ public class StudentSignUpActivity extends AppCompatActivity {
         btnStudentSignUp = findViewById(R.id.btnStudentSignUp);
         spDepartment = findViewById(R.id.spDepartment);
         spSemester = findViewById(R.id.spSemester);
-        loading=new ProgressDialog(this);
+        loading = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("user");//
+        reference = database.getReference("user");
         spDepartment.setBackgroundColor(Color.BLACK);
 
         btnStudentSignUp.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +98,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null){
-                                Toast.makeText(StudentSignUpActivity.this, "User with given ID card number already exists", Toast.LENGTH_LONG).show();
+                                Toasty.warning(StudentSignUpActivity.this, "User with given ID card number already exists", Toast.LENGTH_LONG).show();
                                 etStudentIDNumber.requestFocus();
                             }
                             else {
@@ -112,9 +114,9 @@ public class StudentSignUpActivity extends AppCompatActivity {
                                             finish();
                                         }
                                         else {
-                                            Toast.makeText(StudentSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
-                                            etStudentEmail.requestFocus();
                                             loading.dismiss();
+                                            Toasty.warning(StudentSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
+                                            etStudentEmail.requestFocus();
                                         }
                                     }
                                 });
@@ -123,7 +125,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            Toasty.error(StudentSignUpActivity.this, "Error : "+databaseError, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

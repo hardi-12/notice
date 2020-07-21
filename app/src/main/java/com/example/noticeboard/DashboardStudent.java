@@ -12,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import es.dmoral.toasty.Toasty;
 
 public class DashboardStudent extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
@@ -108,12 +109,12 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(DashboardStudent.this, "Email verification link sent to "+user, Toast.LENGTH_SHORT).show();
+                            Toasty.success(DashboardStudent.this, "Email verification link sent to "+user, Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(DashboardStudent.this, "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toasty.error(DashboardStudent.this, "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -142,7 +143,6 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -162,6 +162,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
+
             case R.id.nav_svv:
                 Intent k = new Intent(DashboardStudent.this,web_view.class);
                 k.putExtra("link","https://myaccount.somaiya.edu/#/login");
@@ -173,6 +174,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 j.putExtra("link","https://kjsieit.somaiya.edu/en");
                 startActivity(j);
                 break;
+
             case R.id.nav_about :
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment()).addToBackStack(null).commit();
                 break;

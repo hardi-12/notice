@@ -10,7 +10,6 @@ import android.widget.Button;
 public class IntroActivity extends AppCompatActivity {
     Button but1,but2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +30,5 @@ public class IntroActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-
     }
 }

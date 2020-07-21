@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvSeminarNotice"
                 android:textColorHint="#000"
-                android:hint="Notice" />
+                android:hint="Description" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Switch

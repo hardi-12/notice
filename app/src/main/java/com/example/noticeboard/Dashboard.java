@@ -1,7 +1,6 @@
 package com.example.noticeboard;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +45,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import es.dmoral.toasty.Toasty;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -196,12 +197,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(Dashboard.this, "Email verification link sent to "+user.getEmail(), Toast.LENGTH_SHORT).show();
+                            Toasty.success(Dashboard.this, "Email verification link sent to "+user.getEmail(), Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Dashboard.this, "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toasty.error(Dashboard.this, "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -215,8 +216,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         getMenuInflater().inflate(R.menu.dashboard, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onSupportNavigateUp() {

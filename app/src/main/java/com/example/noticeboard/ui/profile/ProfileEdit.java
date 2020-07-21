@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
+import es.dmoral.toasty.Toasty;
+
 public class ProfileEdit extends AppCompatActivity {
     TextView tvEditType, tvEditEmail, tvEditID;
     EditText etEditName, etEditPhone;
@@ -117,7 +119,7 @@ public class ProfileEdit extends AppCompatActivity {
                 if (new_name.isEmpty()) { etEditName.setError("Cannot be empty"); }
                 if (new_phone.isEmpty()) { etEditPhone.setError("Cannot be empty"); }
                 if (new_dept.equals("Select Department")) {
-                    Toast.makeText(ProfileEdit.this, "Select proper dept", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(ProfileEdit.this, "Select proper dept", Toast.LENGTH_SHORT).show();
                 }
                 else if (!new_name.isEmpty() || !new_phone.isEmpty() || !new_desg.equals("Select Department")) {
                     HashMap<String, Object> hashMap = new HashMap<>();
@@ -136,13 +138,13 @@ public class ProfileEdit extends AppCompatActivity {
                     reference.child(email).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(ProfileEdit.this, "Update successful", Toast.LENGTH_SHORT).show();
+                            Toasty.success(ProfileEdit.this, "Update successful", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ProfileEdit.this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(ProfileEdit.this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

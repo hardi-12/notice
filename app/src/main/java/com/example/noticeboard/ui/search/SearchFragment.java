@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import es.dmoral.toasty.Toasty;
 
 public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
@@ -102,13 +105,12 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
                     }
                 });
                 refresh.setRefreshing(false);
             }
         });
-
         return view;
     }
 
@@ -158,11 +160,6 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
             if(object.getTitle().toLowerCase().contains(s.toLowerCase()) || object.getUpload().toLowerCase().contains(s.toLowerCase())) {
                 myList.add(object);
             }
-
-            //if(object.getUpload().toLowerCase().contains(s.toLowerCase())) {
-              //  myList.add(object);
-           // }
-
         }
         NoticeAdapter adapterClass = new NoticeAdapter(myList);
         list_view.setAdapter(adapterClass);

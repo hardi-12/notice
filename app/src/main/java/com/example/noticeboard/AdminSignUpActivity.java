@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import es.dmoral.toasty.Toasty;
+
 public class AdminSignUpActivity extends AppCompatActivity {
 
     EditText etAdminName, etAdminIDNumber, etAdminPhoneNumber, etAdminEmail, etAdminPassword;
@@ -45,10 +47,11 @@ public class AdminSignUpActivity extends AppCompatActivity {
         btnAdminSignUp = findViewById(R.id.btnAdminSignUp);
         spDepartment = findViewById(R.id.spDepartment);
         spDesignation = findViewById(R.id.spDesignation);
-        loading=new ProgressDialog(this);
+        loading = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("user");//
+        reference = database.getReference("user");
+
         btnAdminSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +96,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null){
-                                Toast.makeText(AdminSignUpActivity.this, "User with given ID card number already exists", Toast.LENGTH_LONG).show();
+                                Toasty.warning(AdminSignUpActivity.this, "User with given ID card number already exists", Toast.LENGTH_LONG).show();
                                 etAdminIDNumber.requestFocus();
                             }
                             else {
@@ -103,15 +106,14 @@ public class AdminSignUpActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             user u = new user(name, phone, department, email, "", "admin", designation, ID);
                                             reference.child(key).setValue(u);
-                                            Intent i = new Intent(AdminSignUpActivity.this, Dashboard.class);
-                                            startActivity(i);
+                                            startActivity(new Intent(AdminSignUpActivity.this, Dashboard.class));
                                             loading.dismiss();
                                             finish();
                                         }
                                         else {
-                                            Toast.makeText(AdminSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
-                                            etAdminEmail.requestFocus();
                                             loading.dismiss();
+                                            Toasty.warning(AdminSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
+                                            etAdminEmail.requestFocus();
                                         }
                                     }
                                 });
@@ -120,7 +122,8 @@ public class AdminSignUpActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            loading.dismiss();
+                            Toasty.error(AdminSignUpActivity.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
                         }
                     });
                 }

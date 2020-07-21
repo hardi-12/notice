@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import es.dmoral.toasty.Toasty;
 
 public class NoticeDetails extends AppCompatActivity {
 
@@ -106,7 +107,7 @@ public class NoticeDetails extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(NoticeDetails.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
+                Toasty.error(NoticeDetails.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
             }
         });
     }

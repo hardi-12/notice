@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import es.dmoral.toasty.Toasty;
+
 public class ProfileFragment extends Fragment {
 
     private TextView tvProfileType,tvProfileID ,tvProfileEmail, tvProfileName, tvProfilePhNum, tvProfileDept,
@@ -63,8 +65,6 @@ public class ProfileFragment extends Fragment {
                 String semester = dataSnapshot.child("semester").getValue().toString();
                 String designation = dataSnapshot.child("designation").getValue().toString();
 
-//                String cut1 = id_number.substring(0,7).replaceAll("[0-9]", "*");
-//                String cut2 = id_number.substring(7);
                 tvProfileType.setText(type);
                 tvProfileID.setText("".concat(id_number.substring(0,7).replaceAll("[0-9]", "*")).concat(id_number.substring(7)));
                 tvProfileEmail.setText(email);
@@ -104,12 +104,12 @@ public class ProfileFragment extends Fragment {
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getContext(), "Email verification link sent to "+user.getEmail(), Toast.LENGTH_SHORT).show();
+                            Toasty.success(getContext(), "Email verification link sent to "+user.getEmail(), Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toasty.error(getContext(), "Email verification failed "+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }

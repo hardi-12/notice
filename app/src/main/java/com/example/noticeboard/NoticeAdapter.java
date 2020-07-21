@@ -92,8 +92,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

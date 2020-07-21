@@ -28,6 +28,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import es.dmoral.toasty.Toasty;
+
 public class NoticeEdit extends AppCompatActivity {
     DatabaseReference databaseReference;
     EditText etEditNoticeTitle, etEditNoticeSubject, etEditNoticeNotice;
@@ -131,7 +133,9 @@ public class NoticeEdit extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toasty.error(NoticeEdit.this, "Error : "+databaseError, Toast.LENGTH_SHORT).show();
+            }
         });
 
         ibEditNoticeDate.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +202,7 @@ public class NoticeEdit extends AppCompatActivity {
                 if (etEditNoticeTitle.getText().toString().isEmpty()) { etEditNoticeTitle.setError("Cannot be empty"); }
                 if (etEditNoticeSubject.getText().toString().isEmpty()) { etEditNoticeSubject.setError("Cannot be empty"); }
                 if (etEditNoticeNotice.getText().toString().isEmpty()) { etEditNoticeNotice.setError("Cannot be empty"); }
-                if (sem.toString().equals("Sem") || dept.toString().isEmpty()) { Toast.makeText(NoticeEdit.this, "Select at-least one semester or department", Toast.LENGTH_SHORT).show(); }
+                if (sem.toString().equals("Sem") || dept.toString().isEmpty()) { Toasty.warning(NoticeEdit.this, "Select at-least one semester or department", Toast.LENGTH_SHORT).show(); }
 
                 else if (!etEditNoticeTitle.getText().toString().isEmpty() && !etEditNoticeSubject.getText().toString().isEmpty() && !etEditNoticeNotice.getText().toString().isEmpty() && !sem.toString().equals("Sem") && !dept.toString().isEmpty()) {
                     HashMap<String, Object> hashMap = new HashMap<>();
@@ -217,13 +221,13 @@ public class NoticeEdit extends AppCompatActivity {
                     databaseReference.child(key).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(NoticeEdit.this, "Notice Update Successful", Toast.LENGTH_SHORT).show();
+                            Toasty.success(NoticeEdit.this, "Notice Update Successful", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(NoticeEdit.this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toasty.error(NoticeEdit.this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

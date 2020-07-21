@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import es.dmoral.toasty.Toasty;
 
 public class ForgotPassword extends AppCompatActivity {
     TextView tvStatus;
@@ -43,13 +44,13 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(ForgotPassword.this, "Reset link send to email", Toast.LENGTH_SHORT).show();
+                                Toasty.success(ForgotPassword.this, "Reset link send to email", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(ForgotPassword.this, IntroActivity.class);
                                 startActivity(i);
                                 finish();
                             }
                             else {
-                                Toast.makeText(ForgotPassword.this, "Failure :( \n"+task.getException(), Toast.LENGTH_SHORT).show();
+                                Toasty.error(ForgotPassword.this, "Failure :( \n"+task.getException(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
