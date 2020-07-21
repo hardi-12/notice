@@ -1,35 +1,34 @@
 package com.example.noticeboard;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebSettings;
+import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class web_view extends AppCompatActivity {
-    WebView webView;
-
+WebView webView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view);
-        webView = findViewById(R.id.web_view);
+        setContentView(R.layout.web_view);
 
-//        Intent i = getIntent();
-//        String url = i.getStringExtra("url");
-        webView.loadUrl("http://myaccount.somaiya.edu");
+        Intent i =getIntent();
+        String link=i.getStringExtra("link");
+        webView = (WebView) findViewById(R.id.myWebView);
+        webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.loadUrl(link);
 
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportMultipleWindows(true);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        }
-        else super.onBackPressed();
     }
 }

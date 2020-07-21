@@ -114,7 +114,7 @@
             android:layout_marginRight="20dp"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:textColor="#000"
             android:textColorHint="#000" />
 

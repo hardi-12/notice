@@ -36,7 +36,8 @@
     <string-array name="designation">
         <item>Select Designation</item>
         <item>H. O. D.</item>
-        <item>Teacher</item>
+        <item>Professor</item>
+        <item>Asst. Professor</item>
         <item>Lab assistant</item>
     </string-array>
     <string name="title_activity_dashboard">Dashboard</string>

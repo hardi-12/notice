@@ -40,7 +40,7 @@
         <activity
             android:name=".Dashboard"
             android:configChanges="orientation|screenSize"
-            android:label="Admin"
+            android:label="Staff"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- this line helps ACTIVITY to retain its state on screen orientation change -->
         <activity android:name=".ForgotPassword" />
         <activity android:name=".AdminSignUpActivity" />

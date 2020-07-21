@@ -42,7 +42,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoticeAdapter.viewholder holder, final int position) {
+    public void onBindViewHolder(@NonNull final NoticeAdapter.viewholder holder, final int position) {
         final String title, dept, sem, subject, notice, date, currdate, upload, time, type, key;
         title = noticeList.get(position).getTitle();
         dept = noticeList.get(position).getBranch();
@@ -77,9 +77,22 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         }
 
         holder.tvPrintTitle.setText(title);
-        holder.tvPrintUpload.setText(upload);
         holder.tvPrintDate.setText(currdate);
         holder.tvPrintLDate.setText(date);
+
+        FirebaseDatabase.getInstance().getReference("user").child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue().toString();
+                String dept = dataSnapshot.child("department").getValue().toString();
+                String contact = dataSnapshot.child("phone").getValue().toString();
+                holder.tvPrintUpload.setText(name+" ("+dept+")\n"+contact);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -47,7 +47,6 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         reference= FirebaseDatabase.getInstance().getReference().child("notice");
-        reference.keepSynced(true);
 
         searchView_home = view.findViewById(R.id.SearchBar_home);
         ivPopup_home = view.findViewById(R.id.ivPopup_home);
@@ -58,7 +57,6 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         list_view=view.findViewById(R.id.list_view);
-        list_view.setHasFixedSize(true);
         list_view.setLayoutManager(linearLayoutManager);
 
         ivPopup_home.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +95,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                                 notice n = child.getValue(notice.class);
                                 itemlist.add(n);
                             }
-                            adapterClass = new NoticeAdapter(itemlist);
+                            NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
                             list_view.setAdapter(adapterClass);
                         }
                     }
@@ -126,7 +124,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                         notice n = child.getValue(notice.class);
                         itemlist.add(n);
                     }
-                    adapterClass = new NoticeAdapter(itemlist);
+                    NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
                     list_view.setAdapter(adapterClass);
                 }
 
@@ -134,7 +132,8 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                     searchView_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                         @Override
                         public boolean onQueryTextSubmit(String query) {
-                            return false;
+                            search(query);
+                            return true;
                         }
 
                         @Override
@@ -156,12 +155,14 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
     private void search(String s) {
         ArrayList<notice> myList = new ArrayList();
         for (notice object : itemlist) {
-            if(object.getTitle().toLowerCase().contains(s.toLowerCase())) {
+            if(object.getTitle().toLowerCase().contains(s.toLowerCase()) || object.getUpload().toLowerCase().contains(s.toLowerCase())) {
                 myList.add(object);
             }
-            if(object.getUpload().toLowerCase().contains(s.toLowerCase())) {
-                myList.add(object);
-            }
+
+            //if(object.getUpload().toLowerCase().contains(s.toLowerCase())) {
+              //  myList.add(object);
+           // }
+
         }
         NoticeAdapter adapterClass = new NoticeAdapter(myList);
         list_view.setAdapter(adapterClass);

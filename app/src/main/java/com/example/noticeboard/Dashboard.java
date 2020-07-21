@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.noticeboard.noticeTypes.NoticeDepartment;
+import com.example.noticeboard.noticeTypes.NoticeExamCell;
+import com.example.noticeboard.noticeTypes.NoticeSeminar;
+import com.example.noticeboard.noticeTypes.NoticeStudent;
 import com.example.noticeboard.ui.files.FilesFragment;
 import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
@@ -155,7 +158,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 String name = dataSnapshot.child("name").getValue().toString();
-                String type = dataSnapshot.child("type").getValue().toString();
+                String type = dataSnapshot.child("designation").getValue().toString();
 
                 tvDashName.setText(name);
                 tvDashType.setText(type);
@@ -253,14 +256,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
 
             case R.id.nav_svv:
-                Intent k = new Intent(Intent.ACTION_VIEW);
-                k.setData(Uri.parse("http://"+"myaccount.somaiya.edu/#/login"));
+                Intent k = new Intent(Dashboard.this,web_view.class);
+                k.putExtra("link","https://myaccount.somaiya.edu/#/login");
                 startActivity(k);
                 break;
 
             case R.id.nav_website:
-                Intent j = new Intent(Intent.ACTION_VIEW);
-                j.setData(Uri.parse("http://"+"kjsieit.somaiya.edu/en"));
+                Intent j = new Intent(Dashboard.this,web_view.class);
+                j.putExtra("link","https://kjsieit.somaiya.edu/en");
                 startActivity(j);
                 break;
 
