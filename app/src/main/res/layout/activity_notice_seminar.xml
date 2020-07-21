@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:theme="@style/AppTheme.PopupOverlay"
-    tools:context=".NoticeSeminar">
+    tools:context=".noticeTypes.NoticeSeminar">
 
     <RelativeLayout
         android:layout_width="match_parent"

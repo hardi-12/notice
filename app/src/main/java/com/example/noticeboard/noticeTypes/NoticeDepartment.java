@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.noticeTypes;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,7 +10,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,10 +27,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.noticeboard.R;
+import com.example.noticeboard.notice;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,62 +48,60 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class NoticeSeminar extends AppCompatActivity {
+public class NoticeDepartment extends AppCompatActivity {
 
-    ImageButton ibSeminarDate, ibSeminarTime;
-    TextView tvSeminarDate, tvSeminarDept, tvSeminarSem, tvSeminarTime, tvSeminarFile, tvSeminarSemData, tvSeminarDeptData;
-    EditText tvSeminarTitle, tvSeminarSubject, tvSeminarNotice;
+    ImageButton ibDeptDate;
+    TextView tvDeptDate, tvDeptDept, tvDeptSem, tvDeptFile, tvDeptSemData, tvDeptDeptData;
+    EditText tvDeptTitle, tvDeptSubject, tvDeptNotice;
     Calendar calendar;
-    String ampm, url;
     DatabaseReference reference;
     Toolbar toolbar;
-    Button btnSeminarFile;
-    Switch switchSeminar;
+    Button btnDeptFile;
+    Switch switchDept;
     Uri uri;
     ProgressDialog progressDialog;
     StorageReference storageReference;
     AlertDialog.Builder builder;
     CheckBox cb_semI, cb_semII, cb_semIII, cb_semIV, cb_semV, cb_semVI, cb_semVII, cb_semVIII, cb_CS, cb_IT, cb_EXTC, cb_ETRX, cb_AI_DS;
     StringBuilder data = new StringBuilder();
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_seminar);
+        setContentView(R.layout.activity_notice_department);
 
-        ibSeminarDate = findViewById(R.id.ibSeminarDate);
-        ibSeminarTime = findViewById(R.id.ibSeminarTime);
-        tvSeminarDate = findViewById(R.id.tvSeminarDate);
-        tvSeminarDept = findViewById(R.id.tvSeminarDept);
-        tvSeminarSem = findViewById(R.id.tvSeminarSem);
-        tvSeminarTime = findViewById(R.id.tvSeminarTime);
-        tvSeminarTitle = findViewById(R.id.tvSeminarTitle);
-        tvSeminarSubject = findViewById(R.id.tvSeminarSubject);
-        tvSeminarNotice = findViewById(R.id.tvSeminarNotice);
-        tvSeminarSemData = findViewById(R.id.tvSeminarSemData);
-        tvSeminarDeptData = findViewById(R.id.tvSeminarDeptData);
+        ibDeptDate = findViewById(R.id.ibDeptDate);
+        tvDeptDate = findViewById(R.id.tvDeptDate);
+        tvDeptDept = findViewById(R.id.tvDeptDept);
+        tvDeptSem = findViewById(R.id.tvDeptSem);
+        tvDeptTitle = findViewById(R.id.tvDeptTitle);
+        tvDeptSubject = findViewById(R.id.tvDeptSubject);
+        tvDeptNotice = findViewById(R.id.tvDeptNotice);
+        tvDeptSemData = findViewById(R.id.tvDeptSemData);
+        tvDeptDeptData = findViewById(R.id.tvDeptDeptData);
         calendar = Calendar.getInstance();
-        tvSeminarFile = findViewById(R.id.tvSeminarFile);
-        btnSeminarFile = findViewById(R.id.btnSeminarFile);
-        switchSeminar = findViewById(R.id.switchSeminar);
+        tvDeptFile = findViewById(R.id.tvDeptFile);
+        btnDeptFile = findViewById(R.id.btnDeptFile);
+        switchDept = findViewById(R.id.switchDept);
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
 
         toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("Seminar Notice");
+        getSupportActionBar().setTitle("Department Section");
 
-        ibSeminarDate.setOnClickListener(new View.OnClickListener() {
+        ibDeptDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int Year = calendar.get(Calendar.YEAR);
                 int Month = calendar.get(Calendar.MONTH);
                 int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeSeminar.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvSeminarDate.setText(date);
+                        tvDeptDate.setText(date);
                     }
                 }, Year, Month, Day);
                 datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
@@ -111,58 +109,35 @@ public class NoticeSeminar extends AppCompatActivity {
             }
         });
 
-        ibSeminarTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(NoticeSeminar.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if (hourOfDay >= 12) {
-                            ampm = "PM";
-                        }
-                        else ampm = "AM";
-                        if (hourOfDay > 12) {
-                            hourOfDay -= 12;
-                        }
-                        tvSeminarTime.setText(String.format(String.format("%02d:%02d ", hourOfDay, minute) + ampm));
-                    }
-                }, hour, minute, false);
-                timePickerDialog.show();
-            }
-        });
-
-        switchSeminar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchDept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (switchSeminar.isChecked()) {
-                    tvSeminarFile.setVisibility(View.VISIBLE);
-                    btnSeminarFile.setVisibility(View.VISIBLE);
+                if (switchDept.isChecked()) {
+                    tvDeptFile.setVisibility(View.VISIBLE);
+                    btnDeptFile.setVisibility(View.VISIBLE);
                 }
                 else {
-                    tvSeminarFile.setVisibility(View.INVISIBLE);
-                    btnSeminarFile.setVisibility(View.INVISIBLE);
+                    tvDeptFile.setVisibility(View.INVISIBLE);
+                    btnDeptFile.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
-        btnSeminarFile.setOnClickListener(new View.OnClickListener() {
+        btnDeptFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(NoticeSeminar.this,
+                if (ContextCompat.checkSelfPermission(NoticeDepartment.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     selectFiles();
                 }
-                else ActivityCompat.requestPermissions(NoticeSeminar.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                else ActivityCompat.requestPermissions(NoticeDepartment.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
             }
         });
 
-        tvSeminarSem.setOnClickListener(new View.OnClickListener() {
+        tvDeptSem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final View view = LayoutInflater.from(NoticeSeminar.this).inflate(R.layout.dialog_box_semester, null);
+                final View view = LayoutInflater.from(NoticeDepartment.this).inflate(R.layout.dialog_box_semester, null);
                 cb_semI = view.findViewById(R.id.cb_semI);
                 cb_semII = view.findViewById(R.id.cb_semII);
                 cb_semIII = view.findViewById(R.id.cb_semIII);
@@ -187,7 +162,7 @@ public class NoticeSeminar extends AppCompatActivity {
                         if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() && !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
                             Toast.makeText(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
                         }
-                        else tvSeminarSemData.setText(data);
+                        else tvDeptSemData.setText(data);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -198,10 +173,10 @@ public class NoticeSeminar extends AppCompatActivity {
             }
         });
 
-        tvSeminarDept.setOnClickListener(new View.OnClickListener() {
+        tvDeptDept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final View view = LayoutInflater.from(NoticeSeminar.this).inflate(R.layout.dialog_box_department, null);
+                final View view = LayoutInflater.from(NoticeDepartment.this).inflate(R.layout.dialog_box_department, null);
                 cb_CS = view.findViewById(R.id.cb_CS);
                 cb_IT = view.findViewById(R.id.cb_IT);
                 cb_EXTC = view.findViewById(R.id.cb_EXTC);
@@ -220,7 +195,7 @@ public class NoticeSeminar extends AppCompatActivity {
                         if (!cb_CS.isChecked() && !cb_IT.isChecked() && !cb_EXTC.isChecked() && !cb_ETRX.isChecked() && !cb_AI_DS.isChecked()) {
                             Toast.makeText(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
                         }
-                        else tvSeminarDeptData.setText(data);
+                        else tvDeptDeptData.setText(data);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -240,33 +215,32 @@ public class NoticeSeminar extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final String title = tvSeminarTitle.getText().toString();
-        final String date = tvSeminarDate.getText().toString();
-        final String time = tvSeminarTime.getText().toString();
-        final String semester = tvSeminarSemData.getText().toString();
-        final String department = tvSeminarDeptData.getText().toString();
-        final String subject = tvSeminarSubject.getText().toString();
-        final String notice = tvSeminarNotice.getText().toString();
+        final String title = tvDeptTitle.getText().toString();
+        final String date = tvDeptDate.getText().toString();
+        final String semester = tvDeptSemData.getText().toString();
+        final String department = tvDeptDeptData.getText().toString();
+        final String subject = tvDeptSubject.getText().toString();
+        final String notice = tvDeptNotice.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
         final String filename = System.currentTimeMillis()+"";
         if (title.isEmpty()) {
-            tvSeminarTitle.setError("Cannot be empty");
-            tvSeminarTitle.requestFocus();
+            tvDeptTitle.setError("Cannot be empty");
+            tvDeptTitle.requestFocus();
         }
         if (date.equals("Select Date")) {
-            tvSeminarDate.setError("Select Date");
+            tvDeptDate.setError("Select Date");
         }
         if (notice.isEmpty()) {
-            tvSeminarNotice.setError("Cannot be empty");
-            tvSeminarNotice.requestFocus();
+            tvDeptNotice.setError("Cannot be empty");
+            tvDeptNotice.requestFocus();
         }
         else if (item.getItemId() == R.id.itSent) {
             if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Select Semester")
                     && !department.equals("Select Department") && !subject.isEmpty() && !notice.isEmpty() && uri != null) {
 
-                progressDialog = new ProgressDialog(NoticeSeminar.this);
+                progressDialog = new ProgressDialog(NoticeDepartment.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.setTitle("Uploading....");
                 progressDialog.setProgress(0);
@@ -280,16 +254,16 @@ public class NoticeSeminar extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, time, "Seminar Notice", filename);
+                                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
+                                        upload, "", "Department Section",filename);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
-                                Toast.makeText(NoticeSeminar.this, "Done", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NoticeDepartment.this, "Done", Toast.LENGTH_SHORT).show();
 
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
 
-                                new AlertDialog.Builder(NoticeSeminar.this).setMessage("Do you want to share this Notice ?")
+                                new AlertDialog.Builder(NoticeDepartment.this).setMessage("Do you want to share this Notice ?")
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -312,7 +286,7 @@ public class NoticeSeminar extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(NoticeSeminar.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }
                         });
@@ -321,7 +295,7 @@ public class NoticeSeminar extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(NoticeSeminar.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
                     }
@@ -336,9 +310,9 @@ public class NoticeSeminar extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, time, "Seminar Notice", filename);
+                        upload, "", "Department Section", filename);
                 reference.child(filename).setValue(n);
-                Toast.makeText(NoticeSeminar.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NoticeDepartment.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 
                 new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -376,7 +350,7 @@ public class NoticeSeminar extends AppCompatActivity {
         if (requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             selectFiles();
         }
-        else Toast.makeText(NoticeSeminar.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(NoticeDepartment.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -387,10 +361,10 @@ public class NoticeSeminar extends AppCompatActivity {
             String dataaaa = data.getData().getLastPathSegment();
             if (dataaaa.contains("/")) {
                 String name = dataaaa.substring(dataaaa.lastIndexOf("/")+1);
-                tvSeminarFile.setText(name);
+                tvDeptFile.setText(name);
             }
-            else tvSeminarFile.setText(dataaaa);
+            else tvDeptFile.setText(dataaaa);
         }
-        else Toast.makeText(NoticeSeminar.this, "Please select a file...", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(NoticeDepartment.this, "Please select a file...", Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,6 +3,9 @@
     package="com.example.noticeboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -14,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".IntroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NoticeEdit" />
@@ -22,11 +26,10 @@
         <activity android:name=".web_view" />
         <activity android:name=".ui.profile.ProfileEdit" />
         <activity android:name=".NoticeDetails" />
-        <activity android:name=".NoticeSeminar" />
-        <activity android:name=".NoticeExamCell" />
-        <activity android:name=".NoticeSports" />
-        <activity android:name=".NoticeTypes" />
-        <activity android:name=".NoticeDepartment" />
+        <activity android:name=".noticeTypes.NoticeSeminar" />
+        <activity android:name=".noticeTypes.NoticeExamCell" />
+        <activity android:name=".noticeTypes.NoticeStudent" />
+        <activity android:name=".noticeTypes.NoticeDepartment" />
         <activity android:name=".StudentSignUpActivity" />
         <activity android:name=".LoginStudent" />
         <activity

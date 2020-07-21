@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.noticeTypes;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.noticeboard.R;
+import com.example.noticeboard.notice;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -87,7 +89,7 @@ public class NoticeExamCell extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
 
         toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("ExamCell Notice");
+        getSupportActionBar().setTitle("Exam Section");
 
         ibExamDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,8 +254,8 @@ public class NoticeExamCell extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, "", "Department Notice", filename);
+                                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
+                                        upload, "", "Exam Section", filename);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toast.makeText(NoticeExamCell.this, "Done", Toast.LENGTH_SHORT).show();
@@ -308,7 +310,7 @@ public class NoticeExamCell extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, "", "Department Notice", filename);
+                        upload, "", "Exam Section", filename);
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeExamCell.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 

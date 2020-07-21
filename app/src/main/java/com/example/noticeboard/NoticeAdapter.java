@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,8 +63,20 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
             holder.edit.setVisibility(View.GONE);
         }
 
+        if(noticeList.get(position).getType().equals("Department Section")) {
+            holder.noticeType.setImageResource(R.drawable.ic_department);
+        }
+        if (noticeList.get(position).getType().equals("Exam Section")) {
+            holder.noticeType.setImageResource(R.drawable.exam);
+        }
+        if (noticeList.get(position).getType().equals("Student Section")) {
+            holder.noticeType.setImageResource(R.drawable.student_section);
+        }
+        if (noticeList.get(position).getType().equals("Event Section")) {
+            holder.noticeType.setImageResource(R.drawable.seminar);
+        }
+
         holder.tvPrintTitle.setText(title);
-        holder.tvPrintType.setText(type);
         holder.tvPrintUpload.setText(upload);
         holder.tvPrintDate.setText(currdate);
         holder.tvPrintLDate.setText(date);
@@ -161,14 +174,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
 
     class viewholder extends RecyclerView.ViewHolder {
 
-        TextView tvPrintTitle, tvPrintType, tvPrintUpload, tvPrintDate, tvPrintLDate;
+        TextView tvPrintTitle, tvPrintUpload, tvPrintDate, tvPrintLDate;
         ImageButton ibNoticeEdit, ibNoticeDelete;
         LinearLayout edit;
+        ImageView noticeType;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
+            noticeType = itemView.findViewById(R.id.noticeType);
             tvPrintTitle = itemView.findViewById(R.id.tvPrintTitle);
-            tvPrintType = itemView.findViewById(R.id.tvPrintType);
             tvPrintUpload = itemView.findViewById(R.id.tvPrintUpload);
             tvPrintDate = itemView.findViewById(R.id.tvPrintDate);
             tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);

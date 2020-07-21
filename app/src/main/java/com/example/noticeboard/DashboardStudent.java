@@ -25,6 +25,7 @@ import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
 import com.example.noticeboard.ui.profile.ProfileFragment;
+import com.example.noticeboard.ui.search.SearchFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -132,6 +133,15 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.search) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SearchFragment()).addToBackStack(null).commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

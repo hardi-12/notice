@@ -9,13 +9,16 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.example.noticeboard.ui.files.FilesFragment;
 import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
 import com.example.noticeboard.ui.profile.ProfileFragment;
+import com.example.noticeboard.ui.search.SearchFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -30,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -49,6 +54,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     TextView tvDashEmail, tvDashName, tvDashType;
     FirebaseUser user;
+    private BottomSheetBehavior mBottomSheetBehavior1;
+    CardView deptNotice, examNotice, studentNotice, eventNotice;
+    CoordinatorLayout other;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,74 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view_admin);
+        fab = findViewById(R.id.fab);
+
+        other = findViewById(R.id.other);
+
+
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior1.setPeekHeight(0);
+        mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehavior1.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        mBottomSheetBehavior1.setPeekHeight(120);
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        mBottomSheetBehavior1.setPeekHeight(0);
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+        examNotice = findViewById(R.id.examNotice);
+        deptNotice = findViewById(R.id.deptNotice);
+        studentNotice = findViewById(R.id.studentNotice);
+        eventNotice = findViewById(R.id.eventNotice);
+
+        examNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, NoticeExamCell.class);
+                startActivity(i);
+            }
+        });
+
+        eventNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, NoticeSeminar.class);
+                startActivity(i);
+            }
+        });
+
+        deptNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, NoticeDepartment.class);
+                startActivity(i);
+            }
+        });
+
+        studentNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, NoticeStudent.class);
+                startActivity(i);
+            }
+        });
 
         View headerView = navigationView.getHeaderView(0);
         tvDashEmail = headerView.findViewById(R.id.tvDashEmail);
@@ -90,12 +167,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Dashboard.this, NoticeTypes.class);
-                startActivity(i);
+                mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -138,10 +213,21 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
+
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.search) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SearchFragment()).commit();
+            fab.hide();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
