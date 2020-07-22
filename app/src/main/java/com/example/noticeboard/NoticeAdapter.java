@@ -86,7 +86,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
                 String name = dataSnapshot.child("name").getValue().toString();
                 String dept = dataSnapshot.child("department").getValue().toString();
                 String contact = dataSnapshot.child("phone").getValue().toString();
-                holder.tvPrintUpload.setText(name+" ("+dept+")\n"+contact);
+                holder.tvPrintUpload.setText(name+"\n"+dept);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}

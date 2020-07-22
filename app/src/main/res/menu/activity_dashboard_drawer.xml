@@ -20,12 +20,6 @@
             android:visible="true"
             app:showAsAction="withText" />
         <item
-            android:id="@+id/nav_files"
-            android:icon="@drawable/ic_folder_black_24dp"
-
-            android:title="Files"
-            android:visible="true" />
-        <item
             android:id="@+id/nav_list_users"
             android:icon="@drawable/ic_list_black_24dp"
             android:title="Users"

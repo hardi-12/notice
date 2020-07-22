@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.noticeboard.ui.files.FilesFragment;
 import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
@@ -181,11 +180,6 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
 
             case R.id.nav_list_users:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment()).addToBackStack(null).commit();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
-
-            case R.id.nav_files:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new FilesFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 

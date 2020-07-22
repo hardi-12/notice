@@ -24,7 +24,7 @@
             android:textStyle="bold|italic"
             android:textSize="30sp"
             android:textColorHint="#000"
-            android:textColor="#F44336"
+            android:textColor="@color/colorPrimary"
             android:text="Student/Admin Details" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:textColorHint="#000"
             android:textColor="#000"
             android:textSize="20sp"
-            android:layout_below="@id/tvEditType"/>
+            android:layout_below="@id/animation"/>
 
         <TextView
             android:id="@+id/tvEditID"
@@ -119,10 +119,11 @@
             android:layout_below="@id/spEditSem"/>
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
             android:layout_width="match_parent"
-            android:layout_below="@id/btnUpdate"
-            android:layout_height="200dp"
-            android:layout_marginTop="40dp"
+            android:layout_below="@id/tvEditType"
+            android:layout_height="170dp"
+            android:layout_marginTop="20dp"
             app:lottie_rawRes="@raw/pro"
             app:lottie_autoPlay="true"
             app:lottie_loop="true" />
