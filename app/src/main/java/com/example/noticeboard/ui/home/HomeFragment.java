@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent k = new Intent(getContext(), web_view.class);
-                k.putExtra("link","https://myaccount.somaiya.edu/#/login");
+                k.putExtra("link","https://kjsieit.somaiya.edu/en/result");
                 startActivity(k);
             }
         });
