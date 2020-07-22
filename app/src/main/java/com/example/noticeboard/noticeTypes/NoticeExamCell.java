@@ -53,7 +53,7 @@ import es.dmoral.toasty.Toasty;
 public class NoticeExamCell extends AppCompatActivity {
 
     ImageButton ibExamDate;
-    TextView tvExamDate, tvExamDept, tvExamSem, tvExamFile, tvExamSemData, tvExamDeptData;
+    TextView tvExamDate, tvExamDept, tvExamSem, tvExamFile, tvExamSemData, tvExamDeptData, tvExamContact;
     EditText tvExamTitle, tvExamSubject, tvExamNotice;
     Calendar calendar;
     DatabaseReference reference;
@@ -89,6 +89,7 @@ public class NoticeExamCell extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
+        tvExamContact = findViewById(R.id.tvExamContact);
 
         toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setTitle("Exam Section");
@@ -96,18 +97,42 @@ public class NoticeExamCell extends AppCompatActivity {
         ibExamDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int Year = calendar.get(Calendar.YEAR);
-                int Month = calendar.get(Calendar.MONTH);
-                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeExamCell.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvExamDate.setText(date);
-                    }
-                }, Year, Month, Day);
-                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeExamCell.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                tvExamDate.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
+
+
+
+//                int Year = calendar.get(Calendar.YEAR);
+//                int Month = calendar.get(Calendar.MONTH);
+//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeExamCell.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
+//                        tvExamDate.setText(date);
+//                    }
+//                }, Year, Month, Day);
+//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+//                datePickerDialog.show();
             }
         });
 
@@ -227,6 +252,7 @@ public class NoticeExamCell extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
         final String filename = System.currentTimeMillis()+"";
+        final String contact = tvExamContact.getText().toString();
         if (title.isEmpty()) {
             tvExamTitle.setError("Cannot be empty");
             tvExamTitle.requestFocus();
@@ -257,7 +283,7 @@ public class NoticeExamCell extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
 
                                 com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, "", "Exam Section", filename);
+                                        upload, "", "Exam Section", filename, contact);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toasty.success(NoticeExamCell.this, "Done", Toast.LENGTH_SHORT).show();
@@ -312,7 +338,7 @@ public class NoticeExamCell extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, "", "Exam Section", filename);
+                        upload, "", "Exam Section", filename, contact);
                 reference.child(filename).setValue(n);
                 Toasty.success(NoticeExamCell.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 

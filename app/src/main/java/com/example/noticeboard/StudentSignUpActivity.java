@@ -52,7 +52,6 @@ public class StudentSignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("user");
-        spDepartment.setBackgroundColor(Color.BLACK);
 
         btnStudentSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

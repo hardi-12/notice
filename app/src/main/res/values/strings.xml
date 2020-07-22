@@ -15,10 +15,11 @@
 
     <string-array name="department">
         <item>Select Department</item>
-        <item>CS - Computer Science</item>
-        <item>IT - Information Technology</item>
-        <item>EXTC - Electronics and Telecommunication</item>
-        <item>ETRX - Electronics</item>
+        <item>Computer Science</item>
+        <item>Information Technology</item>
+        <item>Electronics And Telecommunication</item>
+        <item>Electronics</item>
+        <item>Artificial Intelligence And Data Science</item>
     </string-array>
 
     <string-array name="semester">

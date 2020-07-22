@@ -53,7 +53,7 @@ import java.util.Locale;
 public class NoticeSeminar extends AppCompatActivity {
 
     ImageButton ibSeminarDate, ibSeminarTime;
-    TextView tvSeminarDate, tvSeminarDept, tvSeminarSem, tvSeminarTime, tvSeminarFile, tvSeminarSemData, tvSeminarDeptData;
+    TextView tvSeminarDate, tvSeminarDept, tvSeminarSem, tvSeminarTime, tvSeminarFile, tvSeminarSemData, tvSeminarDeptData, tvSeminarContact;
     EditText tvSeminarTitle, tvSeminarSubject, tvSeminarNotice;
     Calendar calendar;
     String ampm, url;
@@ -91,6 +91,7 @@ public class NoticeSeminar extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
+        tvSeminarContact = findViewById(R.id.tvSeminarContact);
 
         toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setTitle("Event Section");
@@ -98,18 +99,41 @@ public class NoticeSeminar extends AppCompatActivity {
         ibSeminarDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int Year = calendar.get(Calendar.YEAR);
-                int Month = calendar.get(Calendar.MONTH);
-                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeSeminar.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvSeminarDate.setText(date);
-                    }
-                }, Year, Month, Day);
-                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeSeminar.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                tvSeminarDate.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
+
+
+//                int Year = calendar.get(Calendar.YEAR);
+//                int Month = calendar.get(Calendar.MONTH);
+//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeSeminar.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
+//                        tvSeminarDate.setText(date);
+//                    }
+//                }, Year, Month, Day);
+//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+//                datePickerDialog.show();
             }
         });
 
@@ -253,6 +277,7 @@ public class NoticeSeminar extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
         final String filename = System.currentTimeMillis()+"";
+        final String contact = tvSeminarContact.getText().toString();
         if (title.isEmpty()) {
             tvSeminarTitle.setError("Cannot be empty");
             tvSeminarTitle.requestFocus();
@@ -283,7 +308,7 @@ public class NoticeSeminar extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
 
                                 com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, time, "Event Section", filename);
+                                        upload, time, "Event Section", filename, contact);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toast.makeText(NoticeSeminar.this, "Done", Toast.LENGTH_SHORT).show();
@@ -338,7 +363,7 @@ public class NoticeSeminar extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, time, "Event Section", filename);
+                        upload, time, "Event Section", filename, contact);
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeSeminar.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 

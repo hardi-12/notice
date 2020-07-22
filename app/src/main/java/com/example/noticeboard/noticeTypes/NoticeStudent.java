@@ -52,7 +52,7 @@ import java.util.Locale;
 
 public class NoticeStudent extends AppCompatActivity {
     ImageButton ibSportsDate, ibSportsTime;
-    TextView tvSportsDate, tvSportsDept, tvSportsSem, tvSportsTime, tvSportsFile, tvSportsSemData, tvSportsDeptData;
+    TextView tvSportsDate, tvSportsDept, tvSportsSem, tvSportsTime, tvSportsFile, tvSportsSemData, tvSportsDeptData, tvSportsContact;
     EditText tvSportsTitle, tvSportsSubject, tvSportsNotice;
     Calendar calendar;
     String ampm, url;
@@ -91,22 +91,46 @@ public class NoticeStudent extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
+        tvSportsContact = findViewById(R.id.tvSportsContact);
 
         ibSportsDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int Year = calendar.get(Calendar.YEAR);
-                int Month = calendar.get(Calendar.MONTH);
-                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeStudent.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvSportsDate.setText(date);
-                    }
-                }, Year, Month, Day);
-                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeStudent.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                tvSportsDate.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
+
+
+//                int Year = calendar.get(Calendar.YEAR);
+//                int Month = calendar.get(Calendar.MONTH);
+//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeStudent.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
+//                        tvSportsDate.setText(date);
+//                    }
+//                }, Year, Month, Day);
+//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+//                datePickerDialog.show();
             }
         });
 
@@ -246,7 +270,7 @@ public class NoticeStudent extends AppCompatActivity {
         final String department = tvSportsDeptData.getText().toString();
         final String subject = tvSportsSubject.getText().toString();
         final String notice = tvSportsNotice.getText().toString();
-
+        final String contact = tvSportsContact.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
@@ -281,7 +305,7 @@ public class NoticeStudent extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
 
                                 com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, time, "Student Section", filename);
+                                        upload, time, "Student Section", filename, contact);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toast.makeText(NoticeStudent.this, "Done", Toast.LENGTH_SHORT).show();
@@ -336,7 +360,7 @@ public class NoticeStudent extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, time, "Student Section", filename);
+                        upload, time, "Student Section", filename, contact);
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeStudent.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 

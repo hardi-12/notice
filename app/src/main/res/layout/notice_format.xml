@@ -15,142 +15,170 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/noticeType"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:srcCompat="@drawable/ic_menu_camera"
-            android:layout_margin="5dp"/>
+        <TextView
+            android:id="@+id/tvPrintTitle"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/pt_sans_bold"
+            android:text="TITLE"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvPrintTitle"
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/pt_sans_bold"
-                android:text="TITLE"
-                android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/noticeType"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                app:srcCompat="@drawable/ic_menu_camera"
+                android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                android:background="#fff"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans"
-                    android:text="Date"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tvPrintDate"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:text="Date"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
-            </LinearLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans"
+                        android:text="Upload Date"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans"
-                    android:text="Uploaded By"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tvPrintDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:text="Date"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvPrintUpload"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:text="TextView"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
-            </LinearLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/ld"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans"
+                        android:text="Last Date"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans"
-                    android:text="Last Date"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/tvPrintLDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:text="Last Date"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvPrintLDate"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:text="Last Date"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
-            </LinearLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans"
+                        android:text="Uploaded By"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
 
-                <ImageButton
-                    android:id="@+id/ibNoticeDelete"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_delete_black_24dp" />
 
-                <ImageButton
-                    android:id="@+id/ibNoticeEdit"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPrintUpload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:text="TextView"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvPrintContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_sans_bold"
+                        android:hint="Contact"
+                        android:autoLink="all"
+                        android:linksClickable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_marginLeft="20dp"
-                    android:background="@null"
-                    android:src="@drawable/ic_edit_black_24dp"
-                    tools:ignore="PrivateResource" />
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/ibNoticeDelete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_delete_black_24dp" />
+
+                    <ImageButton
+                        android:id="@+id/ibNoticeEdit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_edit_black_24dp"
+                        tools:ignore="PrivateResource" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

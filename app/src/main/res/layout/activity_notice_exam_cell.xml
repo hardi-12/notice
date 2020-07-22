@@ -60,7 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
-            android:text="Click here to select Semester :"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/custombut1"
+            android:text="Click here to select Semester"
             android:textColor="#000"
             android:layout_marginTop="15dp"
             android:layout_below="@id/tvExamDate"/>
@@ -80,6 +83,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/custombut1"
             android:text="Click here to select Department"
             android:layout_marginTop="20dp"
             android:textColor="#000"
@@ -127,13 +133,30 @@
                 android:hint="Description" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColorHint="#000"
+            android:id="@+id/abc"
+            android:layout_below="@id/two">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvExamContact"
+                android:textColorHint="#000"
+                android:hint="Contact (Email / Phone number)" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Switch
             android:id="@+id/switchExam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
+            android:layout_marginTop="20dp"
             android:text="Want to upload file ?    "
-            android:layout_below="@id/two"/>
+            android:layout_below="@id/abc"/>
 
         <TextView
             android:id="@+id/tvExamFile"

@@ -1,10 +1,21 @@
 package com.example.noticeboard;
 
 public class notice {
-    String title,branch,sem,subject,notice,date,cdate,upload,time,type,key;
+    String title;
+    String branch;
+    String sem;
+    String subject;
+    String notice;
+    String date;
+    String cdate;
+    String upload;
+    String time;
+    String type;
+    String key;
+    String contact;
 
     public notice(String title, String branch, String sem, String subject, String notice,
-                  String date, String cdate, String upload, String time, String type, String key) {
+                  String date, String cdate, String upload, String time, String type, String key, String contact) {
         this.title = title;
         this.branch = branch;
         this.sem = sem;
@@ -16,6 +27,7 @@ public class notice {
         this.time = time;
         this.type = type;
         this.key = key;
+        this.contact = contact;
     }
 
     public String getKey() {
@@ -106,6 +118,14 @@ public class notice {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String toString() {

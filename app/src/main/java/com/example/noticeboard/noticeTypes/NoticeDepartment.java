@@ -53,7 +53,7 @@ import es.dmoral.toasty.Toasty;
 public class NoticeDepartment extends AppCompatActivity {
 
     ImageButton ibDeptDate;
-    TextView tvDeptDate, tvDeptDept, tvDeptSem, tvDeptFile, tvDeptSemData, tvDeptDeptData;
+    TextView tvDeptDate, tvDeptDept, tvDeptSem, tvDeptFile, tvDeptSemData, tvDeptDeptData, tvDeptContact;
     EditText tvDeptTitle, tvDeptSubject, tvDeptNotice;
     Calendar calendar;
     DatabaseReference reference;
@@ -89,6 +89,7 @@ public class NoticeDepartment extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("notice");
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         builder = new AlertDialog.Builder(this);
+        tvDeptContact = findViewById(R.id.tvDeptContact);
 
         toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setTitle("Department Section");
@@ -96,18 +97,44 @@ public class NoticeDepartment extends AppCompatActivity {
         ibDeptDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int Year = calendar.get(Calendar.YEAR);
-                int Month = calendar.get(Calendar.MONTH);
-                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvDeptDate.setText(date);
-                    }
-                }, Year, Month, Day);
-                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+              DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeDepartment.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                tvDeptDate.setText(dayOfMonth + "-"
+                                        + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
+
+
+//                int Year = calendar.get(Calendar.YEAR);
+//                int Month = calendar.get(Calendar.MONTH);
+//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
+//                final DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
+//                        tvDeptDate.setText(date);
+//                    }
+//                }, Year, Month, Day);
+//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+//                datePickerDialog.show();
+
+
+
             }
         });
 
@@ -237,6 +264,7 @@ public class NoticeDepartment extends AppCompatActivity {
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
         final String filename = System.currentTimeMillis()+"";
+        final String contact = tvDeptContact.getText().toString();
         if (title.isEmpty()) {
             tvDeptTitle.setError("Cannot be empty");
             tvDeptTitle.requestFocus();
@@ -267,7 +295,7 @@ public class NoticeDepartment extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
 
                                 com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, "", "Department Section",filename);
+                                        upload, "", "Department Section",filename, contact);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);
                                 Toasty.success(NoticeDepartment.this, "Done", Toast.LENGTH_SHORT).show();
@@ -322,7 +350,7 @@ public class NoticeDepartment extends AppCompatActivity {
             }
             else {
                 notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, "", "Department Section", filename);
+                        upload, "", "Department Section", filename, contact);
                 reference.child(filename).setValue(n);
                 Toasty.success(NoticeDepartment.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 

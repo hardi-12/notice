@@ -62,7 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="Click here to select Semester :"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/custombut1"
+            android:text="Click here to select Semester"
             android:textSize="17sp"
             android:layout_marginTop="15dp"
             android:layout_below="@id/tvDeptDate"/>
@@ -82,7 +85,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:text="Click here to select Department :"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/custombut1"
+            android:text="Click here to select Department"
             android:textSize="17sp"
             android:layout_marginTop="15dp"
             android:layout_below="@id/tvDeptSemData"/>
@@ -129,13 +135,30 @@
                 android:hint="Description" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColorHint="#000"
+            android:id="@+id/abc"
+            android:layout_below="@id/one">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDeptContact"
+                android:textColorHint="#000"
+                android:hint="Contact (Email / Phone number)" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Switch
             android:id="@+id/switchDept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:textColor="#000"
             android:text="Want to upload file ?    "
-            android:layout_below="@id/one"/>
+            android:layout_below="@id/abc"/>
 
         <TextView
             android:id="@+id/tvDeptFile"

@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
 
     @Override
     public void onBindViewHolder(@NonNull final NoticeAdapter.viewholder holder, final int position) {
-        final String title, dept, sem, subject, notice, date, currdate, upload, time, type, key;
+        final String title, dept, sem, subject, notice, date, currdate, upload, time, type, key, contact;
         title = noticeList.get(position).getTitle();
         dept = noticeList.get(position).getBranch();
         sem = noticeList.get(position).getSem();
@@ -55,6 +56,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         time = noticeList.get(position).getTime();
         type = noticeList.get(position).getType();
         key = noticeList.get(position).getKey();
+        contact = noticeList.get(position).getContact();
 
         if (upload.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
            holder.edit.setVisibility(View.VISIBLE);
@@ -73,12 +75,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
             holder.noticeType.setImageResource(R.drawable.student_section);
         }
         if (noticeList.get(position).getType().equals("Event Section")) {
+            holder.ld.setText("Event Date");
             holder.noticeType.setImageResource(R.drawable.seminar);
         }
 
         holder.tvPrintTitle.setText(title);
         holder.tvPrintDate.setText(currdate);
         holder.tvPrintLDate.setText(date);
+        holder.tvPrintContact.setText(""+contact);
+        holder.tvPrintContact.setMovementMethod(LinkMovementMethod.getInstance());
 
         FirebaseDatabase.getInstance().getReference("user").child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
             @Override
@@ -185,13 +190,14 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
 
     class viewholder extends RecyclerView.ViewHolder {
 
-        TextView tvPrintTitle, tvPrintUpload, tvPrintDate, tvPrintLDate;
+        TextView tvPrintTitle, tvPrintUpload, tvPrintDate, tvPrintLDate,ld, tvPrintContact;
         ImageButton ibNoticeEdit, ibNoticeDelete;
         LinearLayout edit;
         ImageView noticeType;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
+            ld =itemView.findViewById(R.id.ld);
             noticeType = itemView.findViewById(R.id.noticeType);
             tvPrintTitle = itemView.findViewById(R.id.tvPrintTitle);
             tvPrintUpload = itemView.findViewById(R.id.tvPrintUpload);
@@ -199,6 +205,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
             tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);
             ibNoticeEdit = itemView.findViewById(R.id.ibNoticeEdit);
             ibNoticeDelete = itemView.findViewById(R.id.ibNoticeDelete);
+            tvPrintContact = itemView.findViewById(R.id.tvPrintContact);
             edit = itemView.findViewById(R.id.edit);
         }
     }
