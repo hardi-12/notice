@@ -113,8 +113,7 @@ public class NoticeSeminar extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                tvSeminarDate.setText(dayOfMonth + "-"
-                                        + (monthOfYear + 1) + "-" + year);
+                                tvSeminarDate.setText(String.format("%02d-%02d-%04d",dayOfMonth,monthOfYear+1,year));
 
                             }
                         }, mYear, mMonth, mDay);

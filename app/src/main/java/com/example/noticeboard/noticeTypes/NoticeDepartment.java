@@ -104,7 +104,8 @@ public class NoticeDepartment extends AppCompatActivity {
                 DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        tvDeptDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        tvDeptDate.setText(String.format("%02d-%02d-%04d",dayOfMonth,monthOfYear+1,year));
+
                     }}, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
                 datePickerDialog.show();

@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.noticeboard.NoticeDetails;
+import com.example.noticeboard.NoticeEdit;
+import com.example.noticeboard.R;
+import com.example.noticeboard.notice;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

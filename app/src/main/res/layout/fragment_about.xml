@@ -16,21 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ABOUT"
-            android:textSize="40sp"
+            android:textSize="28sp"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:gravity="center_horizontal"
-            android:layout_margin="20dp" />
+            android:layout_margin="20dp"
+            android:layout_below="@id/imageView2"/>
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="240dp"
-            android:layout_height="156dp"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
             app:srcCompat="@drawable/somaiya"
             android:layout_margin="20dp"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/textView3"/>
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/textView4"
@@ -41,15 +41,16 @@
             android:textColor="@color/colorPrimary"
             android:textSize="15dp"
             android:gravity="center_horizontal"
-            android:layout_margin="20dp"
-            android:layout_below="@id/imageView2"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/textView3"/>
 
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_below="@id/textView4"
@@ -61,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Developed By\nDepartment of Information Technology"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#000"
             android:textStyle="bold"
             android:textSize="18dp"
             android:gravity="center_horizontal"
@@ -73,20 +74,24 @@
             android:layout_height="wrap_content"
             android:text="Neel Shah\nJay Shah\nHardi Patel\nJaydeep Patel\n\nDevoir\nProf. Prashant Sawant"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#000"
             android:textSize="18dp"
             android:gravity="center_horizontal"/>
         </LinearLayout>
 
         <Button
             android:id="@+id/btnFeedback"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Provide Feedback"
             android:layout_margin="20dp"
-            android:background="@drawable/custombut1"
             android:padding="5dp"
+            android:background="@drawable/custbut2"
+            android:textColor="#fff"
+            android:textSize="18sp"
             android:textAllCaps="false"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_centerInParent="true"
             android:layout_below="@id/ll"/>
 
