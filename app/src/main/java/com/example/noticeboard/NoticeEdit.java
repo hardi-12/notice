@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +38,6 @@ public class NoticeEdit extends AppCompatActivity {
             tvEditNoticeSem, tvEditNoticeDept;
     ImageButton ibEditNoticeDate, ibEditNoticeTime;
     Button btnUpdateNotice;
-    Calendar calendar;
     String ampm;
     Boolean timeStatus;
     CheckBox cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8, cbCS, cbIT, cbEXTC, cbETRX, cbAI_DS;
@@ -75,7 +75,6 @@ public class NoticeEdit extends AppCompatActivity {
         cbETRX = findViewById(R.id.cbETRX);
         cbAI_DS = findViewById(R.id.cbAI_DS);
 
-        calendar = Calendar.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("notice");
         final String key = getIntent().getStringExtra("key");
 
@@ -141,17 +140,16 @@ public class NoticeEdit extends AppCompatActivity {
         ibEditNoticeDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int Year = calendar.get(Calendar.YEAR);
-                int Month = calendar.get(Calendar.MONTH);
-                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeEdit.this, new DatePickerDialog.OnDateSetListener() {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeEdit.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-                        tvEditNoticeDate.setText(date);
-                    }
-                }, Year, Month, Day);
-                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        tvEditNoticeDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }}, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
                 datePickerDialog.show();
             }
         });
@@ -159,7 +157,8 @@ public class NoticeEdit extends AppCompatActivity {
         ibEditNoticeTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog timePickerDialog = new TimePickerDialog(NoticeEdit.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override

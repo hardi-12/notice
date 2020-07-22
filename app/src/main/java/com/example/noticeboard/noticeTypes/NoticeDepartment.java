@@ -97,28 +97,17 @@ public class NoticeDepartment extends AppCompatActivity {
         ibDeptDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // calender class's instance and get current date , month and year from calender
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
-              DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeDepartment.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                tvDeptDate.setText(dayOfMonth + "-"
-                                        + (monthOfYear + 1) + "-" + year);
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        tvDeptDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }}, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
                 datePickerDialog.show();
-
 
 //                int Year = calendar.get(Calendar.YEAR);
 //                int Month = calendar.get(Calendar.MONTH);
@@ -132,8 +121,6 @@ public class NoticeDepartment extends AppCompatActivity {
 //                }, Year, Month, Day);
 //                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
 //                datePickerDialog.show();
-
-
 
             }
         });
