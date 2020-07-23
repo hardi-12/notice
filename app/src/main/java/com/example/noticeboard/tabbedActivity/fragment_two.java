@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.NoticeAdapter;
@@ -28,6 +30,7 @@ public class fragment_two extends Fragment {
     RecyclerView list_view_two, list_updates;
     ArrayList<notice> itemlist, sortedList, updates,noticeList;
     NoticeAdapter adapterClass;
+    Button view_all_events;
 
     public fragment_two() {
         // Required empty public constructor
@@ -44,6 +47,13 @@ public class fragment_two extends Fragment {
         list_view_two=view.findViewById(R.id.list_view_two);
         list_view_two.setLayoutManager(linearLayoutManager);
 
+        view_all_events = view.findViewById(R.id.view_all_two);
+        view_all_events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "To be done soon", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 

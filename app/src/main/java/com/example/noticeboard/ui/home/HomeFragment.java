@@ -13,33 +13,21 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.noticeboard.adapter.EventsAdapter;
-import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.R;
-import com.example.noticeboard.notice;
 import com.example.noticeboard.tabbedActivity.ViewPagerAdapter;
 import com.example.noticeboard.tabbedActivity.fragment_one;
 import com.example.noticeboard.tabbedActivity.fragment_three;
 import com.example.noticeboard.tabbedActivity.fragment_two;
-import com.example.noticeboard.ui.search.SearchFragment;
 import com.example.noticeboard.web_view;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static android.view.ViewGroup.*;
 
 public class HomeFragment extends Fragment {
 

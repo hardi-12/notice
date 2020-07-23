@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.noticeboard.R;
+import com.example.noticeboard.web_view;
 
 public class AboutFragment extends Fragment {
     Button btnFeedback;
@@ -29,7 +30,7 @@ public class AboutFragment extends Fragment {
         btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.google.com")));
+                startActivity(new Intent(v.getContext(), web_view.class).putExtra("link", "https://docs.google.com/forms/d/e/1FAIpQLSdnD7VG7ZTc52h3FwnUMevMJNH8h1ophqvu9vYKlTxl7DCsEg/viewform?usp=sf_link"));
             }
         });
 

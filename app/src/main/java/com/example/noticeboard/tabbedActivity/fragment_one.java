@@ -4,16 +4,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.notice;
+import com.example.noticeboard.ui.search.SearchFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class fragment_one extends Fragment {
     RecyclerView list_view_one, list_updates;
     ArrayList<notice> itemlist, sortedList, updates,noticeList;
     NoticeAdapter adapterClass;
+    Button view_all_one;
 
     public fragment_one() {
         // Required empty public constructor
@@ -43,6 +47,18 @@ public class fragment_one extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         list_view_one=view.findViewById(R.id.list_view_one);
         list_view_one.setLayoutManager(linearLayoutManager);
+
+        view_all_one = view.findViewById(R.id.view_all_one);
+        view_all_one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment newFragment = new SearchFragment();
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         return view;
     }

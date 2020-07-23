@@ -29,7 +29,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder> {
 
@@ -104,6 +109,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                String time_stamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+//                String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+//                Toasty.info(v.getContext(), user+"\n"+time_stamp+"\n"+key, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(v.getContext(), NoticeDetails.class);
                 i.putExtra("title", title);
                 i.putExtra("dept", dept);

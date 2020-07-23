@@ -69,6 +69,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.viewholder
         holder.tvPrintDate.setText(currdate);
         holder.tvPrintContact.setText(""+contact);
         holder.tvPrintContact.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.time.setText(time);
 
         FirebaseDatabase.getInstance().getReference("user").child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
             @Override
@@ -122,7 +123,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.viewholder
 
     static class viewholder extends RecyclerView.ViewHolder {
 
-        TextView tvPrintTitle, tvPrintUpload, tvPrintDate, tvPrintLDate, tvPrintContact,month;
+        TextView tvPrintTitle, tvPrintUpload, tvPrintDate, tvPrintLDate, tvPrintContact,month, time;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
@@ -132,6 +133,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.viewholder
             tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);
             tvPrintContact = itemView.findViewById(R.id.tvPrintContact);
             month = itemView.findViewById(R.id.textView8);
+            time = itemView.findViewById(R.id.textView9);
         }
     }
 }

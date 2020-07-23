@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tabbedActivity.fragment_three">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_upcoming"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="450dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/no_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="No upcoming events \nStay Tuned"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/view_all_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View all"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:fontFamily="@font/pt_sans_bold"
+        android:background="@drawable/custombut1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@id/list_upcoming"/>
+
+</RelativeLayout>
