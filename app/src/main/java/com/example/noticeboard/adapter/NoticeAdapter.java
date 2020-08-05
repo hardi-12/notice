@@ -25,21 +25,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
-import es.dmoral.toasty.Toasty;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder> {
 
     ArrayList<notice> noticeList;
     Boolean fileStatus;
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
+    String user = FirebaseAuth.getInstance().getCurrentUser().getEmail(), superAdmin;
+
     public NoticeAdapter(ArrayList<notice> noticeList) {
         this.noticeList = noticeList;
     }
@@ -67,12 +66,25 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         key = noticeList.get(position).getKey();
         contact = noticeList.get(position).getContact();
 
-        if (upload.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
-           holder.edit.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.edit.setVisibility(View.GONE);
-        }
+        reference.child(user.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("type").getValue().toString().equals("admin")) {
+                    superAdmin = snapshot.child("superAdmin").getValue().toString();
+                    if (superAdmin.equals("true") || upload.equals(user)) {
+                        holder.edit.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        holder.edit.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //
+            }
+        });
 
         if(noticeList.get(position).getType().equals("Department Section")) {
             holder.noticeType.setImageResource(R.drawable.ic_department);
@@ -94,7 +106,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         holder.tvPrintContact.setText(""+contact);
         holder.tvPrintContact.setMovementMethod(LinkMovementMethod.getInstance());
 
-        FirebaseDatabase.getInstance().getReference("user").child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+        reference.child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString();
@@ -109,9 +121,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String time_stamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-//                String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-//                Toasty.info(v.getContext(), user+"\n"+time_stamp+"\n"+key, Toast.LENGTH_SHORT).show();
+
                 Intent i = new Intent(v.getContext(), NoticeDetails.class);
                 i.putExtra("title", title);
                 i.putExtra("dept", dept);

@@ -127,13 +127,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.viewholder
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
-            tvPrintTitle = itemView.findViewById(R.id.tvPrintTitle);
-            tvPrintUpload = itemView.findViewById(R.id.tvPrintUpload);
-            tvPrintDate = itemView.findViewById(R.id.tvPrintDate);
-            tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);
-            tvPrintContact = itemView.findViewById(R.id.tvPrintContact);
-            month = itemView.findViewById(R.id.textView8);
-            time = itemView.findViewById(R.id.textView9);
+//            tvPrintTitle = itemView.findViewById(R.id.tvPrintTitle);
+//            tvPrintUpload = itemView.findViewById(R.id.tvPrintUpload);
+//            tvPrintDate = itemView.findViewById(R.id.tvPrintDate);
+//            tvPrintLDate = itemView.findViewById(R.id.tvPrintLDate);
+//            tvPrintContact = itemView.findViewById(R.id.tvPrintContact);
+//            month = itemView.findViewById(R.id.textView8);
+//            time = itemView.findViewById(R.id.tvPrintTime);
         }
     }
 }

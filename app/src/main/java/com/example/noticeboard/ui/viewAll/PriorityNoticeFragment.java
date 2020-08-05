@@ -1,6 +1,13 @@
-package com.example.noticeboard.ui.search;
+package com.example.noticeboard.ui.viewAll;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +17,8 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.R;
+import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.notice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,45 +29,47 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import es.dmoral.toasty.Toasty;
 
-public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
-    public SearchFragment(){} // an empty public constructor required
     DatabaseReference reference, useref;
-    RecyclerView list_view;
+    RecyclerView list_view_priority;
     ArrayList<notice> itemlist;
-    SearchView searchView_home;
-    ImageView ivPopup_home;
+    SearchView SearchBar_priority;
+    ImageView ivPopup_priority;
     NoticeAdapter adapterClass;
     String sem;
-    SwipeRefreshLayout refresh;
+    SwipeRefreshLayout refreshPriority;
     FirebaseUser user;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_search, container, false);
+    public PriorityNoticeFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_priority_notice, container, false);
 
         reference= FirebaseDatabase.getInstance().getReference().child("notice");
 
-        searchView_home = view.findViewById(R.id.SearchBar_home);
-        ivPopup_home = view.findViewById(R.id.ivPopup_home);
-        refresh = view.findViewById(R.id.refresh);
+        SearchBar_priority = view.findViewById(R.id.SearchBar_priority);
+        ivPopup_priority = view.findViewById(R.id.ivPopup_priority);
+        refreshPriority = view.findViewById(R.id.refreshPriority);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
-        list_view=view.findViewById(R.id.list_view);
-        list_view.setLayoutManager(linearLayoutManager);
+        list_view_priority=view.findViewById(R.id.list_view_priority);
+        list_view_priority.setLayoutManager(linearLayoutManager);
 
-        ivPopup_home.setOnClickListener(new View.OnClickListener() {
+        ivPopup_priority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.setOnMenuItemClickListener(SearchFragment.this);
+                popupMenu.setOnMenuItemClickListener(PriorityNoticeFragment.this);
                 popupMenu.inflate(R.menu.dashboard_filter);
                 popupMenu.show();
             }
@@ -86,7 +89,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
             }
         });
 
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshPriority.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 reference.addValueEventListener(new ValueEventListener() {
@@ -96,10 +99,12 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                             itemlist = new ArrayList<>();
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
                                 notice n = child.getValue(notice.class);
-                                itemlist.add(n);
+                                if (n.getType().equals("Exam Section")) {
+                                    itemlist.add(n);
+                                }
                             }
                             NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
-                            list_view.setAdapter(adapterClass);
+                            list_view_priority.setAdapter(adapterClass);
                         }
                     }
 
@@ -108,7 +113,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                         Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
                     }
                 });
-                refresh.setRefreshing(false);
+                refreshPriority.setRefreshing(false);
             }
         });
         return view;
@@ -124,14 +129,16 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                     itemlist = new ArrayList<>();
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         notice n = child.getValue(notice.class);
-                        itemlist.add(n);
+                        if (n.getType().equals("Exam Section")) {
+                            itemlist.add(n);
+                        }
                     }
                     NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
-                    list_view.setAdapter(adapterClass);
+                    list_view_priority.setAdapter(adapterClass);
                 }
 
-                if(searchView_home != null){
-                    searchView_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                if(SearchBar_priority != null){
+                    SearchBar_priority.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                         @Override
                         public boolean onQueryTextSubmit(String query) {
                             search(query);
@@ -157,12 +164,12 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
     private void search(String s) {
         ArrayList<notice> myList = new ArrayList();
         for (notice object : itemlist) {
-            if(object.getTitle().toLowerCase().contains(s.toLowerCase()) || object.getUpload().toLowerCase().contains(s.toLowerCase())) {
+            if(object.getTitle().toLowerCase().contains(s.toLowerCase()) /*|| object.getUpload().toLowerCase().contains(s.toLowerCase())*/) {
                 myList.add(object);
             }
         }
         NoticeAdapter adapterClass = new NoticeAdapter(myList);
-        list_view.setAdapter(adapterClass);
+        list_view_priority.setAdapter(adapterClass);
     }
 
     @Override
@@ -170,27 +177,27 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
         ArrayList<notice> myList = new ArrayList();
         switch (item.getItemId()) {
             case R.id.it_home_New_Old :
-                Collections.sort(itemlist, new Comparator<notice>() {
-                    @Override
-                    public int compare(notice o1, notice o2) {
-                        String one = o1.getCdate().toLowerCase();
-                        String two = o2.getCdate().toLowerCase();
-                        return one.compareTo(two);
-                    }
-                });
-                adapterClass.notifyDataSetChanged();
+//                Collections.sort(itemlist, new Comparator<notice>() {
+//                    @Override
+//                    public int compare(notice o1, notice o2) {
+//                        String one = o1.getCdate().toLowerCase();
+//                        String two = o2.getCdate().toLowerCase();
+//                        return one.compareTo(two);
+//                    }
+//                });
+//                adapterClass.notifyDataSetChanged();
                 break;
 
             case R.id.it_home_Old_New :
-                Collections.sort(itemlist, new Comparator<notice>() {
-                    @Override
-                    public int compare(notice o1, notice o2) {
-                        String one = o1.getCdate().toLowerCase();
-                        String two = o2.getCdate().toLowerCase();
-                        return two.compareTo(one);
-                    }
-                });
-                adapterClass.notifyDataSetChanged();
+//                Collections.sort(itemlist, new Comparator<notice>() {
+//                    @Override
+//                    public int compare(notice o1, notice o2) {
+//                        String one = o1.getCdate().toLowerCase();
+//                        String two = o2.getCdate().toLowerCase();
+//                        return two.compareTo(one);
+//                    }
+//                });
+//                adapterClass.notifyDataSetChanged();
                 break;
 
             case R.id.it_home_MySem :
@@ -201,7 +208,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                     }
                 }
                 NoticeAdapter adapterClass = new NoticeAdapter(myList);
-                list_view.setAdapter(adapterClass);
+                list_view_priority.setAdapter(adapterClass);
                 break;
 
             case R.id.it_home_MyNotice:
@@ -212,7 +219,7 @@ public class SearchFragment extends Fragment implements PopupMenu.OnMenuItemClic
                     }
                 }
                 NoticeAdapter adapterClas = new NoticeAdapter(myList);
-                list_view.setAdapter(adapterClas);
+                list_view_priority.setAdapter(adapterClas);
                 break;
         }
         return true;

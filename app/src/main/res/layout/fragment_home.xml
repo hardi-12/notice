@@ -5,51 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="#fff">
+    android:background="#fff"
+    android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsv"
+        <ViewFlipper
+            android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="150dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/Result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custombut1"
+            android:layout_margin="5dp"
+            android:text="Results"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="18sp"
+            android:textAllCaps="false"/>
 
-                <ViewFlipper
-                    android:id="@+id/viewFlipper"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp">
-                </ViewFlipper>
-
-                <Button
-                    android:id="@+id/Result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custombut1"
-                    android:layout_margin="5dp"
-                    android:text="Results"
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:textSize="18sp"
-                    android:textAllCaps="false"/>
-
-                <Button
-                    android:id="@+id/Research"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custombut1"
-                    android:layout_margin="5dp"
-                    android:text="University Research and Development"
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:textSize="18sp"
-                    android:textAllCaps="false"/>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+        <Button
+            android:id="@+id/Research"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custombut1"
+            android:layout_margin="5dp"
+            android:text="University Research and Development"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="18sp"
+            android:textAllCaps="false"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -58,16 +47,102 @@
             app:tabIndicatorColor="#000"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
-            app:tabGravity="fill"
-            android:layout_below="@+id/nsv"/>
+            app:tabGravity="fill"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
-            android:layout_below="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
-    </RelativeLayout>
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".ui.home.HomeFragment"-->
+<!--    android:background="#fff">-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:id="@+id/nsv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <ViewFlipper-->
+<!--                    android:id="@+id/viewFlipper"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="150dp">-->
+<!--                </ViewFlipper>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/Result"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/custombut1"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:text="Results"-->
+<!--                    style="@style/TextAppearance.AppCompat.Headline"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAllCaps="false"/>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/Research"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/custombut1"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:text="University Research and Development"-->
+<!--                    style="@style/TextAppearance.AppCompat.Headline"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAllCaps="false"/>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.core.widget.NestedScrollView>-->
+
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/tabLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:tabIndicatorColor="#000"-->
+<!--            app:tabIndicatorHeight="2dp"-->
+<!--            app:tabMode="fixed"-->
+<!--            app:tabGravity="fill"-->
+<!--            android:layout_below="@+id/nsv"/>-->
+
+<!--        <androidx.viewpager.widget.ViewPager-->
+<!--            android:id="@+id/viewPager"-->
+<!--            android:layout_below="@+id/tabLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+<!--    </RelativeLayout>-->
+<!--</ScrollView>-->
 
 
 

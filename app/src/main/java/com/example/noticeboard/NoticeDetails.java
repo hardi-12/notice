@@ -1,13 +1,11 @@
 package com.example.noticeboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -15,11 +13,20 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -28,8 +35,10 @@ public class NoticeDetails extends AppCompatActivity {
     TextView tvDetailTitle, tvDetailUploadBy, tvDetailDate, tvDetailDept, tvDetailSem, tvDetailSubject, tvDetailNotice,
             tvDetailTime, tvDetailLastDate, tvDetailFile,Att, tvDashTym;
     String title, department, semester, subject, notice, date, current_date, upload, time, key;
-    DatabaseReference reference;
-    String file_url;
+    DatabaseReference reference, referenceSeen, referenceUser;
+    String file_url, typ;
+    long enterTime, exitTime;
+    String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,8 @@ public class NoticeDetails extends AppCompatActivity {
         tvDashTym = findViewById(R.id.tvDashTym);
         Att = findViewById(R.id.Att);
         reference = FirebaseDatabase.getInstance().getReference().child("notice");
+        referenceSeen = FirebaseDatabase.getInstance().getReference("seen");
+        referenceUser = FirebaseDatabase.getInstance().getReference("user");
 
         Intent i = getIntent();
         title = i.getStringExtra("title");
@@ -110,23 +121,88 @@ public class NoticeDetails extends AppCompatActivity {
                 Toasty.error(NoticeDetails.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
             }
         });
+
+        referenceUser.child(user.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                typ = snapshot.child("type").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.share, menu);
+        if (typ.equals("admin")) {
+            getMenuInflater().inflate(R.menu.seen_share, menu);
+        }
+        else getMenuInflater().inflate(R.menu.share, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.itShare) {
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/*");
-            i.putExtra(Intent.EXTRA_SUBJECT, subject);
-            i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date+"\n"+time);
-            startActivity(Intent.createChooser(i,"Share using..."));
+        switch (item.getItemId()) {
+            case R.id.itShare:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/*");
+                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date+"\n"+time);
+                startActivity(Intent.createChooser(i,"Share using..."));
+                break;
+
+            case R.id.itSeen:
+                startActivity(new Intent(NoticeDetails.this, NoticeSeen.class).putExtra("key", key));
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        enterTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        final double readTime = (wordCount(title) + wordCount(subject) + wordCount(notice)) * 0.1;   //fast reader - 0.375
+        exitTime = System.currentTimeMillis();
+        final double screenTime = ((exitTime - enterTime) / 1000) % 60;
+        final String asd = wordCount(title) + wordCount(subject) + wordCount(notice)+" word(s)\nRead time : "+readTime+"s\nScreen time : "+screenTime+"s\n";
+
+        referenceSeen.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(key).hasChild(user.replace(".", "_dot_"))) {
+                    Log.i("Seen", key+"\t\t\t\t"+user);
+                }
+                else {
+                    if (readTime > screenTime) { Toast.makeText(getApplicationContext(), asd+"Did not read", Toast.LENGTH_LONG).show(); }
+                    else if (readTime <= screenTime) {
+                        Toast.makeText(getApplicationContext(), asd+"Read", Toast.LENGTH_LONG).show();
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("email", user);
+                        hashMap.put("timeStamp", new SimpleDateFormat("hh:mm:ss a dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+                        referenceSeen.child(key).child(user.replace(".", "_dot_")).setValue(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toasty.info(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public int wordCount (String text) {
+        String[] array = text.split("\\s+");
+        return array.length;
     }
 }

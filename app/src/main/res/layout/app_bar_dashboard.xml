@@ -11,6 +11,7 @@
         android:id="@+id/other"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,22 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
         <include layout="@layout/content_dashboard" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="40dp"
-        android:src="@android:drawable/ic_input_add" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
@@ -110,9 +99,7 @@
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="8dp"
                         android:text="This section is for Timetables, Proctor details, and other departmental updates" />
-
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -163,9 +150,7 @@
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="8dp"
                         android:text="This section is for Exam forms, Exam dates, Results and other exam updates" />
-
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -216,9 +201,7 @@
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="8dp"
                         android:text="This section is for Committee, Sports, Scholarship and Railway Concession Updates " />
-
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -268,14 +251,11 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="8dp"
-                        android:text="Upcoming seminars, Workshops, Guest lectures and details about all the events" />
-
+                        android:linksClickable="true"
+                        android:autoLink="web"
+                        android:text="To add event please visit the below link\n https://eventkj.000webhostapp.com/index.php" />
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-
     </LinearLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,8 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,7 +25,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tvPrintLDate"
+                android:id="@+id/tvPrintFullDate"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pt_sans_bold"
@@ -36,17 +35,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Jul"
-                android:fontFamily="@font/pt_sans_bold"
-                android:gravity="center"
-                android:textColor="#fff"
-                android:textSize="13sp"/>
-
-            <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tvPrintTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="09:00 PM"
@@ -61,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -68,9 +58,6 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
                 android:fontFamily="@font/pt_sans_bold"
                 android:text="TITLE"
                 android:textColor="@color/colorPrimary"
@@ -79,80 +66,58 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="110dp"
+                    android:id="@+id/tvPrintClass"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_sans"
-                    android:text="Upload Date"
+                    android:layout_marginTop="5dp"
+                    android:text="Class"
                     android:textColor="#000"
                     android:textSize="15sp" />
 
-
                 <TextView
-                    android:id="@+id/tvPrintDate"
+                    android:id="@+id/tvPrintVenue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:text="Date"
+                    android:fontFamily="@font/pt_sans"
+                    android:layout_marginTop="5dp"
+                    android:text="Venue"
                     android:textColor="#000"
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvPrintDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/pt_sans"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                android:text="Duration"
+                android:textColor="#000"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans"
-                    android:text="Uploaded By"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvPrintConductedBy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="vertical">
+                android:fontFamily="@font/pt_sans"
+                android:layout_marginTop="5dp"
+                android:text="Conducted By"
+                android:textColor="#000"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/tvPrintUpload"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:text="TextView"
-                    android:textColor="#000"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tvPrintContact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_sans_bold"
-                    android:hint="Contact"
-                    android:autoLink="all"
-                    android:linksClickable="true"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/tvPrintSpeakerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_sans"
+                android:layout_marginTop="5dp"
+                android:text="Speaker Name"
+                android:textColor="#000"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

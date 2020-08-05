@@ -29,7 +29,7 @@
             app:itemTextColor="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_student_dashboard"
-            app:menu="@menu/activity_dashboard_drawer" />
+            app:menu="@menu/activity_dashboard_drawer_student" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

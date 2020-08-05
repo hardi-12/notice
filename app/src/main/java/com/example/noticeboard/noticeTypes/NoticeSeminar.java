@@ -44,7 +44,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -99,40 +98,17 @@ public class NoticeSeminar extends AppCompatActivity {
         ibSeminarDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // calender class's instance and get current date , month and year from calender
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
-                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeSeminar.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                tvSeminarDate.setText(String.format("%02d-%02d-%04d",dayOfMonth,monthOfYear+1,year));
-
-                            }
-                        }, mYear, mMonth, mDay);
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog  datePickerDialog = new DatePickerDialog(NoticeSeminar.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        tvSeminarDate.setText(String.format("%02d-%02d-%04d",dayOfMonth,monthOfYear+1,year));
+                    }}, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
-
-
-//                int Year = calendar.get(Calendar.YEAR);
-//                int Month = calendar.get(Calendar.MONTH);
-//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeSeminar.this, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-//                        tvSeminarDate.setText(date);
-//                    }
-//                }, Year, Month, Day);
-//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
-//                datePickerDialog.show();
             }
         });
 
@@ -212,7 +188,12 @@ public class NoticeSeminar extends AppCompatActivity {
                         if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() && !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
                             Toast.makeText(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
                         }
-                        else tvSeminarSemData.setText(data);
+                        else {
+                            if (data.toString().substring(data.toString().length()-1).equals(",")) {
+                                tvSeminarSemData.setText(data.toString().substring(0, data.toString().length()-1));
+                            }
+                            else tvSeminarSemData.setText(data);
+                        }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -245,7 +226,12 @@ public class NoticeSeminar extends AppCompatActivity {
                         if (!cb_CS.isChecked() && !cb_IT.isChecked() && !cb_EXTC.isChecked() && !cb_ETRX.isChecked() && !cb_AI_DS.isChecked()) {
                             Toast.makeText(view.getContext(), "Please select at-least one department", Toast.LENGTH_SHORT).show();
                         }
-                        else tvSeminarDeptData.setText(data);
+                        else {
+                            if (data.toString().substring(data.toString().length()-1).equals(",")) {
+                                tvSeminarDeptData.setText(data.toString().substring(0, data.toString().length()-1));
+                            }
+                            else tvSeminarDeptData.setText(data);
+                        }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override

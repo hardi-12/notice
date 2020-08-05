@@ -56,6 +56,7 @@
             android:layout_below="@id/textView4"
             android:background="@drawable/rounded_red"
             android:padding="10dp">
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
@@ -65,8 +66,7 @@
             android:textColor="#000"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:gravity="center_horizontal"
-            />
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/textView6"
@@ -95,13 +95,24 @@
             android:layout_centerInParent="true"
             android:layout_below="@id/ll"/>
 
+        <TextView
+            android:id="@+id/handles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Want to connect with us ?\nCheck our Social Media handles"
+            android:textColor="#000"
+            android:textSize="17dp"
+            android:gravity="center"
+            android:layout_below="@+id/btnFeedback"/>
+
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:columnCount="4"
             app:rowCount="1"
             android:layout_centerInParent="true"
-            android:layout_below="@id/btnFeedback">
+            android:layout_margin="15dp"
+            android:layout_below="@id/handles">
 
             <ImageButton
                 android:id="@+id/ibInstagram"

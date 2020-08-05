@@ -1,4 +1,4 @@
-package com.example.noticeboard.tabbedActivity;
+package com.example.noticeboard.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

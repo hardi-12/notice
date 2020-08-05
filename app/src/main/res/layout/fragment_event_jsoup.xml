@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tabbedActivity.fragment_three">
+    tools:context=".tabbedActivity.EventFragmentJsoup">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_upcoming"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/no_events"
@@ -22,8 +17,14 @@
             android:text="No upcoming events \nStay Tuned"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="#000"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
             android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/view_all_events"
@@ -37,6 +38,13 @@
             android:background="@drawable/custombut1"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_below="@id/list_upcoming"/>
+            android:layout_below="@id/list_events"/>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 </ScrollView>

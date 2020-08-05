@@ -1,26 +1,38 @@
 package com.example.noticeboard;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.example.noticeboard.noticeTypes.NoticeExamCell;
-import com.example.noticeboard.noticeTypes.NoticeSeminar;
 import com.example.noticeboard.noticeTypes.NoticeStudent;
-import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
+import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.profile.ProfileFragment;
-import com.example.noticeboard.ui.search.SearchFragment;
+import com.example.noticeboard.ui.superAdmin.superAdminFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,26 +44,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.cardview.widget.CardView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import es.dmoral.toasty.Toasty;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawer;
-    FloatingActionButton fab;
     FirebaseAuth firebaseAuth;
     DatabaseReference reference;
     NavigationView navigationView;
@@ -76,10 +74,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view_admin);
-        fab = findViewById(R.id.fab);
 
         other = findViewById(R.id.other);
-
 
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet);
@@ -124,8 +120,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         eventNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Dashboard.this, NoticeSeminar.class);
-                startActivity(i);
+//                Intent i = new Intent(Dashboard.this, NoticeSeminar.class);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://eventkj.000webhostapp.com/index.php")));
             }
         });
 
@@ -159,21 +155,19 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
                 String name = dataSnapshot.child("name").getValue().toString();
                 String type = dataSnapshot.child("designation").getValue().toString();
+                String superAdmin = dataSnapshot.child("superAdmin").getValue().toString();
 
                 tvDashName.setText(name);
                 tvDashType.setText(type);
+                if (superAdmin.equals("false")) {
+                    navigationView.getMenu().findItem(R.id.nav_list_superAdmin).setVisible(false);
+                }
+                else navigationView.getMenu().findItem(R.id.nav_list_superAdmin).setVisible(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -217,18 +211,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.itAddNotice) {
+            mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.search) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SearchFragment()).commit();
-            fab.hide();
-        }
-        return super.onOptionsItemSelected(item);
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
@@ -237,7 +230,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment()).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                fab.show();
                 break;
 
             case R.id.nav_signout:
@@ -250,7 +242,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                fab.hide();
                 break;
 
             case R.id.nav_svv:
@@ -267,13 +258,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
             case R.id.nav_about :
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment()).addToBackStack(null).commit();
-                fab.hide();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             case R.id.nav_list_users:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                fab.hide();
+                break;
+
+            case R.id.nav_list_superAdmin:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new superAdminFragment()).addToBackStack(null).commit();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

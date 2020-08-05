@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:id="@+id/itAddNotice"
         app:showAsAction="always"
         android:orderInCategory="150"
-        android:title="Search"/>
-
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Add Notice" />
 </menu>
