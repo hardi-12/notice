@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.noticeboard.AboutDepartment;
 import com.example.noticeboard.R;
 import com.example.noticeboard.web_view;
 
 public class AboutFragment extends Fragment {
-    Button btnFeedback;
+    Button btnFeedback, btnAboutIt;
     ImageButton ibInstagram, ibFacebook, ibLinkIn;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,11 +27,19 @@ public class AboutFragment extends Fragment {
         ibInstagram = view.findViewById(R.id.ibInstagram);
         ibFacebook = view.findViewById(R.id.ibFacebook);
         ibLinkIn = view.findViewById(R.id.ibLinkIn);
+        btnAboutIt = view.findViewById(R.id.btnAboutIt);
 
         btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), web_view.class).putExtra("link", "https://docs.google.com/forms/d/e/1FAIpQLSdnD7VG7ZTc52h3FwnUMevMJNH8h1ophqvu9vYKlTxl7DCsEg/viewform?usp=sf_link"));
+            }
+        });
+
+        btnAboutIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), AboutDepartment.class));
             }
         });
 

@@ -1,12 +1,10 @@
 package com.example.noticeboard.ui.home;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
@@ -19,7 +17,6 @@ import com.example.noticeboard.adapter.ViewPagerAdapter;
 import com.example.noticeboard.tabbedActivity.EventFragmentJsoup;
 import com.example.noticeboard.tabbedActivity.fragment_one;
 import com.example.noticeboard.tabbedActivity.fragment_two;
-import com.example.noticeboard.web_view;
 import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +28,6 @@ public class HomeFragment extends Fragment {
     public HomeFragment(){} // an empty public constructor required
     ArrayList<Integer> photos = new ArrayList<>();
     ViewFlipper viewFlipper;
-    Button Result, Research;
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -54,27 +50,15 @@ public class HomeFragment extends Fragment {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
-        Result = view.findViewById(R.id.Result);
-        Research = view.findViewById(R.id.Research);
-
-        Result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent k = new Intent(getContext(), web_view.class);
-                k.putExtra("link","https://kjsieit.somaiya.edu/en/result");
-                startActivity(k);
-            }
-        });
-
         return view;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragent(new fragment_one(), "new updates");
-        viewPagerAdapter.addFragent(new fragment_two(), "priority notice");
-//        viewPagerAdapter.addFragent(new fragment_three(), "events");
-        viewPagerAdapter.addFragent(new EventFragmentJsoup(), "event");
+        viewPagerAdapter.addFragent(new fragment_one(), "updates");
+        viewPagerAdapter.addFragent(new fragment_two(), "priorities");
+        viewPagerAdapter.addFragent(new EventFragmentJsoup(), "events");
+
         viewPager.setAdapter(viewPagerAdapter);
     }
 

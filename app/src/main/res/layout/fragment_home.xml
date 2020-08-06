@@ -18,33 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
 
-        <Button
-            android:id="@+id/Result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custombut1"
-            android:layout_margin="5dp"
-            android:text="Results"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="18sp"
-            android:textAllCaps="false"/>
-
-        <Button
-            android:id="@+id/Research"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custombut1"
-            android:layout_margin="5dp"
-            android:text="University Research and Development"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="18sp"
-            android:textAllCaps="false"/>
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="#000"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
             app:tabGravity="fill"/>

@@ -36,7 +36,7 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NoticeBoard App \n Version 1.0 \n Copyright © KJSIEIT"
+            android:text="NoticeBoard App \n Version 1.0 \n Copyright © KJSIEIT - IT"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="15dp"
@@ -61,7 +61,7 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developed By\nDepartment of Information Technology"
+            android:text="Developed By : \nDepartment of Information Technology"
             android:textAlignment="center"
             android:textColor="#000"
             android:textStyle="bold"
@@ -72,19 +72,75 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Neel Shah\nJay Shah\nHardi Patel\nJaydeep Patel\n\nDevoir\nProf. Prashant Sawant"
+            android:text="Neel Shah\nJay Shah\nHardi Patel\nJaydeep Patel\n"
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="18dp"
             android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guided By :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prof. Prashant Sawant\n"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Devoir :"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dr. Radhika Kotecha\n(Head of Department)"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"/>
+
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAboutIt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About Department"
+            android:padding="5dp"
+            android:background="@drawable/custbut2"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/ll"/>
 
         <Button
             android:id="@+id/btnFeedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Provide Feedback"
-            android:layout_margin="20dp"
             android:padding="5dp"
             android:background="@drawable/custbut2"
             android:textColor="#fff"
@@ -93,7 +149,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_centerInParent="true"
-            android:layout_below="@id/ll"/>
+            android:layout_below="@id/btnAboutIt"/>
 
         <TextView
             android:id="@+id/handles"
@@ -102,6 +158,7 @@
             android:text="Want to connect with us ?\nCheck our Social Media handles"
             android:textColor="#000"
             android:textSize="17dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:layout_below="@+id/btnFeedback"/>
 
