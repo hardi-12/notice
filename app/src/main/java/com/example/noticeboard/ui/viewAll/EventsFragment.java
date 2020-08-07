@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noticeboard.R;
+import com.example.noticeboard.adapter.EventsAdapter;
 import com.example.noticeboard.adapter.JsoupAdapter;
+import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.event;
+import com.example.noticeboard.notice;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -36,7 +39,7 @@ public class EventsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_events, container, false);
+        final View view = inflater.inflate(R.layout.fragment_events, container, false);
 
         SearchBar_events = view.findViewById(R.id.SearchBar_events);
         refreshEvents = view.findViewById(R.id.refreshEvents);
@@ -50,6 +53,20 @@ public class EventsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 load();
+            }
+        });
+
+        SearchBar_events.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                search(query,view);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText,view);
+                return true;
             }
         });
         return view;
@@ -113,5 +130,16 @@ public class EventsFragment extends Fragment {
             }
             return null;
         }
+    }
+
+    private void search(String s, View view) {
+        ArrayList<event> myList = new ArrayList();
+        for (event object : eventList) {
+            if(object.getTitle().toLowerCase().contains(s.toLowerCase()) || object.getDate().toLowerCase().contains(s.toLowerCase()) ) {
+                myList.add(object);
+            }
+        }
+        jsoupAdapter = new JsoupAdapter(myList, view.getContext());
+        list_view_events.setAdapter(jsoupAdapter);
     }
 }

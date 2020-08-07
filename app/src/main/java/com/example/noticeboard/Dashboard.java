@@ -244,12 +244,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
-            case R.id.nav_svv:
-                Intent k = new Intent(Dashboard.this,web_view.class);
-                k.putExtra("link","https://myaccount.somaiya.edu/#/login");
-                startActivity(k);
-                break;
-
             case R.id.nav_website:
                 Intent j = new Intent(Dashboard.this,web_view.class);
                 j.putExtra("link","https://kjsieit.somaiya.edu/en");
@@ -269,6 +263,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_list_superAdmin:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new superAdminFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                break;
+            case R.id.nav_dept_website:
+                Intent n = new Intent(Dashboard.this,web_view.class);
+                n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
+                startActivity(n);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

@@ -67,7 +67,7 @@ public class JsoupAdapter extends RecyclerView.Adapter<JsoupAdapter.viewholder> 
         holder.tvPrintVenue.setText("Venue : "+venue);
         holder.tvPrintDuration .setText("Duration : "+duration);
         holder.tvPrintConductedBy.setText("Conducted By : "+conducted_by);
-        holder.tvPrintSpeakerName.setText(speaker);
+        holder.tvPrintSpeakerName.setText("Speaker : "+speaker);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

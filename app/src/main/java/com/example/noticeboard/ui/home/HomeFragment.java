@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         ImageView image = new ImageView(getContext());
         image.setImageResource(integer);
         viewFlipper.addView(image);
-        viewFlipper.setFlipInterval(2500);
+        viewFlipper.setFlipInterval(5000);
         viewFlipper.setAutoStart(true);
         viewFlipper.startFlipping();
         viewFlipper.setInAnimation(getContext(),R.anim.slide_in_left);

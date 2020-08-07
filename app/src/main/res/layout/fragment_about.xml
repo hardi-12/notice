@@ -61,7 +61,7 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Developed By : \nDepartment of Information Technology"
+            android:text="Department of Information Technology\n\nDeveloped By :"
             android:textAlignment="center"
             android:textColor="#000"
             android:textStyle="bold"

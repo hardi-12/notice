@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,9 @@ public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String email = ds.child("email").getValue().toString();
                     String type = ds.child("type").getValue().toString();
-                    users_list.add(email+"\t\t\t\t"+type);
+                    String name = ds.child("name").getValue().toString();
+                    String contact = ds.child("phone").getValue().toString();
+                    users_list.add(name+" ("+type+")\nEmail : "+email+"\nContact : "+contact+"\n");
                 }
                 arrayAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, users_list);
                 lvUsers.setAdapter(arrayAdapter);

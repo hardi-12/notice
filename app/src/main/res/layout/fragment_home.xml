@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="#fff"
+    android:background="#f3f3f3"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,10 +22,11 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabGravity="fill"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabTextColor="#000" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

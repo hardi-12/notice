@@ -39,14 +39,14 @@
     <item android:title="Quick Links">
         <menu>
             <item
-                android:id="@+id/nav_svv"
-                android:icon="@drawable/ic_domain"
-                android:title="Somaiya Account"
-                android:visible="true" />
-            <item
                 android:id="@+id/nav_website"
                 android:icon="@drawable/ic_domain"
                 android:title="Somaiya Website"
+                android:visible="true" />
+            <item
+                android:id="@+id/nav_dept_website"
+                android:icon="@drawable/ic_domain"
+                android:title="Department Website"
                 android:visible="true" />
         </menu>
     </item>
