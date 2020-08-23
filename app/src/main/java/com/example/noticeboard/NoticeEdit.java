@@ -1,8 +1,5 @@
 package com.example.noticeboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -16,7 +13,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.noticeboard.noticeTypes.NoticeDepartment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -33,7 +31,7 @@ import es.dmoral.toasty.Toasty;
 
 public class NoticeEdit extends AppCompatActivity {
     DatabaseReference databaseReference;
-    EditText etEditNoticeTitle, etEditNoticeSubject, etEditNoticeNotice;
+    EditText etEditNoticeTitle, etEditNoticeSubject, etEditNoticeNotice, etEditNoticeContact;
     TextView tvEditNoticeUploadBy, tvEditNoticeType, tvEditNoticeCDate, tvEditNoticeDate, tvEditNoticeTime,
             tvEditNoticeSem, tvEditNoticeDept;
     ImageButton ibEditNoticeDate, ibEditNoticeTime;
@@ -60,6 +58,7 @@ public class NoticeEdit extends AppCompatActivity {
         tvEditNoticeDept = findViewById(R.id.tvEditNoticeDept);
         ibEditNoticeDate = findViewById(R.id.ibEditNoticeDate);
         ibEditNoticeTime = findViewById(R.id.ibEditNoticeTime);
+        etEditNoticeContact = findViewById(R.id.etEditNoticeContact);
         btnUpdateNotice = findViewById(R.id.btnUpdateNotice);
         cb1 = findViewById(R.id.cb1);
         cb2 = findViewById(R.id.cb2);
@@ -81,7 +80,7 @@ public class NoticeEdit extends AppCompatActivity {
         databaseReference.child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String title,branch,sem,subject,notice,date,cdate,upload,time,type;
+                String title,branch,sem,subject,notice,date,cdate,upload,time,type, contact;
                 title = dataSnapshot.child("title").getValue().toString();
                 branch = dataSnapshot.child("branch").getValue().toString();
                 sem = dataSnapshot.child("sem").getValue().toString();
@@ -92,6 +91,7 @@ public class NoticeEdit extends AppCompatActivity {
                 upload = dataSnapshot.child("upload").getValue().toString();
                 time = dataSnapshot.child("time").getValue().toString();
                 type = dataSnapshot.child("type").getValue().toString();
+                contact = dataSnapshot.child("contact").getValue().toString();
 
                 etEditNoticeTitle.setText(title);
                 etEditNoticeSubject.setText(subject);
@@ -100,6 +100,7 @@ public class NoticeEdit extends AppCompatActivity {
                 tvEditNoticeType.setText(type);
                 tvEditNoticeCDate.setText(cdate);
                 tvEditNoticeDate.setText(date);
+                etEditNoticeContact.setText(contact);
 
                 if (time.equals("")) {
                     timeStatus = true;

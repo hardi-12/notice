@@ -2,7 +2,6 @@ package com.example.noticeboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -35,13 +34,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -127,44 +119,38 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
             });
             snackbar.show();
 
-            int daysBetween = 0;
-            String userSem = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                daysBetween = ((int) ChronoUnit.DAYS.between(LocalDate.parse(curr_date), LocalDate.parse("2022-06-30")));
-            }
-
-            if (daysBetween > 0 && daysBetween <= 182) { userSem = "Semester VIII"; }
-            else if (daysBetween > 182 && daysBetween <= 366) { userSem = "Semester VII"; }
-            else if (daysBetween > 366 && daysBetween <= 548) { userSem = "Semester VI"; }
-            else if (daysBetween > 548 && daysBetween <= 732) { userSem = "Semester V"; }
-            else if (daysBetween > 732 && daysBetween <= 914) { userSem = "Semester IV"; }
-            else if (daysBetween > 914 && daysBetween <= 1098) { userSem = "Semester III"; }
-            else if (daysBetween > 1098 && daysBetween <= 1280) { userSem = "Semester II"; }
-            else if (daysBetween > 1280 && daysBetween <= 1464) { userSem = "Semester I"; }
-
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("semester", userSem);
-            FirebaseDatabase.getInstance().getReference("user").child(user.getEmail().replace(".", "_dot_"))
-                    .updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.i("SemUpdate", "Success");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.i("SemUpdate", "Failure");
-                }
-            });
+//            int daysBetween = 0;
+//            String userSem = null;
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//                String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+//                daysBetween = ((int) ChronoUnit.DAYS.between(LocalDate.parse(curr_date), LocalDate.parse("2022-06-30")));
+//            }
+//
+//            if (daysBetween > 0 && daysBetween <= 182) { userSem = "Semester VIII"; }
+//            else if (daysBetween > 182 && daysBetween <= 366) { userSem = "Semester VII"; }
+//            else if (daysBetween > 366 && daysBetween <= 548) { userSem = "Semester VI"; }
+//            else if (daysBetween > 548 && daysBetween <= 732) { userSem = "Semester V"; }
+//            else if (daysBetween > 732 && daysBetween <= 914) { userSem = "Semester IV"; }
+//            else if (daysBetween > 914 && daysBetween <= 1098) { userSem = "Semester III"; }
+//            else if (daysBetween > 1098 && daysBetween <= 1280) { userSem = "Semester II"; }
+//            else if (daysBetween > 1280 && daysBetween <= 1464) { userSem = "Semester I"; }
+//
+//            HashMap<String, Object> hashMap = new HashMap<>();
+//            hashMap.put("semester", userSem);
+//            FirebaseDatabase.getInstance().getReference("user").child(user.getEmail().replace(".", "_dot_"))
+//                    .updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Log.i("SemUpdate", "Success");
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Log.i("SemUpdate", "Failure");
+//                }
+//            });
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.dashboard, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -206,12 +192,12 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
+
             case R.id.nav_dept_website:
                 Intent n = new Intent(DashboardStudent.this,web_view.class);
                 n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
                 startActivity(n);
                 break;
-
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

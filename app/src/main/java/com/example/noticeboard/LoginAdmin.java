@@ -1,8 +1,5 @@
 package com.example.noticeboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +37,7 @@ public class LoginAdmin extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ProgressDialog loading;
     DatabaseReference reference;
+    String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,17 @@ public class LoginAdmin extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("user");
 
+        FirebaseDatabase.getInstance().getReference("credential").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                pass = snapshot.child("validationAdmin").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //
+            }
+        });
         if (user != null ) {
             startActivity(new Intent(LoginAdmin.this, Dashboard.class));
             finish();
@@ -134,34 +146,25 @@ public class LoginAdmin extends AppCompatActivity {
                 alertDialog.setMessage("Enter password to create an Admin Account");
 
                 final EditText input = new EditText(LoginAdmin.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-                alertDialog.setPositiveButton("Sign up",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(input.getText().toString().equals("Information Technology")) {
-                                    startActivity(new Intent(LoginAdmin.this, AdminSignUpActivity.class));
-                                }
-                                else {
-                                    Toast.makeText(LoginAdmin.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-                                    dialog.cancel();
-                                }
-                            }
-                        });
-
-                alertDialog.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                alertDialog.show();
+                alertDialog.setPositiveButton("Sign up", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(input.getText().toString().equals(pass)) {
+                            startActivity(new Intent(LoginAdmin.this, AdminSignUpActivity.class));
+                        }
+                        else {
+                            Toast.makeText(LoginAdmin.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                        }
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
             }
         });
 

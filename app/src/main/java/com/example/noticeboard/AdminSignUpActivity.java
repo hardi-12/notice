@@ -65,29 +65,37 @@ public class AdminSignUpActivity extends AppCompatActivity {
                 designation = spDesignation.getSelectedItem().toString();
                 String emailpattern = "[a-zA-Z0-9._-]+@somaiya.edu";
                 final String key = email.replace(".", "_dot_");
-
-                if (name.length() < 4){
-                    etAdminName.setError("INVALID");
+                if (password.length() < 7){
+                    etAdminPassword.setError("At-least 8 characters required");
+                    etAdminPassword.requestFocus();
                 }
-                if (ID.length() != 10){
-                    etAdminIDNumber.setError("INVALID");
+                if (!email.matches(emailpattern)){
+                    etAdminEmail.setError("Kindly use ...@somaiya.edu ID");
+                    etAdminEmail.requestFocus();
                 }
                 if (phone.length() != 10){
                     etAdminPhoneNumber.setError("INVALID");
+                    etAdminPhoneNumber.requestFocus();
                 }
-                if (password.length() < 7){
-                    etAdminPassword.setError("At-least 8 characters required");
+                if (ID.length() != 10){
+                    etAdminIDNumber.setError("INVALID");
+                    etAdminIDNumber.requestFocus();
                 }
-                if (department.equals("Select Department")){
-                    spDepartment.requestFocus();
+                if (name.length() < 4){
+                    etAdminName.setError("INVALID");
+                    etAdminName.requestFocus();
                 }
-                if (designation.equals("Select Designation")){
-                    spDesignation.requestFocus();
+                if (department.equals("Select Department")) {
+                    Toasty.error(AdminSignUpActivity.this, "Select Department", Toast.LENGTH_SHORT).show();
                 }
-                if (email.length() == 0 || !email.matches(emailpattern)){
-                    etAdminEmail.setError("Kindly use ...@somaiya.edu ID");
+                if (designation.equals("Select Designation")) {
+                    Toasty.error(AdminSignUpActivity.this, "Select Designation", Toast.LENGTH_SHORT).show();
                 }
-                else {
+                if (department.equals("Select Department") && designation.equals("Select Designation")) {
+                    Toasty.error(AdminSignUpActivity.this, "Select Department & Designation", Toast.LENGTH_SHORT).show();
+                }
+                else if (password.length() > 7 && email.matches(emailpattern) && phone.length() == 10 && ID.length() == 10 && name.length() > 4
+                        && !department.equals("Select Department") && !designation.equals("Select Designation")) {
                     loading.setTitle("Create Account");
                     loading.setMessage("Please wait, while we are checking the credentials.");
                     loading.setCanceledOnTouchOutside(false);
@@ -106,13 +114,14 @@ public class AdminSignUpActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             user u = new user(name, phone, department, email, "", "admin", designation, ID);
                                             reference.child(key).setValue(u);
+                                            reference.child(key).child("superAdmin").setValue("false");
                                             startActivity(new Intent(AdminSignUpActivity.this, Dashboard.class));
                                             loading.dismiss();
                                             finish();
                                         }
                                         else {
                                             loading.dismiss();
-                                            Toasty.warning(AdminSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
+                                            Toasty.warning(AdminSignUpActivity.this, "Account creation failed\n"+task.getException(), Toast.LENGTH_LONG).show();
                                             etAdminEmail.requestFocus();
                                         }
                                     }

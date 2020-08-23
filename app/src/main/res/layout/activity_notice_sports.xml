@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvSportsSubject"
                 android:textColorHint="#000"
-                android:hint="Subject" />
+                android:hint="Subject (optional)" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

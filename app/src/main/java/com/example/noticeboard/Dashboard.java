@@ -120,7 +120,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         eventNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(Dashboard.this, NoticeSeminar.class);
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://eventkj.000webhostapp.com/index.php")));
             }
         });
@@ -264,6 +263,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new superAdminFragment()).addToBackStack(null).commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
+
             case R.id.nav_dept_website:
                 Intent n = new Intent(Dashboard.this,web_view.class);
                 n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");

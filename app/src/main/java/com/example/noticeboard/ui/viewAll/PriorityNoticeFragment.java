@@ -1,13 +1,6 @@
 package com.example.noticeboard.ui.viewAll;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +9,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.NoticeAdapter;
@@ -36,17 +35,14 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
 
     DatabaseReference reference, useref;
     RecyclerView list_view_priority;
-    ArrayList<notice> itemlist;
+    ArrayList<notice> itemlist, displayList;
     SearchView SearchBar_priority;
     ImageView ivPopup_priority;
-    NoticeAdapter adapterClass;
     String sem;
     SwipeRefreshLayout refreshPriority;
     FirebaseUser user;
 
-    public PriorityNoticeFragment() {
-        // Required empty public constructor
-    }
+    public PriorityNoticeFragment() {}   // Required empty public constructor
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,27 +88,7 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
         refreshPriority.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
-                            itemlist = new ArrayList<>();
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                notice n = child.getValue(notice.class);
-                                if (n.getType().equals("Exam Section")) {
-                                    itemlist.add(n);
-                                }
-                            }
-                            NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
-                            list_view_priority.setAdapter(adapterClass);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                displayNotice();
                 refreshPriority.setRefreshing(false);
             }
         });
@@ -133,8 +109,11 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
                             itemlist.add(n);
                         }
                     }
-                    NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
-                    list_view_priority.setAdapter(adapterClass);
+                    displayList = new ArrayList<>();
+                    for (int i = itemlist.size()-1 ;i >=0; i-- ) {
+                        displayList.add(itemlist.get(i));
+                    }
+                    list_view_priority.setAdapter(new NoticeAdapter(displayList));
                 }
 
                 if(SearchBar_priority != null){
@@ -161,6 +140,33 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
         });
     }
 
+    private void displayNotice () {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    itemlist = new ArrayList<>();
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        notice n = child.getValue(notice.class);
+                        if (n.getType().equals("Exam Section")) {
+                            itemlist.add(n);
+                        }
+                    }
+                    displayList = new ArrayList<>();
+                    for (int i = itemlist.size()-1 ;i >=0; i-- ) {
+                        displayList.add(itemlist.get(i));
+                    }
+                    list_view_priority.setAdapter(new NoticeAdapter(displayList));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void search(String s) {
         ArrayList<notice> myList = new ArrayList();
         for (notice object : itemlist) {
@@ -177,27 +183,30 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
         ArrayList<notice> myList = new ArrayList();
         switch (item.getItemId()) {
             case R.id.it_home_New_Old :
-//                Collections.sort(itemlist, new Comparator<notice>() {
-//                    @Override
-//                    public int compare(notice o1, notice o2) {
-//                        String one = o1.getCdate().toLowerCase();
-//                        String two = o2.getCdate().toLowerCase();
-//                        return one.compareTo(two);
-//                    }
-//                });
-//                adapterClass.notifyDataSetChanged();
+                displayNotice();
                 break;
 
             case R.id.it_home_Old_New :
-//                Collections.sort(itemlist, new Comparator<notice>() {
-//                    @Override
-//                    public int compare(notice o1, notice o2) {
-//                        String one = o1.getCdate().toLowerCase();
-//                        String two = o2.getCdate().toLowerCase();
-//                        return two.compareTo(one);
-//                    }
-//                });
-//                adapterClass.notifyDataSetChanged();
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            itemlist = new ArrayList<>();
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                notice n = child.getValue(notice.class);
+                                if (n.getType().equals("Exam Section")) {
+                                    itemlist.add(n);
+                                }
+                            }
+                            list_view_priority.setAdapter(new NoticeAdapter(itemlist));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
 
             case R.id.it_home_MySem :
@@ -207,8 +216,7 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
                         myList.add(object);
                     }
                 }
-                NoticeAdapter adapterClass = new NoticeAdapter(myList);
-                list_view_priority.setAdapter(adapterClass);
+                list_view_priority.setAdapter(new NoticeAdapter(myList));
                 break;
 
             case R.id.it_home_MyNotice:
@@ -218,8 +226,7 @@ public class PriorityNoticeFragment extends Fragment implements PopupMenu.OnMenu
                         myList.add(object);
                     }
                 }
-                NoticeAdapter adapterClas = new NoticeAdapter(myList);
-                list_view_priority.setAdapter(adapterClas);
+                list_view_priority.setAdapter(new NoticeAdapter(myList));
                 break;
         }
         return true;

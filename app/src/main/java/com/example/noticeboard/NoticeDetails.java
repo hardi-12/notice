@@ -1,17 +1,12 @@
 package com.example.noticeboard;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,17 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-
-import es.dmoral.toasty.Toasty;
-
 public class NoticeDetails extends AppCompatActivity {
 
     TextView tvDetailTitle, tvDetailUploadBy, tvDetailDate, tvDetailDept, tvDetailSem, tvDetailSubject, tvDetailNotice,
-            tvDetailTime, tvDetailLastDate, tvDetailFile,Att, tvDashTym;
+            tvDetailTime, tvDetailLastDate, tvDashTym;
     String title, department, semester, subject, notice, date, current_date, upload, time, key;
     DatabaseReference reference, referenceSeen, referenceUser;
     String file_url, typ;
@@ -54,9 +42,7 @@ public class NoticeDetails extends AppCompatActivity {
         tvDetailNotice = findViewById(R.id.tvDetailNotice);
         tvDetailTime = findViewById(R.id.tvDetailTime);
         tvDetailLastDate = findViewById(R.id.tvDetailLastDate);
-        tvDetailFile = findViewById(R.id.tvDetailFile);
         tvDashTym = findViewById(R.id.tvDashTym);
-        Att = findViewById(R.id.Att);
         reference = FirebaseDatabase.getInstance().getReference().child("notice");
         referenceSeen = FirebaseDatabase.getInstance().getReference("seen");
         referenceUser = FirebaseDatabase.getInstance().getReference("user");
@@ -92,36 +78,6 @@ public class NoticeDetails extends AppCompatActivity {
         }
         tvDetailLastDate.setText(date);
 
-        reference.child(key).addValueEventListener(new ValueEventListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("files")) {
-                    file_url = dataSnapshot.child("files").getValue().toString();
-                    tvDetailFile.setText(file_url);
-                    tvDetailFile.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            Intent i = new Intent();
-                            i.setDataAndType(Uri.parse(file_url), Intent.ACTION_VIEW);
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
-                            return true;
-                        }
-                    });
-                }
-                else {
-                    Att.setVisibility(View.GONE);
-                    tvDetailFile.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toasty.error(NoticeDetails.this, "Error : "+databaseError, Toast.LENGTH_LONG).show();
-            }
-        });
-
         referenceUser.child(user.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -138,9 +94,9 @@ public class NoticeDetails extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (typ.equals("admin")) {
-            getMenuInflater().inflate(R.menu.seen_share, menu);
+            getMenuInflater().inflate(R.menu.notice_details_staff, menu);
         }
-        else getMenuInflater().inflate(R.menu.share, menu);
+        else getMenuInflater().inflate(R.menu.notice_details_student, menu);
         return true;
     }
 
@@ -157,52 +113,57 @@ public class NoticeDetails extends AppCompatActivity {
 
             case R.id.itSeen:
                 startActivity(new Intent(NoticeDetails.this, NoticeSeen.class).putExtra("key", key));
+                break;
+
+            case R.id.itFiles:
+                startActivity(new Intent(NoticeDetails.this, NoticeFiles.class).putExtra("key", key));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        enterTime = System.currentTimeMillis();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        final double readTime = (wordCount(title) + wordCount(subject) + wordCount(notice)) * 0.1;   //fast reader - 0.375
-        exitTime = System.currentTimeMillis();
-        final double screenTime = ((exitTime - enterTime) / 1000) % 60;
-        final String asd = wordCount(title) + wordCount(subject) + wordCount(notice)+" word(s)\nRead time : "+readTime+"s\nScreen time : "+screenTime+"s\n";
-
-        referenceSeen.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(key).hasChild(user.replace(".", "_dot_"))) {
-                    Log.i("Seen", key+"\t\t\t\t"+user);
-                }
-                else {
-                    if (readTime > screenTime) { Toast.makeText(getApplicationContext(), asd+"Did not read", Toast.LENGTH_LONG).show(); }
-                    else if (readTime <= screenTime) {
-                        Toast.makeText(getApplicationContext(), asd+"Read", Toast.LENGTH_LONG).show();
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("email", user);
-                        hashMap.put("timeStamp", new SimpleDateFormat("hh:mm:ss a dd-MM-yyyy", Locale.getDefault()).format(new Date()));
-                        referenceSeen.child(key).child(user.replace(".", "_dot_")).setValue(hashMap);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toasty.info(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public int wordCount (String text) {
-        String[] array = text.split("\\s+");
-        return array.length;
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        enterTime = System.currentTimeMillis();
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        final double readTime = (wordCount(title) + wordCount(subject) + wordCount(notice)) * 0.1;   //fast reader - 0.375
+//        exitTime = System.currentTimeMillis();
+//        final double screenTime = ((exitTime - enterTime) / 1000) % 60;
+//        final String asd = wordCount(title) + wordCount(subject) + wordCount(notice)+" word(s)\nRead time : "+readTime+"s\nScreen time : "+screenTime+"s\n";
+//
+//        referenceSeen.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.child(key).hasChild(user.replace(".", "_dot_"))) {
+//                    Log.i("Seen", key+"\t\t\t\t"+user);
+//                }
+//                else {
+//                    if (readTime > screenTime) { Toast.makeText(getApplicationContext(), asd+"Did not read", Toast.LENGTH_LONG).show(); }
+//                    else if (readTime <= screenTime) {
+//                        Toast.makeText(getApplicationContext(), asd+"Read", Toast.LENGTH_LONG).show();
+//                        HashMap<String, Object> hashMap = new HashMap<>();
+//                        hashMap.put("email", user);
+//                        hashMap.put("timeStamp", new SimpleDateFormat("hh:mm:ss a dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+//                        referenceSeen.child(key).child(user.replace(".", "_dot_")).setValue(hashMap);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toasty.info(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+//
+//    public int wordCount (String text) {
+//        String[] array = text.split("\\s+");
+//        return array.length;
+//    }
 }

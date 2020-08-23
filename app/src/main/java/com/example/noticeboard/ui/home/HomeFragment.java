@@ -34,7 +34,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //View Flipper Part
         viewFlipper = view.findViewById(R.id.viewFlipper);
         photos.add(R.drawable.slide_1);
         photos.add(R.drawable.slide_2);
@@ -55,8 +54,8 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragent(new fragment_one(), "updates");
-        viewPagerAdapter.addFragent(new fragment_two(), "priorities");
+        viewPagerAdapter.addFragent(new fragment_one(), "new updates");
+        viewPagerAdapter.addFragent(new fragment_two(), "priority notices");
         viewPagerAdapter.addFragent(new EventFragmentJsoup(), "events");
 
         viewPager.setAdapter(viewPagerAdapter);

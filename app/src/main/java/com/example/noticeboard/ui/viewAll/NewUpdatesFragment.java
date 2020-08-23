@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.R;
+import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.notice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +36,7 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
     public NewUpdatesFragment(){} // an empty public constructor required
     DatabaseReference reference, useref;
     RecyclerView list_view;
-    ArrayList<notice> itemlist;
+    ArrayList<notice> itemlist, displayList;
     SearchView searchView_home;
     ImageView ivPopup_home;
     NoticeAdapter adapterClass;
@@ -55,8 +55,6 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setStackFromEnd(true);
-        linearLayoutManager.setReverseLayout(true);
         list_view=view.findViewById(R.id.list_view);
         list_view.setLayoutManager(linearLayoutManager);
 
@@ -87,25 +85,7 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
-                            itemlist = new ArrayList<>();
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                notice n = child.getValue(notice.class);
-                                itemlist.add(n);
-                            }
-                            NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
-                            list_view.setAdapter(adapterClass);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                displayNotice();
                 refresh.setRefreshing(false);
             }
         });
@@ -124,7 +104,11 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
                         notice n = child.getValue(notice.class);
                         itemlist.add(n);
                     }
-                    NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
+                    displayList = new ArrayList<>();
+                    for (int j = itemlist.size()-1; j >= 0; j--) {
+                        displayList.add(itemlist.get(j));
+                    }
+                    NoticeAdapter adapterClass = new NoticeAdapter(displayList);
                     list_view.setAdapter(adapterClass);
                 }
 
@@ -152,6 +136,32 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
         });
     }
 
+    private void displayNotice() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    itemlist = new ArrayList<>();
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        notice n = child.getValue(notice.class);
+                        itemlist.add(n);
+                    }
+                    displayList = new ArrayList<>();
+                    for (int j = itemlist.size()-1; j >= 0; j--) {
+                        displayList.add(itemlist.get(j));
+                    }
+                    NoticeAdapter adapterClass = new NoticeAdapter(displayList);
+                    list_view.setAdapter(adapterClass);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void search(String s) {
         ArrayList<notice> myList = new ArrayList();
         for (notice object : itemlist) {
@@ -164,31 +174,33 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    public boolean onMenuItemClick(final MenuItem item) {
         ArrayList<notice> myList = new ArrayList();
         switch (item.getItemId()) {
             case R.id.it_home_New_Old :
-//                Collections.sort(itemlist, new Comparator<notice>() {
-//                    @Override
-//                    public int compare(notice o1, notice o2) {
-//                        String one = o1.getCdate().toLowerCase();
-//                        String two = o2.getCdate().toLowerCase();
-//                        return one.compareTo(two);
-//                    }
-//                });
-//                adapterClass.notifyDataSetChanged();
+                displayNotice();
                 break;
 
             case R.id.it_home_Old_New :
-//                Collections.sort(itemlist, new Comparator<notice>() {
-//                    @Override
-//                    public int compare(notice o1, notice o2) {
-//                        String one = o1.getCdate().toLowerCase();
-//                        String two = o2.getCdate().toLowerCase();
-//                        return two.compareTo(one);
-//                    }
-//                });
-//                adapterClass.notifyDataSetChanged();
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            itemlist = new ArrayList<>();
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                notice n = child.getValue(notice.class);
+                                itemlist.add(n);
+                            }
+                            NoticeAdapter adapterClass = new NoticeAdapter(itemlist);
+                            list_view.setAdapter(adapterClass);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toasty.error(getContext(), "Error : "+databaseError, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
 
             case R.id.it_home_MySem :
@@ -198,8 +210,7 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
                         myList.add(object);
                     }
                 }
-                NoticeAdapter adapterClass = new NoticeAdapter(myList);
-                list_view.setAdapter(adapterClass);
+                list_view.setAdapter(new NoticeAdapter(myList));
                 break;
 
             case R.id.it_home_MyNotice:
@@ -209,8 +220,7 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
                         myList.add(object);
                     }
                 }
-                NoticeAdapter adapterClas = new NoticeAdapter(myList);
-                list_view.setAdapter(adapterClas);
+                list_view.setAdapter(new NoticeAdapter(myList));
                 break;
         }
         return true;

@@ -8,7 +8,8 @@
         android:id="@+id/myCardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="#FFE8E8">
 
         <TextView
             android:id="@+id/tvFileName"

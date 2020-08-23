@@ -26,9 +26,9 @@ import java.util.ArrayList;
 
 public class fragment_one extends Fragment {
 
-    DatabaseReference reference,reference_updates;
-    RecyclerView list_view_one, list_updates;
-    ArrayList<notice> itemlist, sortedList, updates,noticeList;
+    DatabaseReference reference;
+    RecyclerView list_view_one;
+    ArrayList<notice> itemlist, sortedList;
     NoticeAdapter adapterClass;
     Button view_all_one;
 

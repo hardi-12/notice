@@ -1,27 +1,22 @@
 package com.example.noticeboard.ui.list;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.noticeboard.R;
+import com.example.noticeboard.adapter.UserListAdapter;
+import com.example.noticeboard.user;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,10 +28,10 @@ import java.util.ArrayList;
 public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
     public ListFragment() {}// Required empty public constructor
-    ListView lvUsers;
-    ArrayList<String> users_list = new ArrayList<>();
-    ArrayList<String> list = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter;
+    RecyclerView lvUsers;
+    ArrayList<user> users_list;
+    ArrayList<user> list = new ArrayList<>();
+    UserListAdapter arrayAdapter;
     DatabaseReference reference;
     SearchView SearchBar_users;
     ImageView ivPopup_users;
@@ -48,20 +43,18 @@ public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         lvUsers = view.findViewById(R.id.lvUsers);
         SearchBar_users = view.findViewById(R.id.SearchBar_users);
         ivPopup_users = view.findViewById(R.id.ivPopup_users);
+        lvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         reference = FirebaseDatabase.getInstance().getReference().child("user");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users_list = new ArrayList<>();
                 users_list.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String email = ds.child("email").getValue().toString();
-                    String type = ds.child("type").getValue().toString();
-                    String name = ds.child("name").getValue().toString();
-                    String contact = ds.child("phone").getValue().toString();
-                    users_list.add(name+" ("+type+")\nEmail : "+email+"\nContact : "+contact+"\n");
+                    users_list.add(ds.getValue(user.class));
                 }
-                arrayAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, users_list);
+                arrayAdapter = new UserListAdapter(users_list);
                 lvUsers.setAdapter(arrayAdapter);
             }
 
@@ -80,28 +73,6 @@ public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickL
                 popupMenu.show();
             }
         });
-
-        lvUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-                final String email = parent.getItemAtPosition(position).toString().substring(0, parent.getItemAtPosition(position).toString().indexOf("u")+1);
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setMessage("Do you want to E-mail "+email);
-                builder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(Intent.ACTION_SENDTO).setData(Uri.parse("mailto:"+email)));
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-            }
-        });
-
         return view;
     }
 
@@ -117,14 +88,13 @@ public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickL
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    ArrayList<String> list = new ArrayList<>();
-                    for (String abc : users_list) {
-                        if (abc.contains(newText.toLowerCase())) {
+                    ArrayList<user> list = new ArrayList<>();
+                    for (user abc : users_list) {
+                        if (abc.getName().toLowerCase().contains(newText.toLowerCase())) {
                             list.add(abc);
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
-                        lvUsers.setAdapter(adapter);
                     }
+                    lvUsers.setAdapter(new UserListAdapter(list));
                     return true;
                 }
             });
@@ -136,35 +106,27 @@ public class ListFragment extends Fragment implements PopupMenu.OnMenuItemClickL
         switch (item.getItemId()) {
             case R.id.it_user_admins:
                 list.clear();
-                for (String admin : users_list) {
-                    if (admin.contains("admin")) {
+                for (user admin : users_list) {
+                    if (admin.getType().equals("admin")) {
                         list.add(admin);
                     }
                 }
-                ArrayAdapter<String> A_adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
-                lvUsers.setAdapter(A_adapter);
+                lvUsers.setAdapter(new UserListAdapter(list));
                 break;
 
             case R.id.it_user_students:
                 list.clear();
-                for (String student : users_list) {
-                    if (student.contains("student")) {
+                for (user student : users_list) {
+                    if (student.getType().equals("student")) {
                         list.add(student);
                     }
                 }
-                ArrayAdapter<String> S_adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
-                lvUsers.setAdapter(S_adapter);
+                lvUsers.setAdapter(new UserListAdapter(list));
                 break;
 
             case R.id.it_user_all:
-                list.clear();
-                for (String all : users_list) {
-                    if (all.contains("student") || all.contains("admin")) {
-                        list.add(all);
-                    }
-                }
-                ArrayAdapter<String> All_adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
-                lvUsers.setAdapter(All_adapter);
+                lvUsers.setAdapter(new UserListAdapter(users_list));
+                break;
         }
         return true;
     }

@@ -4,11 +4,14 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,24 +30,26 @@ import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.noticeboard.notice;
 import com.example.noticeboard.R;
+import com.example.noticeboard.notice;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -59,13 +64,14 @@ public class NoticeDepartment extends AppCompatActivity {
     Toolbar toolbar;
     Button btnDeptFile;
     Switch switchDept;
-    Uri uri;
-    ProgressDialog progressDialog;
     StorageReference storageReference;
     AlertDialog.Builder builder;
     CheckBox cb_semI, cb_semII, cb_semIII, cb_semIV, cb_semV, cb_semVI, cb_semVII, cb_semVIII, cb_CS, cb_IT, cb_EXTC, cb_ETRX, cb_AI_DS;
     StringBuilder data = new StringBuilder();
-    String url;
+    String filename = System.currentTimeMillis()+"";
+    ArrayList<Uri> uriList = new ArrayList<>();
+    ArrayList<String> savedList = new ArrayList<>();
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,24 +110,9 @@ public class NoticeDepartment extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         tvDeptDate.setText(String.format("%02d-%02d-%04d",dayOfMonth,monthOfYear+1,year));
-
                     }}, mYear, mMonth, mDay);
                 datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
                 datePickerDialog.show();
-
-//                int Year = calendar.get(Calendar.YEAR);
-//                int Month = calendar.get(Calendar.MONTH);
-//                int Day = calendar.get(Calendar.DAY_OF_MONTH);
-//                final DatePickerDialog datePickerDialog = new DatePickerDialog(NoticeDepartment.this, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        String date = DateFormat.getDateInstance().format(calendar.getTime());
-//                        tvDeptDate.setText(date);
-//                    }
-//                }, Year, Month, Day);
-//                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
-//                datePickerDialog.show();
-
             }
         });
 
@@ -141,12 +132,21 @@ public class NoticeDepartment extends AppCompatActivity {
 
         btnDeptFile.setOnClickListener(new View.OnClickListener() {
             @Override
+//            public void onClick(View v) {
+//                if (ContextCompat.checkSelfPermission(NoticeDepartment.this,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+//                    pickImage();
+//                }
+//                else ActivityCompat.requestPermissions(NoticeDepartment.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+//            }
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(NoticeDepartment.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectFiles();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(NoticeDepartment.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        selectFiles();
+                    }
+                    else requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 }
-                else ActivityCompat.requestPermissions(NoticeDepartment.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                else selectFiles();
             }
         });
 
@@ -175,7 +175,8 @@ public class NoticeDepartment extends AppCompatActivity {
                         if (cb_semVI.isChecked()) { data.append(" 6,"); }
                         if (cb_semVII.isChecked()) { data.append(" 7,"); }
                         if (cb_semVIII.isChecked()) { data.append(" 8"); }
-                        if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() && !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
+                        if (!cb_semI.isChecked() && !cb_semII.isChecked() && !cb_semIII.isChecked() && !cb_semIV.isChecked() &&
+                                !cb_semV.isChecked() && !cb_semVI.isChecked() && !cb_semVII.isChecked() && !cb_semVIII.isChecked()) {
                             Toasty.warning(view.getContext(), "Please select at-least one semester", Toast.LENGTH_SHORT).show();
                         }
                         else {
@@ -248,150 +249,144 @@ public class NoticeDepartment extends AppCompatActivity {
         final String subject = tvDeptSubject.getText().toString();
         final String notice = tvDeptNotice.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         final String current_date = sdf.format(new Date());
-        final String filename = System.currentTimeMillis()+"";
         final String contact = tvDeptContact.getText().toString();
-        if (title.isEmpty()) {
-            tvDeptTitle.setError("Cannot be empty");
-            tvDeptTitle.requestFocus();
-        }
         if (date.equals("Select Date")) {
             tvDeptDate.setError("Select Date");
+        }
+        if (semester.equals("Selected Semester")) {
+            Toasty.error(NoticeDepartment.this, "Select Semester", Toast.LENGTH_SHORT).show();
+        }
+        if (department.equals("Selected Department")) {
+            Toasty.error(NoticeDepartment.this, "Select Department", Toast.LENGTH_SHORT).show();
+        }
+        if (semester.equals("Selected Semester") && department.equals("Selected Department")) {
+            Toasty.error(NoticeDepartment.this, "Select Semester & Department", Toast.LENGTH_SHORT).show();
+        }
+        if (contact.isEmpty()) {
+            tvDeptContact.setError("Cannot be empty");
+            tvDeptContact.requestFocus();
         }
         if (notice.isEmpty()) {
             tvDeptNotice.setError("Cannot be empty");
             tvDeptNotice.requestFocus();
         }
+        if (title.isEmpty()) {
+            tvDeptTitle.setError("Cannot be empty");
+            tvDeptTitle.requestFocus();
+        }
         else if (item.getItemId() == R.id.itSent) {
-            if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Select Semester")
-                    && !department.equals("Select Department") && !subject.isEmpty() && !notice.isEmpty() && uri != null) {
-
-                progressDialog = new ProgressDialog(NoticeDepartment.this);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setTitle("Uploading....");
-                progressDialog.setProgress(0);
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-
-                storageReference.child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Selected Semester") &&
+                    !department.equals("Selected Department")&& !notice.isEmpty() && !contact.isEmpty()) {
+                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date, upload, "", "Department Section", filename, contact);
+                reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        storageReference.child(filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-
-                                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                                        upload, "", "Department Section",filename, contact);
-                                url = uri.toString();
-                                reference.child(filename).setValue(n);
-                                Toasty.success(NoticeDepartment.this, "Done", Toast.LENGTH_SHORT).show();
-
-                                reference.child(filename).child("files").setValue(url);
-                                progressDialog.dismiss();
-
-                                new AlertDialog.Builder(NoticeDepartment.this).setMessage("Do you want to share this Notice ?")
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                finish();
-                                                Intent i = new Intent(Intent.ACTION_SEND);
-                                                i.setType("text/*");
-                                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
-                                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date+"\nPFA below\n"+url);
-                                                startActivity(Intent.createChooser(i,"Share using..."));
-                                            }
-                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        finish();
-                                    }
-                                }).show();
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toasty.error(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }
-                        });
-
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(NoticeDepartment.this, "Notice Uploaded", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toasty.error(NoticeDepartment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        int CurrProgress = (int) ((100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount());
-                        progressDialog.setProgress(CurrProgress);
+                        Toast.makeText(NoticeDepartment.this, "Notice Upload Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-            }
-            else {
-                notice n = new notice(title, department, semester, subject, notice, date, current_date,
-                        upload, "", "Department Section", filename, contact);
-                reference.child(filename).setValue(n);
-                Toasty.success(NoticeDepartment.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
-
-                new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                if (uriList.size() != 0) {
+                    final ProgressDialog progressDialog = new ProgressDialog(NoticeDepartment.this);
+                    progressDialog.setMessage("Uploding 0/"+uriList.size());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    for (int i = 0; i < uriList.size(); i++) {
+                        final int finalI = i;
+                        FirebaseStorage.getInstance().getReference(filename).child(String.valueOf(i)).putFile(uriList.get(i)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/*");
-                                i.putExtra(Intent.EXTRA_SUBJECT, subject);
-                                i.putExtra(Intent.EXTRA_TEXT, title+"\nfor "+department+"\n"+semester+"\n"+current_date+"\n"+notice+"\nLast date : "+date);
-                                startActivity(Intent.createChooser(i,"Share using..."));
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseStorage.getInstance().getReference(filename).child(String.valueOf(finalI)).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Uri> task) {
+                                            counter++;
+                                            progressDialog.setMessage("Uploaded "+counter+"/"+uriList.size());
+                                            if (task.isSuccessful()) {
+                                                savedList.add(task.getResult().toString());
+                                            }
+                                            else {
+                                                Toast.makeText(NoticeDepartment.this, "Could Not Save "+finalI, Toast.LENGTH_SHORT).show();
+                                                Log.i("Error", task.getException().toString());
+                                            }
+                                            if (counter == uriList.size()) {
+                                                progressDialog.setMessage("Saving Uploaded Files To Database");
+                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                for (int i = 0; i < savedList.size(); i++) {
+                                                    hashMap.put("File " + i, savedList.get(i));
+                                                }
+                                                reference.child(filename).child("files").updateChildren(hashMap)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(NoticeDepartment.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                                                                finish();
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(NoticeDepartment.this, "Could Not Save to database", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                finish();
+                            public void onFailure(@NonNull Exception e) {
+                                //
                             }
-                        }).show();
+                        });
+                    }
+                }
+                else finish();
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //File upload from here
-    public void selectFiles() {
-        Intent i = new Intent();
-        i.setType("*/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(i, 86);
+    private void selectFiles() {
+        startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT).setType("*/*").putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true), 2);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            selectFiles();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectFiles();
+            } else
+                Toast.makeText(NoticeDepartment.this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
-        else Toasty.info(NoticeDepartment.this, "Please provide permissions...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 86 && resultCode == RESULT_OK && data != null) {
-            uri = data.getData();
-            String dataaaa = data.getData().getLastPathSegment();
-            if (dataaaa.contains("/")) {
-                String name = dataaaa.substring(dataaaa.lastIndexOf("/")+1);
-                tvDeptFile.setText(name);
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK && data != null) {
+                ClipData clipData = data.getClipData();
+                if (clipData != null) {
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        uriList.add(clipData.getItemAt(i).getUri());
+                    }
+                    Toasty.success(NoticeDepartment.this, clipData.getItemCount()+" files selected", Toast.LENGTH_SHORT).show();
+                } else  {
+                    uriList.add(data.getData());
+                    Toasty.success(NoticeDepartment.this, "1 file selected", Toast.LENGTH_SHORT).show();
+                }
             }
-            else tvDeptFile.setText(dataaaa);
         }
-        else Toasty.info(NoticeDepartment.this, "Please select a file...", Toast.LENGTH_SHORT).show();
     }
 }

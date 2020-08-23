@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AboutDepartment"></activity>
+        <activity android:name=".NoticeFiles"></activity>
+        <activity android:name=".AboutDepartment" />
         <activity android:name=".EventDetails" />
         <activity android:name=".NoticeSeen" />
         <activity

@@ -6,6 +6,6 @@
         android:id="@+id/itAddNotice"
         app:showAsAction="always"
         android:orderInCategory="150"
-        android:icon="@android:drawable/ic_input_add"
         android:title="Add Notice" />
+<!--        android:icon="@android:drawable/ic_input_add"-->
 </menu>

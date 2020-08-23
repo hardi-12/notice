@@ -53,7 +53,7 @@ public class JsoupAdapter extends RecyclerView.Adapter<JsoupAdapter.viewholder> 
         year = eventList.get(position).getYear();
         reg_link = eventList.get(position).getReg_link();
         DateFormat inputFormat = new SimpleDateFormat("dd-MMMM-yyyy");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM");
+        DateFormat outputFormat = new SimpleDateFormat("dd\nMMM");
         try {
             displayDate = outputFormat.format(inputFormat.parse(date));
         } catch (ParseException e) {

@@ -35,9 +35,7 @@ public class EventFragmentJsoup extends Fragment {
             yearF, venueF, speakerF, dateF, timeF, durationF;
     ProgressBar loading;
 
-    public EventFragmentJsoup() {
-        // Required empty public constructor
-    }
+    public EventFragmentJsoup() {}  // Required empty public constructor
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class EventFragmentJsoup extends Fragment {
             super.onPreExecute();
             loading.setVisibility(View.VISIBLE);
             view_all_events.setVisibility(View.INVISIBLE);
-//            loading.startAnimation(AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in));
         }
 
         @Override
@@ -82,7 +79,6 @@ public class EventFragmentJsoup extends Fragment {
             super.onPostExecute(aVoid);
             loading.setVisibility(View.GONE);
             view_all_events.setVisibility(View.VISIBLE);
-//            loading.startAnimation(AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out));
             jsoupAdapter.notifyDataSetChanged();
         }
 
@@ -94,7 +90,7 @@ public class EventFragmentJsoup extends Fragment {
                 Document document = Jsoup.connect(url).get();
                 Elements element = document.select("div.col-12");
                 int size = element.size();
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 4; i++) {
                     title = element.select("div.card-body").select("div.row").select("div.col-10").select("h2.card-title").eq(i).text();
                     description = element.select("p.card-text").eq(i).text();
                     time_left = element.select("div.card-body").select("div.row").select("div.col-2").eq(i).text();

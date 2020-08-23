@@ -301,7 +301,7 @@ public class NoticeSeminar extends AppCompatActivity {
                                 reference.child(filename).child("files").setValue(url);
                                 progressDialog.dismiss();
 
-                                new AlertDialog.Builder(NoticeSeminar.this).setMessage("Do you want to share this Notice ?")
+                                new AlertDialog.Builder(NoticeSeminar.this).setMessage("Do you want to notice_details_student this Notice ?")
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -352,7 +352,7 @@ public class NoticeSeminar extends AppCompatActivity {
                 reference.child(filename).setValue(n);
                 Toast.makeText(NoticeSeminar.this, "Notice added successfully", Toast.LENGTH_SHORT).show();
 
-                new AlertDialog.Builder(this).setMessage("Do you want to share this Notice ?")
+                new AlertDialog.Builder(this).setMessage("Do you want to notice_details_student this Notice ?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -1,8 +1,5 @@
 package com.example.noticeboard.ui.profile;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.noticeboard.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -102,7 +102,7 @@ public class ProfileEdit extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //
             }
         });
 
@@ -118,10 +118,29 @@ public class ProfileEdit extends AppCompatActivity {
 
                 if (new_name.isEmpty()) { etEditName.setError("Cannot be empty"); }
                 if (new_phone.isEmpty()) { etEditPhone.setError("Cannot be empty"); }
-                if (new_dept.equals("Select Department")) {
-                    Toasty.warning(ProfileEdit.this, "Select proper dept", Toast.LENGTH_SHORT).show();
+                if (spEditDesg.getVisibility() == View.VISIBLE) {
+                    if (new_dept.equals("Select Department")) {
+                        Toasty.error(ProfileEdit.this, "Select Department", Toast.LENGTH_SHORT).show();
+                    }
+                    if (new_desg.equals("Select Designation")) {
+                        Toasty.error(ProfileEdit.this, "Select Designation", Toast.LENGTH_SHORT).show();
+                    }
+                    if (new_dept.equals("Select Department") && new_desg.equals("Select Designation")) {
+                        Toasty.error(ProfileEdit.this, "Invalid Department & Designation", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else if (!new_name.isEmpty() || !new_phone.isEmpty() || !new_desg.equals("Select Department")) {
+                if (spEditDesg.getVisibility() == View.INVISIBLE) {
+                    if (new_sem.equals("Select Semester")) {
+                        Toasty.error(ProfileEdit.this, "Select Semester", Toast.LENGTH_SHORT).show();
+                    }
+                    if (new_dept.equals("Select Department")) {
+                        Toasty.error(ProfileEdit.this, "Select Department", Toast.LENGTH_SHORT).show();
+                    }
+                    if (new_sem.equals("Select Semester") && new_dept.equals("Select Department")) {
+                        Toasty.error(ProfileEdit.this, "Invalid Department & Semester", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (!new_name.isEmpty() && !new_phone.isEmpty() && !new_dept.equals("Select Department") && (!new_desg.equals("Select Designation") || !new_sem.equals("Select Semester"))) {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("name", new_name);
                     hashMap.put("phone", new_phone);

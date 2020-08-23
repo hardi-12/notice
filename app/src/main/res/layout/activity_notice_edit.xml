@@ -19,10 +19,12 @@
             android:id="@+id/tvEditNoticeUploadBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Uploaded by"
+            android:text="Uploaded by"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/tvEditNoticeType"
@@ -30,14 +32,19 @@
             android:layout_height="wrap_content"
             android:text="Notice Type"
             android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
             android:layout_below="@id/tvEditNoticeUploadBy" />
 
         <TextView
             android:id="@+id/tvEditNoticeCDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Upload Date"
+            android:text="Upload Date"
             android:layout_marginTop="20dp"
+            android:textColor="#000"
             android:layout_below="@id/tvEditNoticeType" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -46,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/tvEditNoticeCDate"
+            android:textColorHint="#000"
             app:counterEnabled="true"
             app:counterMaxLength="30">
 
@@ -53,8 +61,9 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Title"
+                android:text="Title"
                 android:id="@+id/etEditNoticeTitle"
+                android:textColor="#000"
                 android:maxLength="30"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +84,7 @@
             android:text="Select Date"
             android:layout_marginTop="25dp"
             android:textSize="20sp"
+            android:textColor="#000"
             android:layout_toStartOf="@id/ibEditNoticeDate"
             android:layout_below="@id/editTitle"/>
 
@@ -95,6 +105,7 @@
             android:text="Select Time"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
+            android:textColor="#000"
             android:layout_toStartOf="@id/ibEditNoticeTime"
             android:layout_below="@id/tvEditNoticeDate"/>
 
@@ -104,6 +115,7 @@
             android:layout_height="wrap_content"
             android:text="Select Semester :"
             android:layout_marginTop="15dp"
+            android:textColor="#000"
             android:layout_below="@id/tvEditNoticeTime"/>
 
         <androidx.gridlayout.widget.GridLayout
@@ -177,6 +189,7 @@
             android:layout_height="wrap_content"
             android:text="Select Department"
             android:layout_marginTop="20dp"
+            android:textColor="#000"
             android:layout_below="@+id/grid_sem"/>
 
         <androidx.gridlayout.widget.GridLayout
@@ -228,13 +241,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_below="@id/grid_dept"
+            android:textColorHint="#000"
             android:id="@+id/editSubject">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeSubject"
-                android:hint="Subject" />
+                android:text="Subject"
+                android:textColor="#000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -242,13 +257,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColorHint="#000"
             android:layout_below="@id/editSubject">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeNotice"
-                android:hint="Description" />
+                android:textColor="#000"
+                android:text="Description" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColorHint="#000"
+            android:layout_below="@id/editNotice">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/etEditNoticeContact"
+                android:textColor="#000"
+                android:text="Contact" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -262,7 +295,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Update Notice"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/editNotice"/>
+            android:layout_below="@+id/editContact"/>
 
     </RelativeLayout>
 </ScrollView>

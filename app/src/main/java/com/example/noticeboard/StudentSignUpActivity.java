@@ -1,8 +1,5 @@
 package com.example.noticeboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,29 +65,37 @@ public class StudentSignUpActivity extends AppCompatActivity {
                 semester = spSemester.getSelectedItem().toString();
                 String emailpattern = "[a-zA-Z0-9._-]+@somaiya.edu";
                 final String key = email.replace(".", "_dot_");
-
-                if (name.length() < 4){
-                    etStudentName.setError("INVALID");
+                if (password.length() < 7){
+                    etStudentPassword.setError("At-least 8 characters required");
+                    etStudentPassword.requestFocus();
                 }
-                if (ID.length() != 10){
-                    etStudentIDNumber.setError("INVALID");
+                if (!email.matches(emailpattern)){
+                    etStudentEmail.setError("Kindly use ...@somaiya.edu ID");
+                    etStudentEmail.requestFocus();
                 }
                 if (phone.length() != 10){
                     etStudentPhoneNumber.setError("INVALID");
+                    etStudentPhoneNumber.requestFocus();
                 }
-                if (password.length() < 7){
-                    etStudentPassword.setError("At-least 8 characters required");
+                if (ID.length() != 10){
+                    etStudentIDNumber.setError("INVALID");
+                    etStudentIDNumber.requestFocus();
                 }
-                if (department.equals("Select Department")){
-                    spDepartment.requestFocus();
+                if (name.length() < 4){
+                    etStudentName.setError("INVALID");
+                    etStudentName.requestFocus();
                 }
-                if (semester.equals("Select Semester")){
-                    spSemester.requestFocus();
+                if (department.equals("Select Department")) {
+                    Toasty.error(StudentSignUpActivity.this, "Select Department", Toast.LENGTH_SHORT).show();
                 }
-                if (email.length() == 0 || !email.matches(emailpattern)){
-                    etStudentEmail.setError("Kindly use ...@somaiya.edu ID");
+                if (semester.equals("Select Semester")) {
+                    Toasty.error(StudentSignUpActivity.this, "Select Semester", Toast.LENGTH_SHORT).show();
                 }
-                else {
+                if (department.equals("Select Department") && semester.equals("Select Semester")) {
+                    Toasty.error(StudentSignUpActivity.this, "Select Department & Semester", Toast.LENGTH_SHORT).show();
+                }
+                else if (password.length() > 7 && email.matches(emailpattern) && phone.length() == 10 && ID.length() == 10 && name.length() > 4
+                        && !department.equals("Select Department") && !semester.equals("Select Semester")) {
                     loading.setTitle("Create Account");
                     loading.setMessage("Please wait, while we are checking the credentials.");
                     loading.setCanceledOnTouchOutside(false);
@@ -113,7 +121,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
                                         }
                                         else {
                                             loading.dismiss();
-                                            Toasty.warning(StudentSignUpActivity.this, "Account creation failed:(" + "\n" + "Account with provided Email Id already exists"/*task.getException()*/, Toast.LENGTH_LONG).show();
+                                            Toasty.warning(StudentSignUpActivity.this, "Account creation failed\n"+task.getException(), Toast.LENGTH_LONG).show();
                                             etStudentEmail.requestFocus();
                                         }
                                     }
