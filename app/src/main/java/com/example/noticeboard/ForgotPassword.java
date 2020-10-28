@@ -43,7 +43,7 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toasty.success(ForgotPassword.this, "Reset link send to email.\nIt may take a while.", Toast.LENGTH_LONG).show();
+                                Toasty.success(ForgotPassword.this, "Reset link send to email.\nIt may take a while", Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(ForgotPassword.this, IntroActivity.class);
                                 startActivity(i);
                                 finish();
