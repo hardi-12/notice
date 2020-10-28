@@ -274,9 +274,14 @@ public class NoticeSeminar extends AppCompatActivity {
             tvSeminarNotice.setError("Cannot be empty");
             tvSeminarNotice.requestFocus();
         }
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if (contact.length()==10 || contact.matches(emailPattern)) {
+            tvSeminarContact.setError("Please enter vaild email ID or Contact no.");
+            tvSeminarContact.requestFocus();
+        }
         else if (item.getItemId() == R.id.itSent) {
             if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Select Semester")
-                    && !department.equals("Select Department") && !subject.isEmpty() && !notice.isEmpty() && uri != null) {
+                    && !department.equals("Select Department") && !subject.isEmpty() && !notice.isEmpty() && uri != null && contact!=null) {
 
                 progressDialog = new ProgressDialog(NoticeSeminar.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);

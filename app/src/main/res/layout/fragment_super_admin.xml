@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.superAdmin.superAdminFragment">
+    tools:context=".ui.superAdmin.superAdminFragment"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btnForgotPasswordAdminValidation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update Validaton Password"
-        android:layout_margin="20dp"
-        android:background="@drawable/custbut2"
-        android:textColor="#fff"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custombut1"
+        android:textColor="@color/colorPrimary"
         android:fontFamily="sans-serif-black" />
 
     <Button
         android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/custombut1"
-        android:textColor="@color/colorPrimary"
         android:fontFamily="sans-serif-black"
-        android:layout_below="@id/btnForgotPasswordAdminValidation"/>
+        android:text="Update Super admins"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_below="@id/btnUpdate"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:padding="7dp"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:text="List of all Super Admins"
+        android:layout_marginBottom="15dp"/>
 
     <ListView
         android:id="@+id/lvsuperAdmin"
-        android:layout_below="@id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"/>
+        android:choiceMode="multipleChoice"
+        android:layout_below="@+id/textView2"/>
 
-</RelativeLayout>
+</LinearLayout>

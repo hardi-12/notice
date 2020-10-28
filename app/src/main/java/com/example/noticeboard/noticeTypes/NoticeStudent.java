@@ -278,8 +278,9 @@ public class NoticeStudent extends AppCompatActivity {
         if (semester.equals("Selected Semester") && department.equals("Selected Department")) {
             Toasty.error(NoticeStudent.this, "Select Semester & Department", Toast.LENGTH_SHORT).show();
         }
-        if (contact.isEmpty()) {
-            tvSportsContact.setError("Cannot be empty");
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if (contact.length()==10 || contact.matches(emailPattern)) {
+            tvSportsContact.setError("Please enter vaild email ID or Contact no.");
             tvSportsContact.requestFocus();
         }
         if (notice.isEmpty()) {

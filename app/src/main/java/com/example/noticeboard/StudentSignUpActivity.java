@@ -70,19 +70,19 @@ public class StudentSignUpActivity extends AppCompatActivity {
                     etStudentPassword.requestFocus();
                 }
                 if (!email.matches(emailpattern)){
-                    etStudentEmail.setError("Kindly use ...@somaiya.edu ID");
+                    etStudentEmail.setError("Kindly use @somaiya.edu ID");
                     etStudentEmail.requestFocus();
                 }
                 if (phone.length() != 10){
-                    etStudentPhoneNumber.setError("INVALID");
+                    etStudentPhoneNumber.setError("Invalid Phone number");
                     etStudentPhoneNumber.requestFocus();
                 }
                 if (ID.length() != 10){
-                    etStudentIDNumber.setError("INVALID");
+                    etStudentIDNumber.setError("Please enter correct ID number");
                     etStudentIDNumber.requestFocus();
                 }
                 if (name.length() < 4){
-                    etStudentName.setError("INVALID");
+                    etStudentName.setError("Invalid Name");
                     etStudentName.requestFocus();
                 }
                 if (department.equals("Select Department")) {

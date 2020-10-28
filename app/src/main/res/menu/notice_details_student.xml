@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/itFiles"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="150"
-        android:icon="@drawable/ic_outline_attachment_24"
-        android:title="View attachments" />
-
-    <item
         android:id="@+id/itShare"
         app:showAsAction="ifRoom"
         android:orderInCategory="150"

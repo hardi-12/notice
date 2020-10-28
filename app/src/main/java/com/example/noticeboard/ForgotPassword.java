@@ -33,18 +33,17 @@ public class ForgotPassword extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         auth = FirebaseAuth.getInstance();
 
-        final String pattern = "[a-zA-Z0-9._-]+@somaiya.edu";
-        final String email = etEmail.getText().toString();
-
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = etEmail.getText().toString();
+                String pattern = "[a-zA-Z0-9._-]+@somaiya.edu";
                 if (email.matches(pattern)){
                     auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toasty.success(ForgotPassword.this, "Reset link send to email", Toast.LENGTH_SHORT).show();
+                                Toasty.success(ForgotPassword.this, "Reset link send to email", Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(ForgotPassword.this, IntroActivity.class);
                                 startActivity(i);
                                 finish();

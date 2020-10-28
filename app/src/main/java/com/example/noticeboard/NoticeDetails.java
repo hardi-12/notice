@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,7 @@ public class NoticeDetails extends AppCompatActivity {
     String file_url, typ;
     long enterTime, exitTime;
     String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    FloatingActionButton fabAttach;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class NoticeDetails extends AppCompatActivity {
         tvDetailTime = findViewById(R.id.tvDetailTime);
         tvDetailLastDate = findViewById(R.id.tvDetailLastDate);
         tvDashTym = findViewById(R.id.tvDashTym);
+        fabAttach = findViewById(R.id.fabAttach);
         reference = FirebaseDatabase.getInstance().getReference().child("notice");
         referenceSeen = FirebaseDatabase.getInstance().getReference("seen");
         referenceUser = FirebaseDatabase.getInstance().getReference("user");
@@ -89,6 +92,13 @@ public class NoticeDetails extends AppCompatActivity {
                 //
             }
         });
+
+        fabAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NoticeDetails.this, NoticeFiles.class).putExtra("key", key));
+            }
+        });
     }
 
     @Override
@@ -114,56 +124,8 @@ public class NoticeDetails extends AppCompatActivity {
             case R.id.itSeen:
                 startActivity(new Intent(NoticeDetails.this, NoticeSeen.class).putExtra("key", key));
                 break;
-
-            case R.id.itFiles:
-                startActivity(new Intent(NoticeDetails.this, NoticeFiles.class).putExtra("key", key));
-                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        enterTime = System.currentTimeMillis();
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        final double readTime = (wordCount(title) + wordCount(subject) + wordCount(notice)) * 0.1;   //fast reader - 0.375
-//        exitTime = System.currentTimeMillis();
-//        final double screenTime = ((exitTime - enterTime) / 1000) % 60;
-//        final String asd = wordCount(title) + wordCount(subject) + wordCount(notice)+" word(s)\nRead time : "+readTime+"s\nScreen time : "+screenTime+"s\n";
-//
-//        referenceSeen.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.child(key).hasChild(user.replace(".", "_dot_"))) {
-//                    Log.i("Seen", key+"\t\t\t\t"+user);
-//                }
-//                else {
-//                    if (readTime > screenTime) { Toast.makeText(getApplicationContext(), asd+"Did not read", Toast.LENGTH_LONG).show(); }
-//                    else if (readTime <= screenTime) {
-//                        Toast.makeText(getApplicationContext(), asd+"Read", Toast.LENGTH_LONG).show();
-//                        HashMap<String, Object> hashMap = new HashMap<>();
-//                        hashMap.put("email", user);
-//                        hashMap.put("timeStamp", new SimpleDateFormat("hh:mm:ss a dd-MM-yyyy", Locale.getDefault()).format(new Date()));
-//                        referenceSeen.child(key).child(user.replace(".", "_dot_")).setValue(hashMap);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toasty.info(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-//
-//    public int wordCount (String text) {
-//        String[] array = text.split("\\s+");
-//        return array.length;
-//    }
 }

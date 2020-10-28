@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Name"
+            android:hint="Full Name"
             android:layout_marginLeft="20dp"
             android:textColor="#000"
             android:textColorHint="#000"

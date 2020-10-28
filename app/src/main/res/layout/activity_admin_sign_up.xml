@@ -30,7 +30,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="Full Name"
             android:inputType="textPersonName"
             android:textColor="#000"
             android:textColorHint="#000" />

@@ -70,19 +70,19 @@ public class AdminSignUpActivity extends AppCompatActivity {
                     etAdminPassword.requestFocus();
                 }
                 if (!email.matches(emailpattern)){
-                    etAdminEmail.setError("Kindly use ...@somaiya.edu ID");
+                    etAdminEmail.setError("Kindly use @somaiya.edu ID");
                     etAdminEmail.requestFocus();
                 }
                 if (phone.length() != 10){
-                    etAdminPhoneNumber.setError("INVALID");
+                    etAdminPhoneNumber.setError("Invalid Phone number");
                     etAdminPhoneNumber.requestFocus();
                 }
                 if (ID.length() != 10){
-                    etAdminIDNumber.setError("INVALID");
+                    etAdminIDNumber.setError("Please enter correct ID number");
                     etAdminIDNumber.requestFocus();
                 }
                 if (name.length() < 4){
-                    etAdminName.setError("INVALID");
+                    etAdminName.setError("Invalid Name");
                     etAdminName.requestFocus();
                 }
                 if (department.equals("Select Department")) {

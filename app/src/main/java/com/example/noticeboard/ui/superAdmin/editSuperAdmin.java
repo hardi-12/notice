@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.noticeboard.R;
+import com.example.noticeboard.ui.profile.ProfileFragment;
+import com.example.noticeboard.ui.viewAll.NewUpdatesFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 
-public class superAdminFragment extends Fragment {
+public class editSuperAdmin extends Fragment {
 
     ListView lvsuperAdmin;
     Button btnUpdate, btnForgotPasswordAdminValidation;
@@ -39,17 +42,22 @@ public class superAdminFragment extends Fragment {
     ArrayList<String> emailList = new ArrayList<>();
     ArrayList<String> superAdminList = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    TextView textView;
 
-    public superAdminFragment() {}   // Required empty public constructor
+    public editSuperAdmin() {}   // Required empty public constructor
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_super_admin, container, false);
 
+
         lvsuperAdmin = view.findViewById(R.id.lvsuperAdmin);
         btnUpdate = view.findViewById(R.id.btnUpdate);
+        textView = view.findViewById(R.id.textView2);
+        textView.setVisibility(View.GONE);
         btnForgotPasswordAdminValidation = view.findViewById(R.id.btnForgotPasswordAdminValidation);
-        adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, emailList);
+        btnForgotPasswordAdminValidation.setVisibility(View.GONE);
+        adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_multiple_choice, emailList);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,13 +66,20 @@ public class superAdminFragment extends Fragment {
                     if (ds.child("type").getValue().toString().equals("admin")) {
                         String email = ds.child("email").getValue(String.class);
                         String superAdmin = ds.child("superAdmin").getValue(String.class);
-                        if(superAdmin.equals("true")) {
-                            emailList.add(email);
-                        }
+                        emailList.add(email);
+                        superAdminList.add(superAdmin);
                     }
                 }
                 adapter.notifyDataSetChanged();
                 lvsuperAdmin.setAdapter(adapter);
+                for (int i = 0; i < emailList.size(); i++) {
+                    if (superAdminList.get(i).equals("true")) {
+                        lvsuperAdmin.setItemChecked(i, true);
+                    }
+                    else {
+                        lvsuperAdmin.setItemChecked(i, false);
+                    }
+                }
             }
 
             @Override
@@ -76,7 +91,13 @@ public class superAdminFragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new editSuperAdmin();
+                for (int i = 0; i < emailList.size(); i++) {
+                    if (lvsuperAdmin.isItemChecked(i)) {
+                        reference.child(emailList.get(i).replace(".", "_dot_")).child("superAdmin").setValue("true");
+                    }
+                    else reference.child(emailList.get(i).replace(".", "_dot_")).child("superAdmin").setValue("false");
+                }
+                Fragment newFragment = new superAdminFragment();
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, newFragment);
                 transaction.addToBackStack(null);
