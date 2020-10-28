@@ -108,12 +108,12 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
         holder.tvPrintContact.setText(""+contact);
         holder.tvPrintContact.setMovementMethod(LinkMovementMethod.getInstance());
 
-        reference.child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("user").child(upload.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue().toString();
-                String dept = dataSnapshot.child("department").getValue().toString();
-                String contact = dataSnapshot.child("phone").getValue().toString();
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String dept = dataSnapshot.child("department").getValue(String.class);
+                String contact = dataSnapshot.child("phone").getValue(String.class);
                 holder.tvPrintUpload.setText(name+"\n"+dept);
             }
             @Override

@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/tvEditNoticeCDate"
+            android:hint="Title"
             android:textColorHint="#000"
             app:counterEnabled="true"
             app:counterMaxLength="30">
@@ -61,7 +62,6 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title"
                 android:id="@+id/etEditNoticeTitle"
                 android:textColor="#000"
                 android:maxLength="30"/>
@@ -241,6 +241,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_below="@id/grid_dept"
+            android:hint="Subject"
             android:textColorHint="#000"
             android:id="@+id/editSubject">
 
@@ -248,7 +249,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeSubject"
-                android:text="Subject"
                 android:textColor="#000" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -257,6 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:hint="Description"
             android:textColorHint="#000"
             android:layout_below="@id/editSubject">
 
@@ -264,8 +265,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeNotice"
-                android:textColor="#000"
-                android:text="Description" />
+                android:textColor="#000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -273,6 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:hint="Contact"
             android:textColorHint="#000"
             android:layout_below="@id/editNotice">
 
@@ -280,8 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeContact"
-                android:textColor="#000"
-                android:text="Contact" />
+                android:textColor="#000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

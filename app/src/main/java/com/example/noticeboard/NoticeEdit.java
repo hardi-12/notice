@@ -200,11 +200,11 @@ public class NoticeEdit extends AppCompatActivity {
                 if (cbAI_DS.isChecked()) { dept.append(" AI-DS"); }
 
                 if (etEditNoticeTitle.getText().toString().isEmpty()) { etEditNoticeTitle.setError("Cannot be empty"); }
-                if (etEditNoticeSubject.getText().toString().isEmpty()) { etEditNoticeSubject.setError("Cannot be empty"); }
+                if (etEditNoticeContact.getText().toString().isEmpty()) { etEditNoticeContact.setError("Cannot be empty"); }
                 if (etEditNoticeNotice.getText().toString().isEmpty()) { etEditNoticeNotice.setError("Cannot be empty"); }
                 if (sem.toString().equals("Sem") || dept.toString().isEmpty()) { Toasty.warning(NoticeEdit.this, "Select at-least one semester or department", Toast.LENGTH_SHORT).show(); }
 
-                else if (!etEditNoticeTitle.getText().toString().isEmpty() && !etEditNoticeSubject.getText().toString().isEmpty() && !etEditNoticeNotice.getText().toString().isEmpty() && !sem.toString().equals("Sem") && !dept.toString().isEmpty()) {
+                else if (!etEditNoticeTitle.getText().toString().isEmpty() && !etEditNoticeNotice.getText().toString().isEmpty() && !sem.toString().equals("Sem") && !dept.toString().isEmpty() && !etEditNoticeContact.getText().toString().isEmpty()) {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("title", etEditNoticeTitle.getText().toString());
                     hashMap.put("subject", etEditNoticeSubject.getText().toString());
@@ -212,6 +212,7 @@ public class NoticeEdit extends AppCompatActivity {
                     hashMap.put("sem", sem.toString());
                     hashMap.put("branch", dept.toString());
                     hashMap.put("date", tvEditNoticeDate.getText().toString());
+                    hashMap.put("contact", etEditNoticeContact.getText().toString());
 
                     if (timeStatus) {
                         hashMap.put("time", "");
