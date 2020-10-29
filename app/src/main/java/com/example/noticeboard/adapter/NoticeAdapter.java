@@ -220,11 +220,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.viewholder
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        FirebaseDatabase.getInstance().getReference("notice").child(key).removeValue();
                         FirebaseDatabase.getInstance().getReference("seen").child(key).removeValue();
                         for (int i = 0; i < count; i++) {
                             FirebaseStorage.getInstance().getReference().child(key).child(i+"").delete();
                         }
-                        FirebaseDatabase.getInstance().getReference("notice").child(key).removeValue();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override

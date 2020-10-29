@@ -274,8 +274,9 @@ public class NoticeSeminar extends AppCompatActivity {
             tvSeminarNotice.setError("Cannot be empty");
             tvSeminarNotice.requestFocus();
         }
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (contact.length() !=10 || !contact.matches(emailPattern)) {
+//        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "[a-zA-Z0-9._-]+@somaiya.edu";
+        if (!(contact.length() ==10 || contact.matches(emailPattern))) {
             tvSeminarContact.setError("Please enter valid email ID or Contact no.");
             tvSeminarContact.requestFocus();
         }

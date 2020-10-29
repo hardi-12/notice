@@ -257,8 +257,9 @@ public class NoticeExamCell extends AppCompatActivity {
         if (semester.equals("Selected Semester") && department.equals("Selected Department")) {
             Toasty.error(NoticeExamCell.this, "Select Semester & Department", Toast.LENGTH_SHORT).show();
         }
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (contact.length() !=10 || !contact.matches(emailPattern)) {
+//        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "[a-zA-Z0-9._-]+@somaiya.edu";
+        if (!(contact.length() ==10 || contact.matches(emailPattern))) {
             tvExamContact.setError("Please enter valid email ID or Contact no.");
             tvExamContact.requestFocus();
         }
