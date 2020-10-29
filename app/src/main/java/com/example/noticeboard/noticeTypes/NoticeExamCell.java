@@ -372,13 +372,16 @@ public class NoticeExamCell extends AppCompatActivity {
         if (requestCode == 2) {
             if (resultCode == RESULT_OK && data != null) {
                 ClipData clipData = data.getClipData();
+                uriList.clear();
                 if (clipData != null) {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
                         uriList.add(clipData.getItemAt(i).getUri());
                     }
+                    tvExamFile.setText(clipData.getItemCount()+" files selected");
                     Toasty.success(NoticeExamCell.this, clipData.getItemCount()+" files selected", Toast.LENGTH_SHORT).show();
                 } else  {
                     uriList.add(data.getData());
+                    tvExamFile.setText("1 file selected");
                     Toasty.success(NoticeExamCell.this, "1 file selected", Toast.LENGTH_SHORT).show();
                 }
             }

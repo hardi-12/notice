@@ -67,6 +67,13 @@ public class NoticeSeminar extends AppCompatActivity {
     CheckBox cb_semI, cb_semII, cb_semIII, cb_semIV, cb_semV, cb_semVI, cb_semVII, cb_semVIII, cb_CS, cb_IT, cb_EXTC, cb_ETRX, cb_AI_DS;
     StringBuilder data = new StringBuilder();
 
+
+    /**
+     * NO CHANGES MADE IN THIS FILE
+     * THIS FILE IS NOT USED ANYMORE
+     * **/
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

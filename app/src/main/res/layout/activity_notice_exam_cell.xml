@@ -165,7 +165,7 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="#000"
-            android:text="Filename"
+            android:text="Number of files selected"
             android:visibility="invisible"
             android:layout_below="@id/switchExam"/>
 

@@ -185,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
-            android:text="Filename"
+            android:text="Number of files selected"
             android:textColor="#000"
             android:visibility="invisible"
             android:layout_below="@id/switchSports"/>
