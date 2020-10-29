@@ -1,11 +1,5 @@
 package com.example.noticeboard.noticeTypes;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -31,6 +25,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.notice;
@@ -275,8 +275,8 @@ public class NoticeSeminar extends AppCompatActivity {
             tvSeminarNotice.requestFocus();
         }
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (contact.length()==10 || contact.matches(emailPattern)) {
-            tvSeminarContact.setError("Please enter vaild email ID or Contact no.");
+        if (contact.length() !=10 || !contact.matches(emailPattern)) {
+            tvSeminarContact.setError("Please enter valid email ID or Contact no.");
             tvSeminarContact.requestFocus();
         }
         else if (item.getItemId() == R.id.itSent) {

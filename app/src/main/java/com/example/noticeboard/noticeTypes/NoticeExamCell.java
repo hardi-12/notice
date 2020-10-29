@@ -258,8 +258,8 @@ public class NoticeExamCell extends AppCompatActivity {
             Toasty.error(NoticeExamCell.this, "Select Semester & Department", Toast.LENGTH_SHORT).show();
         }
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (contact.length()==10 || contact.matches(emailPattern)) {
-            tvExamContact.setError("Please enter vaild email ID or Contact no.");
+        if (contact.length() !=10 || !contact.matches(emailPattern)) {
+            tvExamContact.setError("Please enter valid email ID or Contact no.");
             tvExamContact.requestFocus();
         }
         if (notice.isEmpty()) {
@@ -288,7 +288,7 @@ public class NoticeExamCell extends AppCompatActivity {
 
                 if (uriList.size() != 0) {
                     final ProgressDialog progressDialog = new ProgressDialog(NoticeExamCell.this);
-                    progressDialog.setMessage("Uploding 0/"+uriList.size());
+                    progressDialog.setMessage("Uploading 0/"+uriList.size());
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.setCancelable(false);
                     progressDialog.show();

@@ -265,8 +265,8 @@ public class NoticeDepartment extends AppCompatActivity {
             Toasty.error(NoticeDepartment.this, "Select Semester & Department", Toast.LENGTH_SHORT).show();
         }
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (contact.length()==10 || contact.matches(emailPattern)) {
-            tvDeptContact.setError("Please enter vaild email ID or Contact no.");
+        if (contact.length() !=10 || !contact.matches(emailPattern)) {
+            tvDeptContact.setError("Please enter valid email ID or Contact no.");
             tvDeptContact.requestFocus();
         }
         if (notice.isEmpty()) {
@@ -295,7 +295,7 @@ public class NoticeDepartment extends AppCompatActivity {
 
                 if (uriList.size() != 0) {
                     final ProgressDialog progressDialog = new ProgressDialog(NoticeDepartment.this);
-                    progressDialog.setMessage("Uploding 0/"+uriList.size());
+                    progressDialog.setMessage("Uploading 0/"+uriList.size());
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
