@@ -54,6 +54,7 @@ public class superAdminFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                emailList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.child("type").getValue().toString().equals("admin")) {
                         String email = ds.child("email").getValue(String.class);

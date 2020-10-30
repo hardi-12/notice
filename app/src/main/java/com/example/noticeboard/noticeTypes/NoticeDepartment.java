@@ -280,7 +280,7 @@ public class NoticeDepartment extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.itSent) {
             if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Selected Semester") &&
-                    !department.equals("Selected Department")&& !notice.isEmpty() && !contact.isEmpty()) {
+                    !department.equals("Selected Department")&& !notice.isEmpty() && (contact.length() == 10 || contact.matches(emailPattern))) {
                 com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date, upload, "", "Department Section", filename, contact);
                 reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

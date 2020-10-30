@@ -199,18 +199,31 @@ public class NoticeEdit extends AppCompatActivity {
                 if (cbETRX.isChecked()) { dept.append(" ETRX,"); }
                 if (cbAI_DS.isChecked()) { dept.append(" AI-DS"); }
 
+                String finalSem, finalDept;
+                if (sem.toString().substring(sem.toString().length()-1).equals(",")) {
+                    finalSem = sem.toString().substring(0, sem.toString().length()-1);
+                }
+                else finalSem = sem.toString();
+                if (dept.toString().substring(dept.toString().length()-1).equals(",")) {
+                    finalDept = dept.toString().substring(0, dept.toString().length()-1);
+                }
+                else finalDept = dept.toString();
+
+                String contact = etEditNoticeContact.getText().toString();
+                String emailPattern = "[a-zA-Z0-9._-]+@somaiya.edu";
                 if (etEditNoticeTitle.getText().toString().isEmpty()) { etEditNoticeTitle.setError("Cannot be empty"); }
-                if (etEditNoticeContact.getText().toString().isEmpty()) { etEditNoticeContact.setError("Cannot be empty"); }
+                if (!(contact.length() ==10 || contact.matches(emailPattern))) { etEditNoticeContact.setError("Please enter valid email ID or Contact no."); }
                 if (etEditNoticeNotice.getText().toString().isEmpty()) { etEditNoticeNotice.setError("Cannot be empty"); }
                 if (sem.toString().equals("Sem") || dept.toString().isEmpty()) { Toasty.warning(NoticeEdit.this, "Select at-least one semester or department", Toast.LENGTH_SHORT).show(); }
 
-                else if (!etEditNoticeTitle.getText().toString().isEmpty() && !etEditNoticeNotice.getText().toString().isEmpty() && !sem.toString().equals("Sem") && !dept.toString().isEmpty() && !etEditNoticeContact.getText().toString().isEmpty()) {
+                else if (!etEditNoticeTitle.getText().toString().isEmpty() && !etEditNoticeNotice.getText().toString().isEmpty() && !sem.toString().equals("Sem") &&
+                        !dept.toString().isEmpty() && (contact.length() == 10 || contact.matches(emailPattern))) {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("title", etEditNoticeTitle.getText().toString());
                     hashMap.put("subject", etEditNoticeSubject.getText().toString());
                     hashMap.put("notice", etEditNoticeNotice.getText().toString());
-                    hashMap.put("sem", sem.toString());
-                    hashMap.put("branch", dept.toString());
+                    hashMap.put("sem", finalSem);
+                    hashMap.put("branch", finalDept);
                     hashMap.put("date", tvEditNoticeDate.getText().toString());
                     hashMap.put("contact", etEditNoticeContact.getText().toString());
 
