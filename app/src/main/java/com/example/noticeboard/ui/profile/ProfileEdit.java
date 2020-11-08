@@ -140,7 +140,7 @@ public class ProfileEdit extends AppCompatActivity {
                         Toasty.error(ProfileEdit.this, "Invalid Department & Semester", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else if (!new_name.isEmpty() && !new_phone.isEmpty() && !new_dept.equals("Select Department") && (!new_desg.equals("Select Designation") || !new_sem.equals("Select Semester"))) {
+                if (!new_name.isEmpty() && !new_phone.isEmpty() && !new_dept.equals("Select Department") && (!new_desg.equals("Select Designation") || !new_sem.equals("Select Semester"))) {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("name", new_name);
                     hashMap.put("phone", new_phone);

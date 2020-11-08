@@ -264,11 +264,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
-            case R.id.nav_dept_website:
-                Intent n = new Intent(Dashboard.this,web_view.class);
-                n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
-                startActivity(n);
-                break;
+//            case R.id.nav_dept_website:
+//                Intent n = new Intent(Dashboard.this,web_view.class);
+//                n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
+//                startActivity(n);
+//                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
