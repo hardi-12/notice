@@ -39,7 +39,6 @@ public class JsoupAdapter extends RecyclerView.Adapter<JsoupAdapter.viewholder> 
     @Override
     public void onBindViewHolder(@NonNull JsoupAdapter.viewholder holder, int position) {
         final String title, description, time_left, speaker, contact, duration, venue, time, conducted_by, date, year, reg_link;
-        String displayDate = null;
         title = eventList.get(position).getTitle();
         description = eventList.get(position).getDescription();
         time_left = eventList.get(position).getTime_left();
@@ -52,10 +51,11 @@ public class JsoupAdapter extends RecyclerView.Adapter<JsoupAdapter.viewholder> 
         date = eventList.get(position).getDate();
         year = eventList.get(position).getYear();
         reg_link = eventList.get(position).getReg_link();
-        DateFormat inputFormat = new SimpleDateFormat("dd-MMMM-yyyy");
-        DateFormat outputFormat = new SimpleDateFormat("dd\nMMM");
+        String displayDate = date.substring(0, date.lastIndexOf("(")-1);
+        DateFormat inputFormat = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat outputFormat = new SimpleDateFormat("dd\nMMM\nyyyy");
         try {
-            displayDate = outputFormat.format(inputFormat.parse(date));
+            displayDate = outputFormat.format(inputFormat.parse(displayDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }

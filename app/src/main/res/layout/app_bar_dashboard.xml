@@ -39,17 +39,31 @@
         app:behavior_hideable="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Headline"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Select the type of notice"
-            android:textColor="#000"
-            android:textSize="22sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Select the type of notice"
+                android:textColor="#000"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_drag"
+                android:paddingEnd="10dp"/>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/deptNotice"
@@ -253,7 +267,7 @@
                         android:paddingLeft="8dp"
                         android:linksClickable="true"
                         android:autoLink="web"
-                        android:text="To add event please visit the below link\n https://eventkj.000webhostapp.com/index.php" />
+                        android:text="To add event please visit the below link\n https://kjsieit.in/sims/eventmanager/index.php" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

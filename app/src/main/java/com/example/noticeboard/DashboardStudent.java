@@ -174,7 +174,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 return true;
 
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
@@ -185,18 +185,17 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.nav_about :
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment())/*.addToBackStack(null)*/.commit();
                 break;
 
             case R.id.nav_list_users:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
-            case R.id.nav_dept_website:
-                Intent n = new Intent(DashboardStudent.this,web_view.class);
-                n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
-                startActivity(n);
+            case R.id.nav_SIMS:
+                startActivity(new Intent(DashboardStudent.this,web_view.class)
+                        .putExtra("link","https://www.kjsieit.in/sims/student/login.php"));
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

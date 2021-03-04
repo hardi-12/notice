@@ -120,7 +120,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         eventNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://eventkj.000webhostapp.com/index.php")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://kjsieit.in/sims/eventmanager/index.php")));
             }
         });
 
@@ -239,7 +239,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 return true;
 
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
@@ -250,25 +250,24 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
 
             case R.id.nav_about :
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             case R.id.nav_list_users:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ListFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             case R.id.nav_list_superAdmin:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new superAdminFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new superAdminFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
-//            case R.id.nav_dept_website:
-//                Intent n = new Intent(Dashboard.this,web_view.class);
-//                n.putExtra("link","https://kjsieit.somaiya.edu/en/programme/information-technology-engineering");
-//                startActivity(n);
-//                break;
+            case R.id.nav_SIMS:
+                startActivity(new Intent(Dashboard.this,web_view.class)
+                        .putExtra("link","https://www.kjsieit.in/sims/faculty/login.php"));
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

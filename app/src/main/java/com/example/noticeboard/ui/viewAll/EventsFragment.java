@@ -13,11 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noticeboard.R;
-import com.example.noticeboard.adapter.EventsAdapter;
 import com.example.noticeboard.adapter.JsoupAdapter;
-import com.example.noticeboard.adapter.NoticeAdapter;
 import com.example.noticeboard.event;
-import com.example.noticeboard.notice;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -97,7 +94,7 @@ public class EventsFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             eventList.clear();
             try {
-                String url = "https://eventkj.000webhostapp.com/index.php";
+                String url = "https://kjsieit.in/sims/eventmanager/index.php";
                 Document document = Jsoup.connect(url).get();
                 Elements element = document.select("div.col-12");
                 int size = element.size();

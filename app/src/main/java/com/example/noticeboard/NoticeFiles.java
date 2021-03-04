@@ -42,7 +42,7 @@ public class NoticeFiles extends AppCompatActivity {
                     long size = snapshot.child("files").getChildrenCount();
                     for (int i = 0; i < size; i++) {
                         String url = snapshot.child("files").child("File "+i).getValue().toString();
-                        ((NoticeFilesAdapter)rvFiles.getAdapter()).update("File "+i, url);
+                        ((NoticeFilesAdapter)rvFiles.getAdapter()).update("Attachment "+(i+1), url);
                     }
                 }
                 else tvNoFiles.setVisibility(View.VISIBLE);

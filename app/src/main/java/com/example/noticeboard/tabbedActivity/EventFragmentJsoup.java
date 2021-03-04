@@ -86,7 +86,7 @@ public class EventFragmentJsoup extends Fragment {
         protected Void doInBackground(Void... voids) {
             eventList.clear();
             try {
-                String url = "https://eventkj.000webhostapp.com/index.php";
+                String url = "https://kjsieit.in/sims/eventmanager/index.php";
                 Document document = Jsoup.connect(url).get();
                 Elements element = document.select("div.col-12");
                 int size = element.size();

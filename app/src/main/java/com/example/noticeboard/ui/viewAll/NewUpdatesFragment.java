@@ -173,6 +173,18 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
         list_view.setAdapter(adapterClass);
     }
 
+    private String semConvert(String sem) {
+        int sum = 0;
+        for (int i = 0; i < sem.length(); i++) {
+            char c = sem.charAt(i);
+            switch (c) {
+                case 'I': sum = sum + 1; break;
+                case 'V': sum = sum + 5; break;
+            }
+        }
+        return String.valueOf(sum);
+    }
+
     @Override
     public boolean onMenuItemClick(final MenuItem item) {
         ArrayList<notice> myList = new ArrayList();
@@ -206,9 +218,11 @@ public class NewUpdatesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.it_home_MySem :
                 myList.clear();
                 for (notice object : itemlist) {
-                    if(object.getSem().equals(sem)) {
+//                    if(object.getSem().equals(sem)) {
+//                        myList.add(object);
+//                    }
+                    if (object.getSem().contains(semConvert(sem)))
                         myList.add(object);
-                    }
                 }
                 list_view.setAdapter(new NoticeAdapter(myList));
                 break;

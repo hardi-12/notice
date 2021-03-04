@@ -106,7 +106,7 @@ public class NoticeDetails extends AppCompatActivity {
         if (typ.equals("admin")) {
             getMenuInflater().inflate(R.menu.notice_details_staff, menu);
         }
-        else getMenuInflater().inflate(R.menu.notice_details_student, menu);
+//        else getMenuInflater().inflate(R.menu.notice_details_student, menu);
         return true;
     }
 
