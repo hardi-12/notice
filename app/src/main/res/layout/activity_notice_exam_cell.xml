@@ -30,7 +30,8 @@
                 android:hint="Title"
                 android:textColorHint="#000"
                 android:id="@+id/tvExamTitle"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
@@ -114,7 +115,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvExamSubject"
                 android:textColorHint="#000"
-                android:hint="Subject (optional)" />
+                android:hint="Subject (optional)"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -146,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvExamContact"
                 android:textColorHint="#000"
-                android:hint="Contact (Email / Phone number)" />
+                android:hint="Contact (Email / Phone number)"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Switch

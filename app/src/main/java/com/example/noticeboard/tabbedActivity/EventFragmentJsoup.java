@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.JsoupAdapter;
-import com.example.noticeboard.event;
+import com.example.noticeboard.models.event;
 import com.example.noticeboard.ui.viewAll.EventsFragment;
 
 import org.jsoup.Jsoup;

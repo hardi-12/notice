@@ -30,7 +30,8 @@
                 android:hint="Title"
                 android:textColor="#000"
                 android:id="@+id/tvDeptTitle"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
@@ -116,7 +117,8 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="#000"
                 android:id="@+id/tvDeptSubject"
-                android:hint="Subject (optional)" />
+                android:hint="Subject (optional)"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -148,7 +150,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvDeptContact"
                 android:textColorHint="#000"
-                android:hint="Contact (Email / Phone number)" />
+                android:hint="Contact (Email / Phone number)"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Switch
@@ -158,7 +161,8 @@
             android:layout_marginTop="20dp"
             android:textColor="#000"
             android:text="Want to upload file ?    "
-            android:layout_below="@id/abc"/>
+            android:layout_below="@id/abc"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:id="@+id/tvDeptFile"

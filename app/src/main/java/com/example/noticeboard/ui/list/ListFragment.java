@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.UserListAdapter;
-import com.example.noticeboard.user;
+import com.example.noticeboard.models.user;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

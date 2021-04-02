@@ -33,7 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.noticeboard.R;
-import com.example.noticeboard.notice;
+import com.example.noticeboard.models.notice;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -281,7 +281,7 @@ public class NoticeDepartment extends AppCompatActivity {
         else if (item.getItemId() == R.id.itSent) {
             if (!title.isEmpty() && !date.equals("Select Date") && !semester.equals("Selected Semester") &&
                     !department.equals("Selected Department")&& !notice.isEmpty() && (contact.length() == 10 || contact.matches(emailPattern))) {
-                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date, upload, "", "Department Section", filename, contact);
+                com.example.noticeboard.models.notice n = new notice(title, department, semester, subject, notice, date, current_date, upload, "", "Department Section", filename, contact);
                 reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

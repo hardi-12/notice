@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.models;
 
 public class event {
     String title, description, time_left, speaker, contact, duration, venue, time, conducted_by, reg_link, date, year;

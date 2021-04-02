@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noticeboard.EventDetails;
 import com.example.noticeboard.R;
-import com.example.noticeboard.event;
+import com.example.noticeboard.models.event;
 
 import java.text.DateFormat;
 import java.text.ParseException;

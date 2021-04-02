@@ -18,7 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.NoticeAdapter;
-import com.example.noticeboard.notice;
+import com.example.noticeboard.models.notice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

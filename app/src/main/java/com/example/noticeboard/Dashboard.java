@@ -1,5 +1,6 @@
 package com.example.noticeboard;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -22,6 +24,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.noticeboard.noticeTypes.AddResources;
 import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.example.noticeboard.noticeTypes.NoticeExamCell;
 import com.example.noticeboard.noticeTypes.NoticeStudent;
@@ -55,8 +58,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     NavigationView navigationView;
     TextView tvDashEmail, tvDashName, tvDashType;
     FirebaseUser user;
-    private BottomSheetBehavior mBottomSheetBehavior1;
-    CardView deptNotice, examNotice, studentNotice, eventNotice;
+    BottomSheetBehavior mBottomSheetBehavior1;
+    CardView deptNotice, examNotice, studentNotice, eventNotice, resources;
     CoordinatorLayout other;
 
 
@@ -64,6 +67,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         firebaseAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("user");
@@ -108,6 +112,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         deptNotice = findViewById(R.id.deptNotice);
         studentNotice = findViewById(R.id.studentNotice);
         eventNotice = findViewById(R.id.eventNotice);
+        resources = findViewById(R.id.resources);
 
         examNotice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +145,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
+        resources.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, AddResources.class);
+                startActivity(i);
+            }
+        });
+
         View headerView = navigationView.getHeaderView(0);
         tvDashEmail = headerView.findViewById(R.id.tvDashEmail);
         tvDashName = headerView.findViewById(R.id.tvDashName);
@@ -158,10 +171,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
                 tvDashName.setText(name);
                 tvDashType.setText(type);
-                if (superAdmin.equals("false")) {
-                    navigationView.getMenu().findItem(R.id.nav_list_superAdmin).setVisible(false);
-                }
-                else navigationView.getMenu().findItem(R.id.nav_list_superAdmin).setVisible(true);
+                navigationView.getMenu().findItem(R.id.nav_list_superAdmin).setVisible(!superAdmin.equals("false"));
             }
 
             @Override
@@ -223,6 +233,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

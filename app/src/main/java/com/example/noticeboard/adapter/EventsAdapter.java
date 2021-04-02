@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noticeboard.NoticeDetails;
 import com.example.noticeboard.R;
-import com.example.noticeboard.notice;
+import com.example.noticeboard.models.notice;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.models;
 
 public class user {
     public String name, phone, department, email,semester, type, designation, id_number;

@@ -33,7 +33,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.noticeboard.R;
-import com.example.noticeboard.notice;
+import com.example.noticeboard.models.notice;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -305,7 +305,7 @@ public class NoticeSeminar extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                com.example.noticeboard.notice n = new notice(title, department, semester, subject, notice, date, current_date,
+                                com.example.noticeboard.models.notice n = new notice(title, department, semester, subject, notice, date, current_date,
                                         upload, time, "Event Section", filename, contact);
                                 url = uri.toString();
                                 reference.child(filename).setValue(n);

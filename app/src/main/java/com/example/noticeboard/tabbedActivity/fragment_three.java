@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.EventsAdapter;
-import com.example.noticeboard.notice;
+import com.example.noticeboard.models.notice;
 import com.example.noticeboard.ui.viewAll.EventsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

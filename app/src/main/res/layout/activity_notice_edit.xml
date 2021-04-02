@@ -64,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeTitle"
                 android:textColor="#000"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
@@ -249,7 +250,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeSubject"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -281,7 +283,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/etEditNoticeContact"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.JsoupAdapter;
-import com.example.noticeboard.event;
+import com.example.noticeboard.models.event;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

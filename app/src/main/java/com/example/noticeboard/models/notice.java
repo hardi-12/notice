@@ -1,4 +1,4 @@
-package com.example.noticeboard;
+package com.example.noticeboard.models;
 
 public class notice {
     String title;
