@@ -161,7 +161,8 @@
             android:layout_marginTop="20dp"
             android:textColor="#000"
             android:text="Want to upload file ?    "
-            android:layout_below="@id/abc" />
+            android:layout_below="@id/abc"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <TextView
             android:id="@+id/tvDeptFile"
