@@ -37,6 +37,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 
 public class DashboardStudent extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,8 +46,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
     private AppBarConfiguration mAppBarConfiguration;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
-    DatabaseReference reference, ref;
-    String userSem;
+    DatabaseReference reference;
     NavigationView navigationView;
     TextView tvDashEmailSt, tvDashNameSt, tvDashTypeSt;
 
@@ -71,14 +72,14 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
         tvDashTypeSt = headerView.findViewById(R.id.tvDashTypeSt);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String em = user.getEmail().replace(".","_dot_");
+        String em = Objects.requireNonNull(user.getEmail()).replace(".","_dot_");
         tvDashEmailSt.setText(user.getEmail());
         reference.child(em).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String name = dataSnapshot.child("name").getValue().toString();
-                String type = dataSnapshot.child("type").getValue().toString();
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String type = dataSnapshot.child("type").getValue(String.class);
 
                 tvDashNameSt.setText(name);
                 tvDashTypeSt.setText(type);
@@ -170,7 +171,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.nav_signout:
-                firebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();
                 Intent i = new Intent(this,IntroActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
@@ -184,6 +185,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
             case R.id.nav_website:
                 Intent j = new Intent(DashboardStudent.this,web_view.class);
                 j.putExtra("link","https://kjsieit.somaiya.edu/en");
+                j.putExtra("title","Somaiya Website");
                 startActivity(j);
                 break;
 
@@ -197,12 +199,20 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.nav_SIMS:
-                startActivity(new Intent(DashboardStudent.this,web_view.class)
-                        .putExtra("link","https://www.kjsieit.in/sims/student/login.php"));
+                Intent n = new Intent(DashboardStudent.this,web_view.class);
+                n.putExtra("link","https://www.kjsieit.in/sims/faculty/login.php");
+                n.putExtra("title", "SIMS Portal");
+                startActivity(n);
                 break;
             case R.id.nav_resources:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ResourceFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                break;
+            case R.id.nav_library:
+                Intent m = new Intent(DashboardStudent.this,web_view.class);
+                m.putExtra("link","https://library.somaiya.edu/user/login");
+                m.putExtra("title", "Library");
+                startActivity(m);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EventDetails extends AppCompatActivity {
     TextView tvEventTitle, tvEventTimeLeft, tvEventConductedBy, tvEventClass, tvEventVenue, tvEventSpeaker, tvEventDate, tvEventTime,
             tvEventDuration, tvEventDescription, tvEventRegLink, tvEventSpeakerContact;
-    String contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

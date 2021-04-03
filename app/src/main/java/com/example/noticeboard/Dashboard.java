@@ -109,11 +109,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        examNotice = findViewById(R.id.examNotice);
-        deptNotice = findViewById(R.id.deptNotice);
-        studentNotice = findViewById(R.id.studentNotice);
-        eventNotice = findViewById(R.id.eventNotice);
-        resources = findViewById(R.id.resources);
+        examNotice = bottomSheet.findViewById(R.id.examNotice);
+        deptNotice = bottomSheet.findViewById(R.id.deptNotice);
+        studentNotice = bottomSheet.findViewById(R.id.studentNotice);
+        eventNotice = bottomSheet.findViewById(R.id.eventNotice);
+        resources = bottomSheet.findViewById(R.id.resources);
 
         examNotice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +258,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_website:
                 Intent j = new Intent(Dashboard.this,web_view.class);
                 j.putExtra("link","https://kjsieit.somaiya.edu/en");
+                j.putExtra("title","Somaiya Website");
                 startActivity(j);
                 break;
 
@@ -277,12 +278,20 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
 
             case R.id.nav_SIMS:
-                startActivity(new Intent(Dashboard.this,web_view.class)
-                        .putExtra("link","https://www.kjsieit.in/sims/faculty/login.php"));
+                Intent n = new Intent(Dashboard.this,web_view.class);
+                n.putExtra("link","https://www.kjsieit.in/sims/faculty/login.php");
+                n.putExtra("title", "SIMS Portal");
+                startActivity(n);
                 break;
             case R.id.nav_resources:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ResourceFragment())/*.addToBackStack(null)*/.commit();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                break;
+            case R.id.nav_library:
+                Intent m = new Intent(Dashboard.this,web_view.class);
+                m.putExtra("link","https://library.somaiya.edu/user/login");
+                m.putExtra("title", "Library");
+                startActivity(m);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

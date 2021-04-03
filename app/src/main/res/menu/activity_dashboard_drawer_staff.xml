@@ -6,13 +6,14 @@
 
     <group
         android:checkableBehavior="single"
-        android:visible="true">
+        android:visible="true"
+        tools:ignore="HardCodedText">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home"
             android:visible="true"
-            app:showAsAction="always" />
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
@@ -41,28 +42,35 @@
             android:visible="true" />
     </group>
 
-    <item android:title="Reference Material">
+    <item android:title="Reference Material"
+        tools:ignore="HardcodedText">
         <menu>
             <group
                 android:checkableBehavior="single"
                 android:visible="true">
-
                 <item
                     android:id="@+id/nav_resources"
                     android:icon="@drawable/ic_book"
                     android:title="Resources"
                     android:visible="true" />
+                <item
+                    android:id="@+id/nav_library"
+                    android:icon="@drawable/ic_domain"
+                    android:title="Library Website"
+                    android:visible="true" />
             </group>
         </menu>
     </item>
 
-    <item android:title="Quick Links">
+    <item android:title="Quick Links"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/nav_website"
                 android:icon="@drawable/ic_domain"
                 android:title="Somaiya Website"
-                android:visible="true" />
+                android:visible="true"
+                tools:ignore="HardcodedText" />
 
             <item
                 android:id="@+id/nav_SIMS"
