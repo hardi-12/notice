@@ -15,7 +15,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.noticeboard.R;
 import com.example.noticeboard.adapter.ViewPagerAdapter;
 import com.example.noticeboard.tabbedActivity.EventFragmentJsoup;
-import com.example.noticeboard.tabbedActivity.fragment_four;
 import com.example.noticeboard.tabbedActivity.fragment_one;
 import com.example.noticeboard.tabbedActivity.fragment_two;
 import com.google.android.material.tabs.TabLayout;
@@ -58,7 +57,6 @@ public class HomeFragment extends Fragment {
         viewPagerAdapter.addFragent(new fragment_one(), "new updates");
         viewPagerAdapter.addFragent(new fragment_two(), "priority notices");
         viewPagerAdapter.addFragent(new EventFragmentJsoup(), "events");
-        viewPagerAdapter.addFragent(new fragment_four(), "Resources");
 
         viewPager.setAdapter(viewPagerAdapter);
     }

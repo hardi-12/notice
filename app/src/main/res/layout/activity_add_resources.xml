@@ -66,6 +66,29 @@
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tvDeptSem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@drawable/custombut1"
+            android:text="Select Semester and Department"
+            android:textSize="17sp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tvDeptDate"/>
+
+        <TextView
+            android:id="@+id/tvDeptSemData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:text="Selected Semester and Department"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tvDeptSem"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.noticeboard;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class web_view extends AppCompatActivity {
 WebView webView;
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -20,6 +22,14 @@ WebView webView;
 
         Intent i =getIntent();
         String link=i.getStringExtra("link");
+        String title = i.getStringExtra("title");
+        if (title!=null) {
+            setTitle(title);
+        }
+        else {
+            setTitle("E-Noticeboard");
+        }
+
         webView = findViewById(R.id.myWebView);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);

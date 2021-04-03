@@ -1,5 +1,6 @@
 package com.example.noticeboard;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
 import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.profile.ProfileFragment;
+import com.example.noticeboard.ui.resources.ResourceFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -158,6 +160,7 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -196,6 +199,10 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
             case R.id.nav_SIMS:
                 startActivity(new Intent(DashboardStudent.this,web_view.class)
                         .putExtra("link","https://www.kjsieit.in/sims/student/login.php"));
+                break;
+            case R.id.nav_resources:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ResourceFragment())/*.addToBackStack(null)*/.commit();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

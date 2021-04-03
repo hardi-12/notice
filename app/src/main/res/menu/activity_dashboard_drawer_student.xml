@@ -36,6 +36,16 @@
             android:visible="true" />
     </group>
 
+    <item android:title="Reference Material">
+        <menu>
+            <item
+                android:id="@+id/nav_resources"
+                android:icon="@drawable/ic_book"
+                android:title="Resources"
+                android:visible="true" />
+        </menu>
+    </item>
+
     <item android:title="Quick Links">
         <menu>
             <item

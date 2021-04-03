@@ -37,9 +37,19 @@
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_arrow_back_black_24dp"
-            android:title="Signout"
+            android:title="Sign Out"
             android:visible="true" />
     </group>
+
+    <item android:title="Reference Material">
+        <menu>
+            <item
+                android:id="@+id/nav_resources"
+                android:icon="@drawable/ic_book"
+                android:title="Resources"
+                android:visible="true" />
+        </menu>
+    </item>
 
     <item android:title="Quick Links">
         <menu>

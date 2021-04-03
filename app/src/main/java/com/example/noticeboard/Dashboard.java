@@ -28,6 +28,7 @@ import com.example.noticeboard.noticeTypes.AddResources;
 import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.example.noticeboard.noticeTypes.NoticeExamCell;
 import com.example.noticeboard.noticeTypes.NoticeStudent;
+import com.example.noticeboard.ui.resources.ResourceFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
 import com.example.noticeboard.ui.list.ListFragment;
@@ -278,6 +279,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             case R.id.nav_SIMS:
                 startActivity(new Intent(Dashboard.this,web_view.class)
                         .putExtra("link","https://www.kjsieit.in/sims/faculty/login.php"));
+                break;
+            case R.id.nav_resources:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ResourceFragment())/*.addToBackStack(null)*/.commit();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

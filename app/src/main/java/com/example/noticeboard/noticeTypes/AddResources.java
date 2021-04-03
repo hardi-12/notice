@@ -2,6 +2,7 @@ package com.example.noticeboard.noticeTypes;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,12 +50,13 @@ import io.ghyeok.stickyswitch.widget.StickySwitch;
 
 public class AddResources extends AppCompatActivity {
 
-    TextView tvResFile;
+    TextView tvResFile, tvDeptDept, tvDeptSem,tvDeptSemData, tvDeptDeptData;
     TextInputEditText tvResTitle, tvResAuthor, tvResPublication, tvResSubject, tvResDescription, tvResLink;
     TextInputLayout link;
     DatabaseReference reference;
     Toolbar toolbar;
     Button btnDeptFile;
+    AlertDialog.Builder builder;
     StorageReference storageReference;
     String filename = System.currentTimeMillis()+"";
     ArrayList<Uri> uriList = new ArrayList<>();
@@ -74,6 +77,10 @@ public class AddResources extends AppCompatActivity {
         btnDeptFile = findViewById(R.id.btnDeptFile);
         tvResFile = findViewById(R.id.tvResFile);
         tvResLink = findViewById(R.id.tvResLink);
+        tvDeptSem = findViewById(R.id.tvDeptSem);
+        tvDeptDept = findViewById(R.id.tvDeptDept);
+        tvDeptSemData = findViewById(R.id.tvDeptSemData);
+        tvDeptDeptData = findViewById(R.id.tvDeptDeptData);
         link = findViewById(R.id.link);
         reference = FirebaseDatabase.getInstance().getReference().child("References");
         storageReference = FirebaseStorage.getInstance().getReference("resource");
@@ -132,9 +139,15 @@ public class AddResources extends AppCompatActivity {
             tvResTitle.setError("Cannot be empty");
             tvResTitle.requestFocus();
         }
+
         if (subject.isEmpty()) {
             tvResSubject.setError("Cannot be empty");
             tvResSubject.requestFocus();
+        }
+
+        if (!link.isEmpty() && !URLUtil.isValidUrl(link)) {
+            tvResLink.setError("Please enter a valid Link");
+            tvResLink.requestFocus();
         }
 
         else if (item.getItemId() == R.id.itSent) {
