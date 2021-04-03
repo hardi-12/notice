@@ -39,7 +39,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,14 +46,15 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import es.dmoral.toasty.Toasty;
-import io.ghyeok.stickyswitch.widget.StickySwitch;
 
 public class AddResources extends AppCompatActivity {
 
     TextView tvResFile, tvResSemDept, tvResSemDeptData;
     TextInputEditText tvResTitle, tvResAuthor, tvResPublication, tvResSubject, tvResDescription, tvResLink;
-    TextInputLayout link;
+    TextInputLayout link, author, publication;
     DatabaseReference reference;
     Toolbar toolbar;
     Button btnResFile;
@@ -65,6 +65,7 @@ public class AddResources extends AppCompatActivity {
     ArrayList<String> savedList = new ArrayList<>();
     int counter = 0;
     StringBuilder stringBuilder;
+    ToggleSwitch toggleSwitch;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -83,6 +84,38 @@ public class AddResources extends AppCompatActivity {
         btnResFile = findViewById(R.id.btnResFile);
         tvResFile = findViewById(R.id.tvResFile);
         link = findViewById(R.id.link);
+        author = findViewById(R.id.author);
+        publication = findViewById(R.id.publication);
+        toggleSwitch = findViewById(R.id.switchResourceType);
+
+        toggleSwitch.setOnToggleSwitchChangeListener(new BaseToggleSwitch.OnToggleSwitchChangeListener() {
+            @Override
+            public void onToggleSwitchChangeListener(int position, boolean isChecked) {
+                switch (position){
+                    case 0:
+                        author.setVisibility(View.VISIBLE);
+                        publication.setVisibility(View.VISIBLE);
+                        btnResFile.setVisibility(View.VISIBLE);
+                        tvResFile.setVisibility(View.VISIBLE);
+                        link.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        author.setVisibility(View.GONE);
+                        publication.setVisibility(View.GONE);
+                        btnResFile.setVisibility(View.VISIBLE);
+                        tvResFile.setVisibility(View.VISIBLE);
+                        link.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        author.setVisibility(View.GONE);
+                        publication.setVisibility(View.GONE);
+                        btnResFile.setVisibility(View.GONE);
+                        tvResFile.setVisibility(View.GONE);
+                        link.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
 
         builder = new AlertDialog.Builder(this);
         reference = FirebaseDatabase.getInstance().getReference().child("References");
@@ -142,6 +175,7 @@ public class AddResources extends AppCompatActivity {
                         cb51, cb52, cb53, cb54, cb55, cb61, cb62, cb63, cb64, cb65, cb71, cb72, cb73, cb74, cb75, cb81, cb82, cb83, cb84, cb85};
                 builder.setView(view);
                 builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         stringBuilder = new StringBuilder();
@@ -167,22 +201,24 @@ public class AddResources extends AppCompatActivity {
             }
         });
 
-        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.stickySwitchRes);
-        stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
-            @Override
-            public void onSelectedChange(@org.jetbrains.annotations.NotNull @NotNull StickySwitch.Direction direction, @org.jetbrains.annotations.NotNull @NotNull String text) {
-                if(direction == StickySwitch.Direction.LEFT) {
-                    btnResFile.setVisibility(View.VISIBLE);
-                    tvResFile.setVisibility(View.VISIBLE);
-                    link.setVisibility(View.GONE);
-                }
-                else {
-                    btnResFile.setVisibility(View.GONE);
-                    tvResFile.setVisibility(View.GONE);
-                    link.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+//        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.stickySwitchRes);
+//        stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
+//            @Override
+//            public void onSelectedChange(@org.jetbrains.annotations.NotNull @NotNull StickySwitch.Direction direction, @org.jetbrains.annotations.NotNull @NotNull String text) {
+//                if(direction == StickySwitch.Direction.LEFT) {
+//                    btnResFile.setVisibility(View.VISIBLE);
+//                    tvResFile.setVisibility(View.VISIBLE);
+//                    link.setVisibility(View.GONE);
+//                }
+//                else {
+//                    btnResFile.setVisibility(View.GONE);
+//                    tvResFile.setVisibility(View.GONE);
+//                    link.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
+
 
         btnResFile.setOnClickListener(new View.OnClickListener() {
             @Override

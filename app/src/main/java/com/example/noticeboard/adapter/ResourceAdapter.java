@@ -63,6 +63,18 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             holder.tvFile.setText("Click here to open Link");
         }
 
+        if(resourceList.get(position).getAuthor().equals("")) {
+            holder.authorLayout.setVisibility(View.GONE);
+        }
+
+        if(resourceList.get(position).getPublication().equals("")) {
+            holder.publicationLayout.setVisibility(View.GONE);
+        }
+
+        if(resourceList.get(position).getDescription().equals("")) {
+            holder.descriptionLayout.setVisibility(View.GONE);
+        }
+
         holder.tvFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -129,7 +141,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
     public class viewholder extends RecyclerView.ViewHolder {
         TextView tvPrintTitle, tvPrintSubject, tvPrintAuthor, tvPrintPublication,
                 tvPrintDescription, tvFile, tvPrintsemDept;
-        LinearLayout hiddenView;
+        LinearLayout hiddenView, authorLayout, publicationLayout, descriptionLayout ;
         CardView cardView;
         public viewholder(View view) {
             super(view);
@@ -141,6 +153,9 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             tvPrintPublication = view.findViewById(R.id.tvPrintPublication);
             tvPrintDescription = view.findViewById(R.id.tvPrintDescription);
             tvFile = view.findViewById(R.id.tvFile);
+            authorLayout = view.findViewById(R.id.authorLayout);
+            publicationLayout = view.findViewById(R.id.publicationLayout);
+            descriptionLayout = view.findViewById(R.id.descriptionLayout);
             tvPrintsemDept = view.findViewById(R.id.tvPrintsemDept);
         }
     }

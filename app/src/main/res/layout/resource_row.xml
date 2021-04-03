@@ -64,10 +64,11 @@
             android:id="@+id/hiddenView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
+                android:id="@+id/authorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -122,6 +123,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/publicationLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -149,6 +151,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/descriptionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
