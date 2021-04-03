@@ -52,6 +52,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
         holder.tvPrintAuthor.setText(resourceList.get(position).getAuthor());
         holder.tvPrintPublication.setText(resourceList.get(position).getPublication());
         holder.tvPrintDescription.setText(resourceList.get(position).getDescription());
+        holder.tvPrintsemDept.setText(resourceList.get(position).getSemDept());
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("References");
 
@@ -89,7 +90,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            //
                         }
                     });
                 }
@@ -127,7 +128,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
 
     public class viewholder extends RecyclerView.ViewHolder {
         TextView tvPrintTitle, tvPrintSubject, tvPrintAuthor, tvPrintPublication,
-                tvPrintDescription, tvFile;
+                tvPrintDescription, tvFile, tvPrintsemDept;
         LinearLayout hiddenView;
         CardView cardView;
         public viewholder(View view) {
@@ -140,6 +141,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             tvPrintPublication = view.findViewById(R.id.tvPrintPublication);
             tvPrintDescription = view.findViewById(R.id.tvPrintDescription);
             tvFile = view.findViewById(R.id.tvFile);
+            tvPrintsemDept = view.findViewById(R.id.tvPrintsemDept);
         }
     }
 }

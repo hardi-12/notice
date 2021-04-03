@@ -16,7 +16,6 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -29,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Resource Title"
-                android:textColor="#000"
+                android:textColorHint="#000"
                 android:id="@+id/tvResTitle"
                 android:maxLength="30"
                 android:singleLine="true"/>
@@ -54,8 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColorHint="#000"
-            android:id="@+id/one">
+            android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -67,7 +65,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tvDeptSem"
+            android:id="@+id/tvResSemDept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"
@@ -76,18 +74,16 @@
             android:background="@drawable/custombut1"
             android:text="Select Semester and Department"
             android:textSize="17sp"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/tvDeptDate"/>
+            android:layout_marginTop="15dp" />
 
         <TextView
-            android:id="@+id/tvDeptSemData"
+            android:id="@+id/tvResSemDeptData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#000"
             android:text="Selected Semester and Department"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/tvDeptSem"/>
+            android:layout_marginTop="15dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -128,7 +124,7 @@
             android:text="Resource Type\n(Attachment / Link)" />
 
         <io.ghyeok.stickyswitch.widget.StickySwitch
-            android:id="@+id/sticky_switch"
+            android:id="@+id/stickySwitchRes"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -163,7 +159,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnDeptFile"
+            android:id="@+id/btnResFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

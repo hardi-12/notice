@@ -1,11 +1,11 @@
 package com.example.noticeboard.models;
 
 public class resource {
-    String title, author, publication, subject, description, upload, link;
+    String title, author, publication, subject, description, upload, link, semDept;
 
     resource() {}
 
-    public resource(String title, String author, String publication, String subject, String description, String upload, String link) {
+    public resource(String title, String author, String publication, String subject, String description, String upload, String link, String semDept) {
         this.title = title;
         this.author = author;
         this.publication = publication;
@@ -13,6 +13,7 @@ public class resource {
         this.description = description;
         this.upload = upload;
         this.link = link;
+        this.semDept = semDept;
     }
 
     public String getLink() {
@@ -69,5 +70,13 @@ public class resource {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSemDept() {
+        return semDept;
+    }
+
+    public void setSemDept(String semDept) {
+        this.semDept = semDept;
     }
 }

@@ -5,17 +5,20 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -26,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.noticeboard.R;
-import com.example.noticeboard.models.notice;
 import com.example.noticeboard.models.resource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,18 +52,19 @@ import io.ghyeok.stickyswitch.widget.StickySwitch;
 
 public class AddResources extends AppCompatActivity {
 
-    TextView tvResFile, tvDeptDept, tvDeptSem,tvDeptSemData, tvDeptDeptData;
+    TextView tvResFile, tvResSemDept, tvResSemDeptData;
     TextInputEditText tvResTitle, tvResAuthor, tvResPublication, tvResSubject, tvResDescription, tvResLink;
     TextInputLayout link;
     DatabaseReference reference;
     Toolbar toolbar;
-    Button btnDeptFile;
+    Button btnResFile;
     AlertDialog.Builder builder;
     StorageReference storageReference;
     String filename = System.currentTimeMillis()+"";
     ArrayList<Uri> uriList = new ArrayList<>();
     ArrayList<String> savedList = new ArrayList<>();
     int counter = 0;
+    StringBuilder stringBuilder;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -69,43 +72,119 @@ public class AddResources extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_resources);
 
-        tvResTitle = findViewById(R.id.tvResSubject);
+        tvResTitle = findViewById(R.id.tvResTitle);
         tvResAuthor = findViewById(R.id.tvResAuthor);
         tvResPublication = findViewById(R.id.tvResPublication);
+        tvResSemDept = findViewById(R.id.tvResSemDept);
+        tvResSemDeptData = findViewById(R.id.tvResSemDeptData);
         tvResSubject = findViewById(R.id.tvResSubject);
         tvResDescription = findViewById(R.id.tvResDescription);
-        btnDeptFile = findViewById(R.id.btnDeptFile);
-        tvResFile = findViewById(R.id.tvResFile);
         tvResLink = findViewById(R.id.tvResLink);
-        tvDeptSem = findViewById(R.id.tvDeptSem);
-        tvDeptDept = findViewById(R.id.tvDeptDept);
-        tvDeptSemData = findViewById(R.id.tvDeptSemData);
-        tvDeptDeptData = findViewById(R.id.tvDeptDeptData);
+        btnResFile = findViewById(R.id.btnResFile);
+        tvResFile = findViewById(R.id.tvResFile);
         link = findViewById(R.id.link);
+
+        builder = new AlertDialog.Builder(this);
         reference = FirebaseDatabase.getInstance().getReference().child("References");
         storageReference = FirebaseStorage.getInstance().getReference("resource");
 
         toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setTitle("Add Resources");
 
-        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.sticky_switch);
+        tvResSemDept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final View view = LayoutInflater.from(AddResources.this).inflate(R.layout.dialog_box_resources, null);
+                CheckBox cb11, cb12, cb13, cb14, cb15, cb21, cb22, cb23, cb24, cb25, cb31, cb32, cb33, cb34, cb35, cb41, cb42, cb43, cb44, cb45, 
+                        cb51, cb52, cb53, cb54, cb55, cb61, cb62, cb63, cb64, cb65, cb71, cb72, cb73, cb74, cb75, cb81, cb82, cb83, cb84, cb85;
+                cb11 = view.findViewById(R.id.cb11);
+                cb12 = view.findViewById(R.id.cb12);
+                cb13 = view.findViewById(R.id.cb13);
+                cb14 = view.findViewById(R.id.cb14);
+                cb15 = view.findViewById(R.id.cb15);
+                cb21 = view.findViewById(R.id.cb21);
+                cb22 = view.findViewById(R.id.cb22);
+                cb23 = view.findViewById(R.id.cb23);
+                cb24 = view.findViewById(R.id.cb24);
+                cb25 = view.findViewById(R.id.cb25);
+                cb31 = view.findViewById(R.id.cb31);
+                cb32 = view.findViewById(R.id.cb32);
+                cb33 = view.findViewById(R.id.cb33);
+                cb34 = view.findViewById(R.id.cb34);
+                cb35 = view.findViewById(R.id.cb35);
+                cb41 = view.findViewById(R.id.cb41);
+                cb42 = view.findViewById(R.id.cb42);
+                cb43 = view.findViewById(R.id.cb43);
+                cb44 = view.findViewById(R.id.cb44);
+                cb45 = view.findViewById(R.id.cb45);
+                cb51 = view.findViewById(R.id.cb51);
+                cb52 = view.findViewById(R.id.cb52);
+                cb53 = view.findViewById(R.id.cb53);
+                cb54 = view.findViewById(R.id.cb54);
+                cb55 = view.findViewById(R.id.cb55);
+                cb61 = view.findViewById(R.id.cb61);
+                cb62 = view.findViewById(R.id.cb62);
+                cb63 = view.findViewById(R.id.cb63);
+                cb64 = view.findViewById(R.id.cb64);
+                cb65 = view.findViewById(R.id.cb65);
+                cb71 = view.findViewById(R.id.cb71);
+                cb72 = view.findViewById(R.id.cb72);
+                cb73 = view.findViewById(R.id.cb73);
+                cb74 = view.findViewById(R.id.cb74);
+                cb75 = view.findViewById(R.id.cb75);
+                cb81 = view.findViewById(R.id.cb81);
+                cb82 = view.findViewById(R.id.cb82);
+                cb83 = view.findViewById(R.id.cb83);
+                cb84 = view.findViewById(R.id.cb84);
+                cb85 = view.findViewById(R.id.cb85);
+
+                final CheckBox[] checkBoxes = new CheckBox[] {cb11, cb12, cb13, cb14, cb15, cb21, cb22, cb23, cb24, cb25, cb31, cb32, cb33, cb34, cb35, cb41, cb42, cb43, cb44, cb45,
+                        cb51, cb52, cb53, cb54, cb55, cb61, cb62, cb63, cb64, cb65, cb71, cb72, cb73, cb74, cb75, cb81, cb82, cb83, cb84, cb85};
+                builder.setView(view);
+                builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        stringBuilder = new StringBuilder();
+                        for (CheckBox box : checkBoxes) {
+                            if (box.isChecked()) {
+                                stringBuilder.append(getSemDept(box.getId(), view)).append(", ");
+                            }
+                        }
+                        if (stringBuilder.length() == 0) {
+                            tvResSemDeptData.setText("All combinations of semester and department");
+                            for (CheckBox checkBox : checkBoxes) {
+                                stringBuilder.append(getSemDept(checkBox.getId(), view)).append(", ");
+                            }
+                        }
+                        else tvResSemDeptData.setText(stringBuilder);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+            }
+        });
+
+        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.stickySwitchRes);
         stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
             @Override
             public void onSelectedChange(@org.jetbrains.annotations.NotNull @NotNull StickySwitch.Direction direction, @org.jetbrains.annotations.NotNull @NotNull String text) {
                 if(direction == StickySwitch.Direction.LEFT) {
-                    btnDeptFile.setVisibility(View.VISIBLE);
+                    btnResFile.setVisibility(View.VISIBLE);
                     tvResFile.setVisibility(View.VISIBLE);
                     link.setVisibility(View.GONE);
                 }
                 else {
-                    btnDeptFile.setVisibility(View.GONE);
+                    btnResFile.setVisibility(View.GONE);
                     tvResFile.setVisibility(View.GONE);
                     link.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        btnDeptFile.setOnClickListener(new View.OnClickListener() {
+        btnResFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -134,6 +213,7 @@ public class AddResources extends AppCompatActivity {
         final String description = tvResDescription.getText().toString();
         final String link = tvResLink.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        final String semDept = stringBuilder.toString();
 
         if (title.isEmpty()) {
             tvResTitle.setError("Cannot be empty");
@@ -152,7 +232,7 @@ public class AddResources extends AppCompatActivity {
 
         else if (item.getItemId() == R.id.itSent) {
             if (!title.isEmpty() && !subject.isEmpty()) {
-                resource n = new resource(title, author, publication, subject, description, upload, link);
+                resource n = new resource(title, author, publication, subject, description, upload, link, semDept);
                 reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -227,6 +307,31 @@ public class AddResources extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getSemDept(int id, View view) {
+        String data = view.getResources().getResourceName(id);
+        data = data.substring(data.length()-2);
+        String sem = "", dept = "";
+        switch (data.charAt(0)) {
+            case '1': sem = "Sem 1"; break;
+            case '2': sem = "Sem 2"; break;
+            case '3': sem = "Sem 3"; break;
+            case '4': sem = "Sem 4"; break;
+            case '5': sem = "Sem 5"; break;
+            case '6': sem = "Sem 6"; break;
+            case '7': sem = "Sem 7"; break;
+            case '8': sem = "Sem 8"; break;
+        }
+
+        switch (data.charAt(1)) {
+            case '1': dept = "CS"; break;
+            case '2': dept = "IT"; break;
+            case '3': dept = "EXTC"; break;
+            case '4': dept = "ETRX"; break;
+            case '5': dept = "AI-DS"; break;
+        }
+        return dept+" "+sem;
     }
 
     private void selectFiles() {
