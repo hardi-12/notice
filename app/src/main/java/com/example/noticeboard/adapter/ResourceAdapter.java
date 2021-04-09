@@ -1,13 +1,19 @@
 package com.example.noticeboard.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +29,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 import java.util.ArrayList;
 
@@ -130,6 +140,40 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             }
         });
 
+        holder.ibQRScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                View view = LayoutInflater.from(v.getContext()).inflate(R.layout.barcode_display, null);
+                builder.setView(view);
+                ImageView ivQRCode;
+                ivQRCode = view.findViewById(R.id.ivQRCode);
+
+                builder.setCancelable(false).setTitle("QR code");
+
+                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                try {
+                    BitMatrix bitMatrix = multiFormatWriter.encode(resourceList.get(position).getLink(), BarcodeFormat.QR_CODE, 250, 250);
+                    Bitmap bitmap = Bitmap.createBitmap(250, 250, Bitmap.Config.RGB_565);
+                    for (int i = 0; i < 250; i++){
+                        for (int j = 0; j < 250; j++){
+                            bitmap.setPixel(i,j,bitMatrix.get(i,j)? Color.BLACK:Color.WHITE);
+                        }
+                    }
+                    ivQRCode.setImageBitmap(bitmap);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+            }
+        });
+
     }
 
 
@@ -143,6 +187,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
                 tvPrintDescription, tvFile, tvPrintsemDept;
         LinearLayout hiddenView, authorLayout, publicationLayout, descriptionLayout ;
         CardView cardView;
+        ImageButton ibQRScan;
         public viewholder(View view) {
             super(view);
             cardView = view.findViewById(R.id.cardView);
@@ -157,6 +202,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             publicationLayout = view.findViewById(R.id.publicationLayout);
             descriptionLayout = view.findViewById(R.id.descriptionLayout);
             tvPrintsemDept = view.findViewById(R.id.tvPrintsemDept);
+            ibQRScan = view.findViewById(R.id.ibQRScan);
         }
     }
 }

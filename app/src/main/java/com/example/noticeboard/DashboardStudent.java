@@ -23,6 +23,7 @@ import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
 import com.example.noticeboard.ui.list.ListFragment;
 import com.example.noticeboard.ui.profile.ProfileFragment;
+import com.example.noticeboard.ui.qr.QRscanFragment;
 import com.example.noticeboard.ui.resources.ResourceFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -213,6 +214,10 @@ public class DashboardStudent extends AppCompatActivity implements NavigationVie
                 m.putExtra("link","https://library.somaiya.edu/user/login");
                 m.putExtra("title", "Library");
                 startActivity(m);
+                break;
+            case R.id.qrScan:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new QRscanFragment())/*.addToBackStack(null)*/.commit();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

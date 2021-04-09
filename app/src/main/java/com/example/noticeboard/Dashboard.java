@@ -28,6 +28,7 @@ import com.example.noticeboard.noticeTypes.AddResources;
 import com.example.noticeboard.noticeTypes.NoticeDepartment;
 import com.example.noticeboard.noticeTypes.NoticeExamCell;
 import com.example.noticeboard.noticeTypes.NoticeStudent;
+import com.example.noticeboard.ui.qr.QRscanFragment;
 import com.example.noticeboard.ui.resources.ResourceFragment;
 import com.example.noticeboard.ui.about.AboutFragment;
 import com.example.noticeboard.ui.home.HomeFragment;
@@ -292,6 +293,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 m.putExtra("link","https://library.somaiya.edu/user/login");
                 m.putExtra("title", "Library");
                 startActivity(m);
+                break;
+            case R.id.qrScan:
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new QRscanFragment())/*.addToBackStack(null)*/.commit();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

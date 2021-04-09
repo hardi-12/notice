@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.noticeboard"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -49,4 +49,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'us.belka:androidtoggleswitch:1.2.2'
+    implementation 'com.journeyapps:zxing-android-embedded:4.0.2'
+
 }

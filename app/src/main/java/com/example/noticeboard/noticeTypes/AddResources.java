@@ -44,7 +44,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
@@ -185,12 +184,11 @@ public class AddResources extends AppCompatActivity {
                             }
                         }
                         if (stringBuilder.length() == 0) {
-                            tvResSemDeptData.setText("All combinations of semester and department");
                             for (CheckBox checkBox : checkBoxes) {
                                 stringBuilder.append(getSemDept(checkBox.getId(), view)).append(", ");
                             }
                         }
-                        else tvResSemDeptData.setText(stringBuilder);
+                        tvResSemDeptData.setText(stringBuilder);
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -249,7 +247,7 @@ public class AddResources extends AppCompatActivity {
         final String description = tvResDescription.getText().toString();
         final String link = tvResLink.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        final String semDept = stringBuilder.toString();
+        final String semDept = tvResSemDeptData.getText().toString();
 
         if (title.isEmpty()) {
             tvResTitle.setError("Cannot be empty");
@@ -266,8 +264,12 @@ public class AddResources extends AppCompatActivity {
             tvResLink.requestFocus();
         }
 
+        if (semDept.equals("Selected Semester and Department")) {
+            Toasty.warning(this, "Select Department and Semester", Toast.LENGTH_SHORT).show();
+        }
+
         else if (item.getItemId() == R.id.itSent) {
-            if (!title.isEmpty() && !subject.isEmpty()) {
+            if (!title.isEmpty() && !subject.isEmpty() && !semDept.isEmpty()) {
                 resource n = new resource(title, author, publication, subject, description, upload, link, semDept);
                 reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -307,11 +309,11 @@ public class AddResources extends AppCompatActivity {
                                             }
                                             if (counter == uriList.size()) {
                                                 progressDialog.setMessage("Saving Uploaded Files To Database");
-                                                HashMap<String, Object> hashMap = new HashMap<>();
-                                                for (int i = 0; i < savedList.size(); i++) {
-                                                    hashMap.put("File " + i, savedList.get(i));
-                                                }
-                                                reference.child(filename).child("files").updateChildren(hashMap)
+//                                                HashMap<String, Object> hashMap = new HashMap<>();
+//                                                for (int i = 0; i < savedList.size(); i++) {
+//                                                    hashMap.put("File " + i, savedList.get(i));
+//                                                }
+                                                reference.child(filename).child("link").setValue(/*hashMap*/savedList.get(0))
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
@@ -371,7 +373,7 @@ public class AddResources extends AppCompatActivity {
     }
 
     private void selectFiles() {
-        startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT).setType("*/*").putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true), 2);
+        startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT).setType("*/*").putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false), 2);
     }
 
     @Override
