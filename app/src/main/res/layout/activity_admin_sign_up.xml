@@ -129,5 +129,19 @@
             android:fontFamily="sans-serif-black"
             android:text="SignUp" />
 
+        <TextView
+            android:id="@+id/tvPrivacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnAdminSignUp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/pt_sans"
+            android:text="TextView"
+            android:gravity="center"
+            android:clickable="true"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:focusable="true" />
+
     </RelativeLayout>
 </ScrollView>

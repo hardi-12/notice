@@ -3,18 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.qr.QRscanFragment"
+    android:layout_margin="50dp"
     android:orientation="vertical"
-    android:layout_margin="50dp">
+    tools:context=".ui.qr.QRscanFragment">
 
     <Button
-        android:id="@+id/btnScanQR"
+        android:id="@+id/btnScanQR_direct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/custbut2"
-        android:textColor="#fff"
-        android:text="Scan QR code" />
+        android:text="Open Scanner"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/btnScanQR_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custbut2"
+        android:text="Scan QR code"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/tvScannedData"
@@ -22,10 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:textColor="#000"
-        android:textSize="20sp"
+        android:text="Result"
         android:textAlignment="center"
-        android:text="Result" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnVisit"
@@ -33,9 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:visibility="gone"
         android:background="@drawable/custombut1"
+        android:text="Visit this site"
         android:textColor="#a72426"
-        android:text="Visit this site" />
+        android:visibility="gone" />
 
 </LinearLayout>

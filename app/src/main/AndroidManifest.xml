@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.noticeboard">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.kjsieit.noticeboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -17,80 +19,80 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".noticeTypes.AddResources" />
+        <activity android:name="com.kjsieit.noticeboard.noticeTypes.AddResources" />
         <activity
-            android:name=".NoticeFiles"
+            android:name="com.kjsieit.noticeboard.NoticeFiles"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutDepartment"
+            android:name="com.kjsieit.noticeboard.AboutDepartment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EventDetails"
+            android:name="com.kjsieit.noticeboard.EventDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NoticeSeen"
+            android:name="com.kjsieit.noticeboard.NoticeSeen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".IntroActivity"
+            android:name="com.kjsieit.noticeboard.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NoticeEdit"
+            android:name="com.kjsieit.noticeboard.NoticeEdit"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AdminValidation"
+            android:name="com.kjsieit.noticeboard.AdminValidation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SingleFileUpload"
+            android:name="com.kjsieit.noticeboard.SingleFileUpload"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".web_view"
+            android:name="com.kjsieit.noticeboard.web_view"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.profile.ProfileEdit"
+            android:name="com.kjsieit.noticeboard.ui.profile.ProfileEdit"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NoticeDetails"
+            android:name="com.kjsieit.noticeboard.NoticeDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".noticeTypes.NoticeSeminar"
+            android:name="com.kjsieit.noticeboard.noticeTypes.NoticeSeminar"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".noticeTypes.NoticeExamCell"
+            android:name="com.kjsieit.noticeboard.noticeTypes.NoticeExamCell"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".noticeTypes.NoticeStudent"
+            android:name="com.kjsieit.noticeboard.noticeTypes.NoticeStudent"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".noticeTypes.NoticeDepartment"
+            android:name="com.kjsieit.noticeboard.noticeTypes.NoticeDepartment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StudentSignUpActivity"
+            android:name="com.kjsieit.noticeboard.StudentSignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginStudent"
+            android:name="com.kjsieit.noticeboard.LoginStudent"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DashboardStudent"
+            android:name="com.kjsieit.noticeboard.DashboardStudent"
             android:label="Student"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- android:configChanges="orientation|screenSize"/> -->
         <activity
-            android:name=".Dashboard"
+            android:name="com.kjsieit.noticeboard.Dashboard"
             android:label="Staff"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- android:configChanges="orientation|screenSize" /> &lt;!&ndash; this line helps ACTIVITY to retain its state on screen orientation change &ndash;&gt; -->
         <activity
-            android:name=".ForgotPassword"
+            android:name="com.kjsieit.noticeboard.ForgotPassword"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AdminSignUpActivity"
+            android:name="com.kjsieit.noticeboard.AdminSignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginAdmin"
+            android:name="com.kjsieit.noticeboard.LoginAdmin"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Splash"
+            android:name="com.kjsieit.noticeboard.Splash"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
