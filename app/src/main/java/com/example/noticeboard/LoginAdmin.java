@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +44,7 @@ public class LoginAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_admin);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         etSignInEmail = findViewById(R.id.etSignInEmail);
         etSignInPassword = findViewById(R.id.etSignInPassword);
@@ -123,7 +125,7 @@ public class LoginAdmin extends AppCompatActivity {
                                 }
                             }
                             else {
-                                Toasty.warning(LoginAdmin.this, "No such user exists", Toast.LENGTH_SHORT).show();
+                                Toasty.warning(LoginAdmin.this, "No such user exists. Please Sign up first.", Toast.LENGTH_SHORT).show();
                                 loading.dismiss();
                             }
                         }

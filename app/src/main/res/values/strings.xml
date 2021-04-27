@@ -9,6 +9,7 @@
 
     <string-array name="department">
         <item>Select Department</item>
+        <item>All</item>
         <item>Computer Science</item>
         <item>Information Technology</item>
         <item>Electronics And Telecommunication</item>
@@ -30,6 +31,9 @@
 
     <string-array name="designation">
         <item>Select Designation</item>
+        <item>Principal</item>
+        <item>Vice Principle</item>
+        <item>Dean</item>
         <item>H. O. D.</item>
         <item>Professor</item>
         <item>Asst. Professor</item>

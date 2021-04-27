@@ -57,13 +57,18 @@ public class Splash extends AppCompatActivity {
                     reference.child(mail).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String typ = dataSnapshot.child("type").getValue().toString();
+                            String typ = dataSnapshot.child("type").getValue(String.class);
+                            assert typ != null;
                             if (typ.equals("student")) {
-                                startActivity(new Intent(Splash.this, DashboardStudent.class));
+                                Intent i = new Intent(Splash.this, DashboardStudent.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
                                 finish();
                             }
                             if (typ.equals("admin")) {
-                                startActivity(new Intent(Splash.this, Dashboard.class));
+                                Intent i = new Intent(Splash.this, Dashboard.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
                                 finish();
                             }
                         }

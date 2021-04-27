@@ -78,7 +78,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
                     etAdminPhoneNumber.setError("Invalid Phone number");
                     etAdminPhoneNumber.requestFocus();
                 }
-                if (ID.length() != 10){
+                if (ID.length() != 6){
                     etAdminIDNumber.setError("Please enter correct ID number");
                     etAdminIDNumber.requestFocus();
                 }

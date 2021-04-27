@@ -1,6 +1,7 @@
 package com.example.noticeboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class NoticeSeen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_seen);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         tabLayoutNotice = findViewById(R.id.tabLayoutNotice);
         viewPagerNotice = findViewById(R.id.viewPagerNotice);

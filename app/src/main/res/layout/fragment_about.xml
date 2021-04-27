@@ -162,38 +162,56 @@
             android:gravity="center"
             android:layout_below="@+id/btnFeedback"/>
 
-        <androidx.gridlayout.widget.GridLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:columnCount="4"
-            app:rowCount="1"
+            android:layout_below="@id/handles"
             android:layout_centerInParent="true"
-            android:layout_margin="15dp"
-            android:layout_below="@id/handles">
-
-            <ImageButton
-                android:id="@+id/ibInstagram"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_margin="5dp"
-                android:src="@drawable/instagram_logo" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp">
 
             <ImageButton
                 android:id="@+id/ibFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@null"
-                android:layout_margin="5dp"
-                android:src="@drawable/facebook_logo" />
+                android:src="@drawable/ic_facebook" />
+
+            <ImageButton
+                android:id="@+id/ibInstagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_instagram" />
+
+            <ImageButton
+                android:id="@+id/ibYoutube"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:src="@drawable/ic_youtube" />
+
+            <ImageButton
+                android:id="@+id/ibTwitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_twitter" />
 
             <ImageButton
                 android:id="@+id/ibLinkIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@null"
-                android:layout_margin="5dp"
-                android:src="@drawable/linkdin_logo" />
-        </androidx.gridlayout.widget.GridLayout>
+                android:src="@drawable/ic_linkedin" />
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class EventDetails extends AppCompatActivity {
     TextView tvEventTitle, tvEventTimeLeft, tvEventConductedBy, tvEventClass, tvEventVenue, tvEventSpeaker, tvEventDate, tvEventTime,
@@ -14,6 +15,7 @@ public class EventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         tvEventTitle = findViewById(R.id.tvEventTitle);
         tvEventTimeLeft = findViewById(R.id.tvEventTimeLeft);

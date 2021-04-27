@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class web_view extends AppCompatActivity {
 WebView webView;
@@ -19,6 +20,7 @@ WebView webView;
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Intent i =getIntent();
         String link=i.getStringExtra("link");
