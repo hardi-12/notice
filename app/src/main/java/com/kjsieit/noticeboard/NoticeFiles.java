@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NoticeFiles extends AppCompatActivity {
     RecyclerView rvFiles;
@@ -43,8 +44,8 @@ public class NoticeFiles extends AppCompatActivity {
                     tvNoFiles.setVisibility(View.GONE);
                     long size = snapshot.child("files").getChildrenCount();
                     for (int i = 0; i < size; i++) {
-                        String url = snapshot.child("files").child("File "+i).getValue().toString();
-                        ((NoticeFilesAdapter)rvFiles.getAdapter()).update("Attachment "+(i+1), url);
+                        String url = snapshot.child("files").child("File "+i).getValue(String.class);
+                        ((NoticeFilesAdapter) Objects.requireNonNull(rvFiles.getAdapter())).update("Attachment "+(i+1), url);
                     }
                 }
                 else tvNoFiles.setVisibility(View.VISIBLE);

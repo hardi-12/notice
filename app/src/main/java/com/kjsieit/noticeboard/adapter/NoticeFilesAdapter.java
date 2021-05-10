@@ -61,7 +61,8 @@ public class NoticeFilesAdapter extends RecyclerView.Adapter<NoticeFilesAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = recyclerView.getChildAdapterPosition(v);
-                    context.startActivity(new Intent().setDataAndType(Uri.parse(urls.get(position)), Intent.ACTION_VIEW)
+//                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urls.get(position))).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    context.startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(urls.get(position)), "application/*")
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 }
             });
