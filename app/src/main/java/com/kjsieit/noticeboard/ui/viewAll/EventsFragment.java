@@ -12,12 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.kjsieit.noticeboard.R;
 import com.kjsieit.noticeboard.adapter.JsoupAdapter;
 import com.kjsieit.noticeboard.models.event;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -31,6 +38,8 @@ public class EventsFragment extends Fragment {
     JsoupAdapter jsoupAdapter;
     String title, description, time_left, speaker, contact, duration, venue, time, conducted_by, reg_link, date, year, conducted_byF,
             yearF, venueF, speakerF, dateF, timeF, durationF;
+    RequestQueue requestQueue;
+    String url = "http://ems.kjsieit.in/api/getEvents.php?status=confirm&who=all";
 
     public EventsFragment() {}  // Required empty public constructor
 
@@ -44,8 +53,10 @@ public class EventsFragment extends Fragment {
         list_view_events.setLayoutManager(new LinearLayoutManager(getActivity()));
         jsoupAdapter = new JsoupAdapter(eventList, view.getContext());
         list_view_events.setAdapter(jsoupAdapter);
+        requestQueue = Volley.newRequestQueue(requireContext());
 
         load();
+
         refreshEvents.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -70,69 +81,52 @@ public class EventsFragment extends Fragment {
     }
 
     public void load() {
-        Data data = new Data();
-        data.execute();
-    }
-
-    public class Data extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, response -> {
             eventList.clear();
-            jsoupAdapter.notifyDataSetChanged();
-        }
+            for (int i=0; i<response.length();i++) {
+                try {
+                    JSONObject rep = response.getJSONObject(i);
+                    String id = rep.getString("id");
+                    String event_name = rep.getString("event_name");
+                    String event_title = rep.getString("event_title");
+                    String end_time = rep.getString("end_time");
+                    String start_time = rep.getString("start_time");
+                    String duration = rep.getString("duration");
+                    String venue = rep.getString("venue");
+                    String classC = rep.getString("class");
+                    String description = rep.getString("description");
+                    String speaker_name = rep.getString("speaker_name");
+                    String conducted_by = rep.getString("conducted_by");
+                    String organised_by = rep.getString("organised_by");
+                    String eventcoord = rep.getString("eventcoord");
+                    String eventcoorddesg = rep.getString("eventcoorddesg");
+                    String amount = rep.getString("amount");
+                    String series_name = rep.getString("series_name");
+                    String series_title = rep.getString("series_title");
+                    String registration_link = rep.getString("registration_link");
+                    String speaker_contact = rep.getString("speaker_contact");
+                    String department = rep.getString("department");
+                    String participants = rep.getString("participants");
+                    String speaker_desg = rep.getString("speaker_desg");
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            jsoupAdapter.notifyDataSetChanged();
-            refreshEvents.setRefreshing(false);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            eventList.clear();
-            try {
-                String url = "https://kjsieit.in/sims/eventmanager/index.php";
-                Document document = Jsoup.connect(url).get();
-                Elements element = document.select("div.col-12");
-                int size = element.size();
-                for (int i = 0; i < size; i++) {
-                    title = element.select("div.card-body").select("div.row").select("div.col-10").select("h2.card-title").eq(i).text();
-                    description = element.select("p.card-text").eq(i).text();
-                    time_left = element.select("div.card-body").select("div.row").select("div.col-2").eq(i).text();
-                    speaker = element.select("ul.list-group").select("li#speaker_contact").eq(i).text();
-                    speakerF = speaker.substring(speaker.indexOf("Speaker") +9, speaker.length() -7);
-                    year = element.select("ul.list-group").select("div.row").select("li#class").eq(i).text();
-                    yearF = year.substring(year.indexOf("Class") +7);
-                    date = element.select("ul.list-group").select("div.row").select("li#date").eq(i).text();
-                    dateF = date.substring(date.indexOf("Date") +6);
-                    time = element.select("ul.list-group").select("div.row").select("li#time").eq(i).text();
-                    timeF = time.substring(time.indexOf("Time") +6);
-                    venue = element.select("ul.list-group").select("div.row").select("li#venue").eq(i).text();
-                    venueF = venue.substring(venue.indexOf("Venue") +7);
-                    duration = element.select("ul.list-group").select("div.row").select("li#duration").eq(i).text();
-                    durationF = duration.substring(duration.indexOf("Duration") +10);
-                    conducted_by = element.select("ul.list-group").select("div.row").select("li#conducted_by").eq(i).text();
-                    conducted_byF = conducted_by.substring(conducted_by.indexOf("Conducted") +14);
-                    reg_link = element.select("ul.list-group").select("li#link-reg-form").select("a#link-reg-form").eq(i).attr("href");
-                    contact = element.select("ul.list-group").select("li.list-group-item").select("a.badge").eq(i).attr("href");
-                    eventList.add(new event(title, description, time_left, speakerF, contact, durationF, venueF,
-                            timeF, conducted_byF, reg_link, dateF, yearF));
+                    eventList.add(new event(id, event_name, event_title, end_time, start_time, duration, venue, classC, description, speaker_name, conducted_by, organised_by, eventcoord, eventcoorddesg, amount, series_name, series_title, registration_link, speaker_contact, department, participants, speaker_desg));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                jsoupAdapter = new JsoupAdapter(eventList, getContext());
+                list_view_events.setAdapter(jsoupAdapter);
             }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+        }, error -> {
+
+        });
+
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void search(String s, View view) {
         ArrayList<event> myList = new ArrayList();
         for (event object : eventList) {
-            if(object.getTitle().toLowerCase().contains(s.toLowerCase()) || object.getDate().toLowerCase().contains(s.toLowerCase()) ) {
+            if(object.getEvent_name().toLowerCase().contains(s.toLowerCase()) || object.getStart_time().toLowerCase().contains(s.toLowerCase()) ) {
                 myList.add(object);
             }
         }

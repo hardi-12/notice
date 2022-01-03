@@ -38,53 +38,62 @@ public class JsoupAdapter extends RecyclerView.Adapter<JsoupAdapter.viewholder> 
 
     @Override
     public void onBindViewHolder(@NonNull JsoupAdapter.viewholder holder, int position) {
-        final String title, description, time_left, speaker, contact, duration, venue, time, conducted_by, date, year, reg_link;
-        title = eventList.get(position).getTitle();
-        description = eventList.get(position).getDescription();
-        time_left = eventList.get(position).getTime_left();
-        speaker = eventList.get(position).getSpeaker();
-        contact = eventList.get(position).getContact();
+        final String id, event_name, event_title, end_time, start_time, duration, venue, classC, description, speaker_name, conducted_by, organised_by, eventcoord, eventcoorddesg, amount, series_name, series_title, registration_link, speaker_contact, department, participants, speaker_desg;
+        id = eventList.get(position).getId();
+        event_name = eventList.get(position).getEvent_name();
+        event_title = eventList.get(position).getEvent_title();
+        end_time = eventList.get(position).getEnd_time();
+        start_time = eventList.get(position).getStart_time();
         duration = eventList.get(position).getDuration();
         venue = eventList.get(position).getVenue();
-        time = eventList.get(position).getTime();
+        classC = eventList.get(position).getClassC();
+        description = eventList.get(position).getDescription();
+        speaker_name = eventList.get(position).getSpeaker_name();
         conducted_by = eventList.get(position).getConducted_by();
-        date = eventList.get(position).getDate();
-        year = eventList.get(position).getYear();
-        reg_link = eventList.get(position).getReg_link();
-        String displayDate = date.substring(0, date.lastIndexOf("(")-1);
-        DateFormat inputFormat = new SimpleDateFormat("dd MMMM yyyy");
-        DateFormat outputFormat = new SimpleDateFormat("dd\nMMM\nyyyy");
+        organised_by = eventList.get(position).getOrganised_by();
+        eventcoord = eventList.get(position).getEventcoord();
+        eventcoorddesg = eventList.get(position).getEventcoorddesg();
+        amount = eventList.get(position).getAmount();
+        series_name = eventList.get(position).getSeries_name();
+        series_title = eventList.get(position).getSeries_title();
+        registration_link = eventList.get(position).getRegistration_link();
+        speaker_contact = eventList.get(position).getSpeaker_contact();
+        department = eventList.get(position).getDepartment();
+        participants = eventList.get(position).getParticipants();
+        speaker_desg = eventList.get(position).getSpeaker_desg();
+
+
+        String cls = null;
+        if(classC.equals("CE_FE,CE_SE,CE_TE,CE_BE,IT_FE,IT_SE,IT_TE,IT_BE,EXTC_FE,EXTC_SE,EXTC_TE,EXTC_BE,ETRX_FE,ETRX_SE,ETRX_TE,ETRX_BE,AI-DS_FE,AI-DS_SE,AI-DS_TE,AI-DS_BE"))
+            cls = "All Students";
+        else
+            cls = classC;
+
+        String displayDate = null, displayTime = null;
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat outputDate = new SimpleDateFormat("dd\nMMM\nyyyy");
+        DateFormat outputTime = new SimpleDateFormat("hh:mm a");
         try {
-            displayDate = outputFormat.format(inputFormat.parse(displayDate));
+            displayDate = outputDate.format(inputFormat.parse(start_time));
+            displayTime = outputTime.format(inputFormat.parse(start_time));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         holder.tvPrintFullDate.setText(displayDate);
-        holder.tvPrintTime.setText(time);
-        holder.tvPrintTitle.setText(title);
-        holder.tvPrintClass.setText("Class : "+year); // its Class:TE according to website
+        holder.tvPrintTime.setText(displayTime);
+        holder.tvPrintTitle.setText(event_name);
+        holder.tvPrintClass.setText("Class : "+cls);
         holder.tvPrintVenue.setText("Venue : "+venue);
         holder.tvPrintDuration .setText("Duration : "+duration);
         holder.tvPrintConductedBy.setText("Conducted By : "+conducted_by);
-        holder.tvPrintSpeakerName.setText("Speaker : "+speaker);
+        holder.tvPrintSpeakerName.setText("Speaker : "+speaker_name);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), EventDetails.class);
-                i.putExtra("title", title);
-                i.putExtra("description", description);
-                i.putExtra("time_left", time_left);
-                i.putExtra("speaker", speaker);
-                i.putExtra("contact", contact);
-                i.putExtra("duration", duration);
-                i.putExtra("venue", venue);
-                i.putExtra("time", time);
-                i.putExtra("conducted_by", conducted_by);
-                i.putExtra("date", date);
-                i.putExtra("year", year);
-                i.putExtra("reg_link", reg_link);
+                i.putExtra("id", id);
                 v.getContext().startActivity(i);
             }
         });

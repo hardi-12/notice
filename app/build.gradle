@@ -50,4 +50,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'us.belka:androidtoggleswitch:1.2.2'
     implementation 'com.journeyapps:zxing-android-embedded:4.0.2'
+    implementation 'com.android.volley:volley:1.2.1'
 }

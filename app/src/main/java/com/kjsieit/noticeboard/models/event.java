@@ -1,64 +1,72 @@
 package com.kjsieit.noticeboard.models;
 
 public class event {
-    String title, description, time_left, speaker, contact, duration, venue, time, conducted_by, reg_link, date, year;
-
+    String id, event_name, event_title, end_time, start_time, duration, venue, classC, description, speaker_name, conducted_by, organised_by, eventcoord, eventcoorddesg, amount, series_name, series_title, registration_link, speaker_contact, department, participants, speaker_desg;
     public event() {} // empty constructor required
 
-    public event(String title, String description, String time_left, String speaker, String contact, String duration, String venue,
-                 String time, String conducted_by, String reg_link, String date, String year) {
-        this.title = title;
-        this.description = description;
-        this.time_left = time_left;
-        this.speaker = speaker;
-        this.contact = contact;
+    public event(String id, String event_name, String event_title, String end_time, String start_time, String duration, String venue, String classC, String description, String speaker_name, String conducted_by, String organised_by, String eventcoord, String eventcoorddesg, String amount, String series_name, String series_title, String registration_link, String speaker_contact, String department, String participants, String speaker_desg) {
+        this.id = id;
+        this.event_name = event_name;
+        this.event_title = event_title;
+        this.end_time = end_time;
+        this.start_time = start_time;
         this.duration = duration;
         this.venue = venue;
-        this.time = time;
-        this.conducted_by = conducted_by;
-        this.reg_link = reg_link;
-        this.date = date;
-        this.year = year;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
+        this.classC = classC;
         this.description = description;
+        this.speaker_name = speaker_name;
+        this.conducted_by = conducted_by;
+        this.organised_by = organised_by;
+        this.eventcoord = eventcoord;
+        this.eventcoorddesg = eventcoorddesg;
+        this.amount = amount;
+        this.series_name = series_name;
+        this.series_title = series_title;
+        this.registration_link = registration_link;
+        this.speaker_contact = speaker_contact;
+        this.department = department;
+        this.participants = participants;
+        this.speaker_desg = speaker_desg;
     }
 
-    public String getTime_left() {
-        return time_left;
+    public String getId() {
+        return id;
     }
 
-    public void setTime_left(String time_left) {
-        this.time_left = time_left;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getSpeaker() {
-        return speaker;
+    public String getEvent_name() {
+        return event_name;
     }
 
-    public void setSpeaker(String speaker) {
-        this.speaker = speaker;
+    public void setEvent_name(String event_name) {
+        this.event_name = event_name;
     }
 
-    public String getContact() {
-        return contact;
+    public String getEvent_title() {
+        return event_title;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setEvent_title(String event_title) {
+        this.event_title = event_title;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
     }
 
     public String getDuration() {
@@ -77,12 +85,28 @@ public class event {
         this.venue = venue;
     }
 
-    public String getTime() {
-        return time;
+    public String getClassC() {
+        return classC;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setClassC(String classC) {
+        this.classC = classC;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpeaker_name() {
+        return speaker_name;
+    }
+
+    public void setSpeaker_name(String speaker_name) {
+        this.speaker_name = speaker_name;
     }
 
     public String getConducted_by() {
@@ -93,27 +117,91 @@ public class event {
         this.conducted_by = conducted_by;
     }
 
-    public String getReg_link() {
-        return reg_link;
+    public String getOrganised_by() {
+        return organised_by;
     }
 
-    public void setReg_link(String reg_link) {
-        this.reg_link = reg_link;
+    public void setOrganised_by(String organised_by) {
+        this.organised_by = organised_by;
     }
 
-    public String getDate() {
-        return date;
+    public String getEventcoord() {
+        return eventcoord;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setEventcoord(String eventcoord) {
+        this.eventcoord = eventcoord;
     }
 
-    public String getYear() {
-        return year;
+    public String getEventcoorddesg() {
+        return eventcoorddesg;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setEventcoorddesg(String eventcoorddesg) {
+        this.eventcoorddesg = eventcoorddesg;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getSeries_name() {
+        return series_name;
+    }
+
+    public void setSeries_name(String series_name) {
+        this.series_name = series_name;
+    }
+
+    public String getSeries_title() {
+        return series_title;
+    }
+
+    public void setSeries_title(String series_title) {
+        this.series_title = series_title;
+    }
+
+    public String getRegistration_link() {
+        return registration_link;
+    }
+
+    public void setRegistration_link(String registration_link) {
+        this.registration_link = registration_link;
+    }
+
+    public String getSpeaker_contact() {
+        return speaker_contact;
+    }
+
+    public void setSpeaker_contact(String speaker_contact) {
+        this.speaker_contact = speaker_contact;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(String participants) {
+        this.participants = participants;
+    }
+
+    public String getSpeaker_desg() {
+        return speaker_desg;
+    }
+
+    public void setSpeaker_desg(String speaker_desg) {
+        this.speaker_desg = speaker_desg;
     }
 }

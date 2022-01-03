@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tabbedActivity.EventFragmentJsoup">
+    tools:context=".tabbedActivity.fragment_three">
 
     <RelativeLayout
         android:layout_width="match_parent"

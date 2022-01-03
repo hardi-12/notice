@@ -43,6 +43,18 @@
             android:textColor="#000"
             android:textSize="20sp" />
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombut1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Select Semester and Department"
+            android:textColor="#000"
+            android:textSize="17sp"/>
+
+
         <TextView
             android:id="@+id/tvResSemDept"
             android:layout_width="match_parent"

@@ -127,7 +127,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         eventNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://kjsieit.in/sims/eventmanager/index.php")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://ems.kjsieit.in/")));
             }
         });
 

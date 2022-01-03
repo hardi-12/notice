@@ -154,7 +154,7 @@
                             <TextView
                                 android:id="@+id/tvEventSpeaker"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/pt_sans_bold"
                                 android:text="Speaker"
@@ -165,7 +165,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -189,7 +189,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -248,6 +248,7 @@
                             android:textSize="15sp" />
 
                         <LinearLayout
+                            android:id="@+id/reg_link"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -276,6 +277,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/speaker_contact"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -294,12 +296,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:autoLink="all"
                                 android:fontFamily="@font/pt_sans_bold"
+                                android:linksClickable="true"
                                 android:text="Speaker Contact"
                                 android:textColor="#000"
-                                android:textSize="15sp"
-                                android:linksClickable="true"
-                                android:autoLink="all"/>
+                                android:textSize="15sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </ScrollView>

@@ -293,7 +293,7 @@
                     android:paddingLeft="8dp"
                     android:linksClickable="true"
                     android:autoLink="web"
-                    android:text="To add event please visit the below link\n https://kjsieit.in/sims/eventmanager/index.php" />
+                    android:text="To add event please visit the below link\n http://ems.kjsieit.in/" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
