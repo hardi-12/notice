@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.resources.ResourceSemester">
+
+    <Button
+        android:id="@+id/btnSem1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:text="FY - Semester I" />
+
+    <Button
+        android:id="@+id/btnSem2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnSem1"
+        android:text="FY - Semester II" />
+
+    <Button
+        android:id="@+id/btnSem3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:layout_below="@id/btnSem2"
+        android:text="SY - Semester III" />
+
+    <Button
+        android:id="@+id/btnSem4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnSem3"
+        android:text="SY - Semester IV" />
+
+    <Button
+        android:id="@+id/btnSem5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:layout_below="@id/btnSem4"
+        android:text="TY - Semester V" />
+
+    <Button
+        android:id="@+id/btnSem6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnSem5"
+        android:text="TY - Semester VI" />
+
+    <Button
+        android:id="@+id/btnSem7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:layout_below="@id/btnSem6"
+        android:text="LY - Semester VII" />
+
+    <Button
+        android:id="@+id/btnSem8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnSem7"
+        android:text="LY - Semester VIII" />
+</RelativeLayout>
