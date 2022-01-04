@@ -14,6 +14,26 @@
         <entry key="..\:/E-Noticeboard/Noticeboard/app/src/main/res/layout/fragment_new_updates.xml" value="0.1" />
         <entry key="..\:/E-Noticeboard/Noticeboard/app/src/main/res/layout/fragment_three.xml" value="0.12708333333333333" />
         <entry key="..\:/E-Noticeboard/Noticeboard/app/src/main/res/layout/notice_format.xml" value="0.4" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_about_department.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_add_resources.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_dashboard.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_notice_seminar.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_resource_semester.xml" value="0.2" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_resource_subject.xml" value="0.4" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/activity_resources.xml" value="0.17083333333333334" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/app_bar_dashboard.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/content_dashboard.xml" value="0.16041666666666668" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/dialog_box_resource_subject.xml" value="0.25" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/dialog_box_resources.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/fragment_list.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/fragment_q_rscan.xml" value="0.14739583333333334" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/fragment_resource.xml" value="0.2" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/notice_format.xml" value="0.12158054711246201" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/resource_row.xml" value="0.15443840579710144" />
+        <entry key="..\:/notice_23_07/app/src/main/res/layout/resource_subject_row.xml" value="0.1" />
+        <entry key="..\:/notice_23_07/app/src/main/res/menu/notice_details_staff.xml" value="0.25" />
+        <entry key="..\:/notice_23_07/app/src/main/res/menu/resource_subject.xml" value="0.25" />
+        <entry key="..\:/notice_23_07/app/src/main/res/menu/send.xml" value="0.25" />
       </map>
     </option>
   </component>

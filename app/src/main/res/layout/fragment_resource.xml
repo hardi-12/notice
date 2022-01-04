@@ -6,12 +6,57 @@
     tools:context=".ui.resources.ResourceFragment"
     android:background="#e8e8e8">
 
+    <Button
+        android:id="@+id/btnCS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:text="CS" />
+
+    <Button
+        android:id="@+id/btnIT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:layout_below="@id/btnCS"
+        android:text="IT" />
+
+    <Button
+        android:id="@+id/btnEXTC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnIT"
+        android:text="EXTC" />
+
+    <Button
+        android:id="@+id/btnETRX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custbut2"
+        android:layout_below="@id/btnEXTC"
+        android:text="ETRX" />
+
+    <Button
+        android:id="@+id/btnAI_DS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custombut1"
+        android:layout_below="@id/btnETRX"
+        android:text="AI-DS" />
+
     <SearchView
         android:id="@+id/SearchBar_resource"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Type to search"/>
+        android:queryHint="Type to search"
+        android:layout_below="@id/btnAI_DS"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_view_resource"

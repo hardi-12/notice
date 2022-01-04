@@ -21,9 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kjsieit.noticeboard.R;
-import com.kjsieit.noticeboard.models.resource;
-import com.kjsieit.noticeboard.web_view;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +30,9 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.kjsieit.noticeboard.R;
+import com.kjsieit.noticeboard.models.resource;
+import com.kjsieit.noticeboard.web_view;
 
 import java.util.ArrayList;
 

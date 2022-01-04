@@ -1,103 +1,78 @@
 package com.kjsieit.noticeboard.ui.resources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.kjsieit.noticeboard.R;
-import com.kjsieit.noticeboard.adapter.ResourceAdapter;
-import com.kjsieit.noticeboard.models.resource;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class ResourceFragment extends Fragment {
     public ResourceFragment() {}
 
-    SearchView searchView_resource;
-    RecyclerView list_view_resource;
-    DatabaseReference databaseReference;
-    ArrayList<resource> itemlist = new ArrayList<>();
+    Button btnCS, btnIT, btnEXTC, btnETRX, btnAI_DS;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_resource, container, false);
-        searchView_resource = view.findViewById(R.id.SearchBar_resource);
-        list_view_resource = view.findViewById(R.id.list_view_resource);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setStackFromEnd(true);
-        linearLayoutManager.setReverseLayout(true);
-        list_view_resource.setLayoutManager(linearLayoutManager);
+        btnCS = view.findViewById(R.id.btnCS);
+        btnIT = view.findViewById(R.id.btnIT);
+        btnEXTC = view.findViewById(R.id.btnEXTC);
+        btnETRX = view.findViewById(R.id.btnETRX);
+        btnAI_DS = view.findViewById(R.id.btnAI_DS);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("References");
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        btnCS.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    itemlist = new ArrayList<>();
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        resource n = child.getValue(resource.class);
-                        itemlist.add(n);
-
-                    }
-                    list_view_resource.setAdapter(new ResourceAdapter(itemlist, getContext() ));
-                }
-                if(searchView_resource != null){
-                    searchView_resource.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                        @Override
-                        public boolean onQueryTextSubmit(String query) {
-                            search(query);
-                            return true;
-                        }
-
-                        @Override
-                        public boolean onQueryTextChange(String newText) {
-                            search(newText);
-                            return true;
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ResourceSemester.class);
+                i.putExtra("dept", "CS");
+                startActivity(i);
             }
         });
-    }
 
-    private void search(String query) {
-        ArrayList<resource> myList = new ArrayList<>();
-        for (resource object : itemlist) {
-            if(object.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    object.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
-                    object.getPublication().toLowerCase().contains(query.toLowerCase()) ||
-                    object.getDescription().toLowerCase().contains(query.toLowerCase()) ||
-                    object.getSubject().toLowerCase().contains(query.toLowerCase())) {
-                myList.add(object);
+        btnIT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ResourceSemester.class);
+                i.putExtra("dept", "IT");
+                startActivity(i);
             }
-        }
-        ResourceAdapter adapterClass = new ResourceAdapter(myList, getContext());
-        list_view_resource.setAdapter(adapterClass);
-    }
+        });
 
+        btnEXTC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ResourceSemester.class);
+                i.putExtra("dept", "EXTC");
+                startActivity(i);
+            }
+        });
+
+        btnETRX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ResourceSemester.class);
+                i.putExtra("dept", "ETRX");
+                startActivity(i);
+            }
+        });
+
+        btnAI_DS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ResourceSemester.class);
+                i.putExtra("dept", "AI-DS");
+                startActivity(i);
+            }
+        });
+
+        return view;
+    }
 }
