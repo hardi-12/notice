@@ -5,20 +5,20 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.URLUtil;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -28,8 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.kjsieit.noticeboard.R;
-import com.kjsieit.noticeboard.models.resource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,13 +35,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kjsieit.noticeboard.R;
+import com.kjsieit.noticeboard.models.resource;
+import com.kjsieit.noticeboard.models.resourceSubject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
@@ -51,20 +56,23 @@ import es.dmoral.toasty.Toasty;
 
 public class AddResources extends AppCompatActivity {
 
-    TextView tvResFile, tvResSemDept, tvResSemDeptData;
-    TextInputEditText tvResTitle, tvResAuthor, tvResPublication, tvResSubject, tvResDescription, tvResLink;
+    TextView tvResFile;
+    TextInputEditText tvResTitle, tvResAuthor, tvResPublication, tvResDescription, tvResLink;
     TextInputLayout link, author, publication;
-    DatabaseReference reference;
+    DatabaseReference reference, subRefeence;
     Toolbar toolbar;
     Button btnResFile;
     AlertDialog.Builder builder;
     StorageReference storageReference;
     String filename = System.currentTimeMillis()+"";
     ArrayList<Uri> uriList = new ArrayList<>();
-    ArrayList<String> savedList = new ArrayList<>();
+    ArrayList<String> savedList = new ArrayList<>(), codeList;
     int counter = 0;
     StringBuilder stringBuilder;
     ToggleSwitch toggleSwitch;
+    Spinner spResDept, spResSem, spResSub;
+    LinkedHashSet<String> semLHS, subTitleLHS, subCodeLHS;
+    ArrayAdapter<String> semAdapter, subAdapter;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -75,9 +83,6 @@ public class AddResources extends AppCompatActivity {
         tvResTitle = findViewById(R.id.tvResTitle);
         tvResAuthor = findViewById(R.id.tvResAuthor);
         tvResPublication = findViewById(R.id.tvResPublication);
-        tvResSemDept = findViewById(R.id.tvResSemDept);
-        tvResSemDeptData = findViewById(R.id.tvResSemDeptData);
-        tvResSubject = findViewById(R.id.tvResSubject);
         tvResDescription = findViewById(R.id.tvResDescription);
         tvResLink = findViewById(R.id.tvResLink);
         btnResFile = findViewById(R.id.btnResFile);
@@ -86,6 +91,88 @@ public class AddResources extends AppCompatActivity {
         author = findViewById(R.id.author);
         publication = findViewById(R.id.publication);
         toggleSwitch = findViewById(R.id.switchResourceType);
+
+        spResDept = findViewById(R.id.spResDept);
+        spResSem = findViewById(R.id.spResSem);
+        spResSub = findViewById(R.id.spResSub);
+        subRefeence = FirebaseDatabase.getInstance().getReference("resourceSubjects");
+
+        spResDept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spResDept.getSelectedItemPosition() > 0) {
+                    semLHS = new LinkedHashSet<String>() {{ add("Select Semester"); }};
+                    String dept = spResDept.getSelectedItem().toString();
+                    subRefeence.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot child : snapshot.getChildren()) {
+                                resourceSubject subject = child.getValue(resourceSubject.class);
+                                assert subject != null;
+                                if (subject.getSubjectDept().equals(dept)) {
+                                    semLHS.add(subject.getSubjectSem());
+                                }
+                            }
+                            semAdapter = new ArrayAdapter<>(AddResources.this, R.layout.resource_spinner, new ArrayList<>(semLHS));
+                            spResSem.setVisibility(View.VISIBLE);
+                            spResSem.setAdapter(semAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } else {
+                    spResSem.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spResSem.setVisibility(View.GONE);
+            }
+        });
+
+        spResSem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spResSem.getSelectedItemPosition() > 0) {
+                    subTitleLHS = new LinkedHashSet<String>() {{ add("Select Subject"); }};
+                    subCodeLHS = new LinkedHashSet<String>() {{ add("Select Code"); }};
+                    String dept = spResDept.getSelectedItem().toString(), sem = spResSem.getSelectedItem().toString();
+                    subRefeence.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot child : snapshot.getChildren()) {
+                                resourceSubject subject = child.getValue(resourceSubject.class);
+                                assert subject != null;
+                                if (subject.getSubjectDept().equals(dept) && subject.getSubjectSem().equals(sem)) {
+                                    subTitleLHS.add(subject.getSubjectTitle());
+                                    subCodeLHS.add(subject.getSubjectCode());
+                                }
+                            }
+                            subAdapter = new ArrayAdapter<>(AddResources.this, R.layout.resource_spinner, new ArrayList<>(subTitleLHS));
+                            spResSub.setVisibility(View.VISIBLE);
+                            spResSub.setAdapter(subAdapter);
+                            codeList = new ArrayList<>(subCodeLHS);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } else {
+                    spResSub.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spResSub.setVisibility(View.GONE);
+            }
+        });
 
         toggleSwitch.setOnToggleSwitchChangeListener(new BaseToggleSwitch.OnToggleSwitchChangeListener() {
             @Override
@@ -123,101 +210,6 @@ public class AddResources extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setTitle("Add Resources");
 
-        tvResSemDept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                final View view = LayoutInflater.from(AddResources.this).inflate(R.layout.dialog_box_resources, null);
-                CheckBox cb11, cb12, cb13, cb14, cb15, cb21, cb22, cb23, cb24, cb25, cb31, cb32, cb33, cb34, cb35, cb41, cb42, cb43, cb44, cb45, 
-                        cb51, cb52, cb53, cb54, cb55, cb61, cb62, cb63, cb64, cb65, cb71, cb72, cb73, cb74, cb75, cb81, cb82, cb83, cb84, cb85;
-                cb11 = view.findViewById(R.id.cb11);
-                cb12 = view.findViewById(R.id.cb12);
-                cb13 = view.findViewById(R.id.cb13);
-                cb14 = view.findViewById(R.id.cb14);
-                cb15 = view.findViewById(R.id.cb15);
-                cb21 = view.findViewById(R.id.cb21);
-                cb22 = view.findViewById(R.id.cb22);
-                cb23 = view.findViewById(R.id.cb23);
-                cb24 = view.findViewById(R.id.cb24);
-                cb25 = view.findViewById(R.id.cb25);
-                cb31 = view.findViewById(R.id.cb31);
-                cb32 = view.findViewById(R.id.cb32);
-                cb33 = view.findViewById(R.id.cb33);
-                cb34 = view.findViewById(R.id.cb34);
-                cb35 = view.findViewById(R.id.cb35);
-                cb41 = view.findViewById(R.id.cb41);
-                cb42 = view.findViewById(R.id.cb42);
-                cb43 = view.findViewById(R.id.cb43);
-                cb44 = view.findViewById(R.id.cb44);
-                cb45 = view.findViewById(R.id.cb45);
-                cb51 = view.findViewById(R.id.cb51);
-                cb52 = view.findViewById(R.id.cb52);
-                cb53 = view.findViewById(R.id.cb53);
-                cb54 = view.findViewById(R.id.cb54);
-                cb55 = view.findViewById(R.id.cb55);
-                cb61 = view.findViewById(R.id.cb61);
-                cb62 = view.findViewById(R.id.cb62);
-                cb63 = view.findViewById(R.id.cb63);
-                cb64 = view.findViewById(R.id.cb64);
-                cb65 = view.findViewById(R.id.cb65);
-                cb71 = view.findViewById(R.id.cb71);
-                cb72 = view.findViewById(R.id.cb72);
-                cb73 = view.findViewById(R.id.cb73);
-                cb74 = view.findViewById(R.id.cb74);
-                cb75 = view.findViewById(R.id.cb75);
-                cb81 = view.findViewById(R.id.cb81);
-                cb82 = view.findViewById(R.id.cb82);
-                cb83 = view.findViewById(R.id.cb83);
-                cb84 = view.findViewById(R.id.cb84);
-                cb85 = view.findViewById(R.id.cb85);
-
-                final CheckBox[] checkBoxes = new CheckBox[] {cb11, cb12, cb13, cb14, cb15, cb21, cb22, cb23, cb24, cb25, cb31, cb32, cb33, cb34, cb35, cb41, cb42, cb43, cb44, cb45,
-                        cb51, cb52, cb53, cb54, cb55, cb61, cb62, cb63, cb64, cb65, cb71, cb72, cb73, cb74, cb75, cb81, cb82, cb83, cb84, cb85};
-                builder.setView(view);
-                builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        stringBuilder = new StringBuilder();
-                        for (CheckBox box : checkBoxes) {
-                            if (box.isChecked()) {
-                                stringBuilder.append(getSemDept(box.getId(), view)).append(", ");
-                            }
-                        }
-                        if (stringBuilder.length() == 0) {
-                            for (CheckBox checkBox : checkBoxes) {
-                                stringBuilder.append(getSemDept(checkBox.getId(), view)).append(", ");
-                            }
-                        }
-                        tvResSemDeptData.setText(stringBuilder);
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
-            }
-        });
-
-//        StickySwitch stickySwitch = (StickySwitch) findViewById(R.id.stickySwitchRes);
-//        stickySwitch.setOnSelectedChangeListener(new StickySwitch.OnSelectedChangeListener() {
-//            @Override
-//            public void onSelectedChange(@org.jetbrains.annotations.NotNull @NotNull StickySwitch.Direction direction, @org.jetbrains.annotations.NotNull @NotNull String text) {
-//                if(direction == StickySwitch.Direction.LEFT) {
-//                    btnResFile.setVisibility(View.VISIBLE);
-//                    tvResFile.setVisibility(View.VISIBLE);
-//                    link.setVisibility(View.GONE);
-//                }
-//                else {
-//                    btnResFile.setVisibility(View.GONE);
-//                    tvResFile.setVisibility(View.GONE);
-//                    link.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-
-
-
         btnResFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,34 +235,45 @@ public class AddResources extends AppCompatActivity {
         final String title = tvResTitle.getText().toString();
         final String author = tvResAuthor.getText().toString();
         final String publication = tvResPublication.getText().toString();
-        final String subject = tvResSubject.getText().toString();
         final String description = tvResDescription.getText().toString();
         final String link = tvResLink.getText().toString();
         final String upload = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        final String semDept = tvResSemDeptData.getText().toString();
+        final String dept = spResDept.getSelectedItem().toString();
+        String sem = "", subCode = "";
+        int codePos = 0, togglePos = toggleSwitch.getCheckedTogglePosition();
 
         if (title.isEmpty()) {
             tvResTitle.setError("Cannot be empty");
             tvResTitle.requestFocus();
         }
 
-        if (subject.isEmpty()) {
-            tvResSubject.setError("Cannot be empty");
-            tvResSubject.requestFocus();
-        }
+        if (spResSem.getVisibility() != View.GONE) {
+            if (spResSub.getVisibility() != View.GONE) {
+                sem = spResSem.getSelectedItem().toString();
+                codePos = spResSub.getSelectedItemPosition();
+                if (codePos == 0) {
+                    Toasty.warning(this, "Select Subject", Toast.LENGTH_SHORT).show();
+                    spResSub.requestFocus();
+                }
+                else subCode = codeList.get(codePos);
+            } else Toasty.warning(this, "Select Semester", Toast.LENGTH_SHORT).show();
+        } else Toasty.warning(this, "Select Department", Toast.LENGTH_SHORT).show();
+
+        if (togglePos == 2) {
+            if (link.isEmpty()) {
+                tvResLink.setError("Please enter a valid Link");
+                tvResLink.requestFocus();
+            }
+        } else Toasty.warning(this, "Select a file", Toast.LENGTH_SHORT).show();
 
         if (!link.isEmpty() && !URLUtil.isValidUrl(link)) {
             tvResLink.setError("Please enter a valid Link");
             tvResLink.requestFocus();
         }
 
-        if (semDept.equals("Selected Semester and Department")) {
-            Toasty.warning(this, "Select Department and Semester", Toast.LENGTH_SHORT).show();
-        }
-
         else if (item.getItemId() == R.id.itSent) {
-            if (!title.isEmpty() && !subject.isEmpty() && !semDept.isEmpty()) {
-                resource n = new resource(title, author, publication, subject, description, upload, link, semDept);
+            if (!title.isEmpty() && codePos > 0) {
+                resource n = new resource(title, author, publication, subCode, description, upload, link, sem, dept);
                 reference.child(filename).setValue(n).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

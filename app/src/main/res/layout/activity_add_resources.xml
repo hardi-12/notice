@@ -34,53 +34,45 @@
                 android:textColorHint="#000" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvResSemDeptData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Selected Semester and Department"
-            android:textColor="#000"
-            android:textSize="20sp" />
 
         <Spinner
+            android:id="@+id/spResDept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombut1"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Select Semester and Department"
+            android:text="Select Department"
+            android:entries="@array/resDept"
             android:textColor="#000"
             android:textSize="17sp"/>
 
-
-        <TextView
-            android:id="@+id/tvResSemDept"
+        <Spinner
+            android:id="@+id/spResSem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/custombut1"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Select Semester and Department"
+            android:text="Select Semester"
             android:textColor="#000"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="gone"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <Spinner
+            android:id="@+id/spResSub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColorHint="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tvResSubject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Subject Name"
-                android:singleLine="true"
-                android:textColorHint="#000" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombut1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Select Subject"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:visibility="gone"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

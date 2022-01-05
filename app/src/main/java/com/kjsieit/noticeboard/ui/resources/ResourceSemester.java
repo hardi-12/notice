@@ -17,7 +17,6 @@ public class ResourceSemester extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_semester);
-        getSupportActionBar().setTitle("Select Semester");
         btnSem1 = findViewById(R.id.btnSem1);
         btnSem2 = findViewById(R.id.btnSem2);
         btnSem3 = findViewById(R.id.btnSem3);
@@ -29,13 +28,14 @@ public class ResourceSemester extends AppCompatActivity {
 
         Intent i = getIntent();
         String dept = i.getStringExtra("dept");
+        getSupportActionBar().setTitle("Select Semester - "+dept);
 
         btnSem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem1");
+                i.putExtra("sem", "Sem 1");
                 startActivity(i);
             }
         });
@@ -45,7 +45,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem2");
+                i.putExtra("sem", "Sem 2");
                 startActivity(i);
             }
         });
@@ -55,7 +55,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem3");
+                i.putExtra("sem", "Sem 3");
                 startActivity(i);
             }
         });
@@ -65,7 +65,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem4");
+                i.putExtra("sem", "Sem 4");
                 startActivity(i);
             }
         });
@@ -75,7 +75,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem5");
+                i.putExtra("sem", "Sem 5");
                 startActivity(i);
             }
         });
@@ -85,7 +85,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem6");
+                i.putExtra("sem", "Sem 6");
                 startActivity(i);
             }
         });
@@ -95,7 +95,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem7");
+                i.putExtra("sem", "Sem 7");
                 startActivity(i);
             }
         });
@@ -105,7 +105,7 @@ public class ResourceSemester extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResourceSemester.this, ResourceSubject.class);
                 i.putExtra("dept", dept);
-                i.putExtra("sem", "Sem8");
+                i.putExtra("sem", "Sem 8");
                 startActivity(i);
             }
         });

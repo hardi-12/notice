@@ -18,6 +18,7 @@ import com.kjsieit.noticeboard.adapter.ResourceAdapter;
 import com.kjsieit.noticeboard.models.resource;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Resources extends AppCompatActivity {
 
@@ -31,7 +32,8 @@ public class Resources extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resources);
-//        getSupportActionBar().setTitle("");
+        code = getIntent().getStringExtra("code");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(code);
 
         searchView_resource = findViewById(R.id.SearchBar_resource);
         list_view_resource = findViewById(R.id.list_view_resource);
@@ -41,7 +43,6 @@ public class Resources extends AppCompatActivity {
         list_view_resource.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("References");
-        code = getIntent().getStringExtra("code");
     }
 
     @Override
@@ -54,6 +55,7 @@ public class Resources extends AppCompatActivity {
                     itemlist = new ArrayList<>();
                     for (DataSnapshot child : snapshot.getChildren()) {
                         resource n = child.getValue(resource.class);
+                        assert n != null;
                         if (n.getSubject().equals(code))
                             itemlist.add(n);
                     }

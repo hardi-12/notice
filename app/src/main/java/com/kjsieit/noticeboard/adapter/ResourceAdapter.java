@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +37,13 @@ import com.kjsieit.noticeboard.R;
 import com.kjsieit.noticeboard.models.resource;
 import com.kjsieit.noticeboard.web_view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewholder> {
 
@@ -62,7 +71,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
         holder.tvPrintAuthor.setText(resourceList.get(position).getAuthor());
         holder.tvPrintPublication.setText(resourceList.get(position).getPublication());
         holder.tvPrintDescription.setText(resourceList.get(position).getDescription());
-        holder.tvPrintsemDept.setText(resourceList.get(position).getSemDept());
+        holder.tvPrintsemDept.setText(resourceList.get(position).getSem());
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("References");
 
@@ -165,7 +174,36 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
                     e.printStackTrace();
                 }
 
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Share", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bitmap bitmap = ((BitmapDrawable) ivQRCode.getDrawable()).getBitmap();
+                        File imagefolder = new File(context.getCacheDir(), "images");
+                        Uri uri = null;
+                        try {
+                            imagefolder.mkdirs();
+                            File file = new File(imagefolder, resourceList.get(position).getTitle()+".png");
+                            FileOutputStream outputStream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                            // check authority from Manifest file
+                            uri = FileProvider.getUriForFile(context, "com.kjsieit.noticeboard.ui.resources.Resources", file);
+                        } catch (FileNotFoundException e) {
+                            Toasty.error(context, e.getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Toasty.error(context, e.getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                        }
+
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_STREAM, uri);
+                        intent.putExtra(Intent.EXTRA_TEXT, "QR Code of "+resourceList.get(position).getDept()+"-"+
+                                resourceList.get(position).getSem()+" for "+resourceList.get(position).getTitle());
+//                        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+                        intent.setType("image/png");
+                        context.startActivity(Intent.createChooser(intent, "Share Using.."));
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -174,6 +212,33 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.viewho
             }
         });
 
+    }
+
+    private Uri getmageToShare(Bitmap bitmap) {
+        File imagefolder = new File(context.getCacheDir(), "images");
+        Uri uri = null;
+        try {
+            imagefolder.mkdirs();
+            File file = new File(imagefolder, "shared_image.png");
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            uri = FileProvider.getUriForFile(context, "com.anni.shareimage.fileprovider", file);
+        } catch (Exception e) {
+            Toasty.error(context, e.getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+        }
+        return uri;
+    }
+
+    private void shareImageandText(Bitmap bitmap) {
+        Uri uri = getmageToShare(bitmap);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra(Intent.EXTRA_TEXT, "Sharing Image");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        intent.setType("image/png");
+        context.startActivity(Intent.createChooser(intent, "Share Via"));
     }
 
 

@@ -1,11 +1,12 @@
 package com.kjsieit.noticeboard.models;
 
 public class resource {
-    String title, author, publication, subject, description, upload, link, semDept;
+    private String title, author, publication, subject, description, upload, link, sem, dept;
 
-    resource() {}
+    public resource() {
+    }
 
-    public resource(String title, String author, String publication, String subject, String description, String upload, String link, String semDept) {
+    public resource(String title, String author, String publication, String subject, String description, String upload, String link, String sem, String dept) {
         this.title = title;
         this.author = author;
         this.publication = publication;
@@ -13,23 +14,8 @@ public class resource {
         this.description = description;
         this.upload = upload;
         this.link = link;
-        this.semDept = semDept;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getUpload() {
-        return upload;
-    }
-
-    public void setUpload(String upload) {
-        this.upload = upload;
+        this.sem = sem;
+        this.dept = dept;
     }
 
     public String getTitle() {
@@ -72,11 +58,35 @@ public class resource {
         this.description = description;
     }
 
-    public String getSemDept() {
-        return semDept;
+    public String getUpload() {
+        return upload;
     }
 
-    public void setSemDept(String semDept) {
-        this.semDept = semDept;
+    public void setUpload(String upload) {
+        this.upload = upload;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSem() {
+        return sem;
+    }
+
+    public void setSem(String sem) {
+        this.sem = sem;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 }

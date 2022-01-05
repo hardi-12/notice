@@ -19,11 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kjsieit.noticeboard.R;
 import com.kjsieit.noticeboard.models.resourceSubject;
 
@@ -37,12 +39,12 @@ public class ResourceSubject extends AppCompatActivity {
     String sem, dept;
     ListView lvSubjects;
     ArrayList<String> subjectList = new ArrayList<>(), codeList = new ArrayList<>();
+    String user = FirebaseAuth.getInstance().getCurrentUser().getEmail(), type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_subject);
-        getSupportActionBar().setTitle("Select Subject");
         reference = FirebaseDatabase.getInstance().getReference("resourceSubjects");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(ResourceSubject.this, android.R.layout.simple_list_item_1, subjectList);
@@ -52,6 +54,19 @@ public class ResourceSubject extends AppCompatActivity {
         Intent i = getIntent();
         sem = i.getStringExtra("sem");
         dept = i.getStringExtra("dept");
+        getSupportActionBar().setTitle("Select Subject - "+dept+" "+sem);
+
+        FirebaseDatabase.getInstance().getReference("user").child(user.replace(".", "_dot_")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                type = snapshot.child("type").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //
+            }
+        });
 
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -95,7 +110,8 @@ public class ResourceSubject extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.resource_subject, menu);
+        if (type.equals("admin"))
+            getMenuInflater().inflate(R.menu.resource_subject, menu);
         return true;
     }
 
